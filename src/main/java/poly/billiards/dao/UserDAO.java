@@ -10,4 +10,5 @@ public interface UserDAO {
     void create(User user);
     void update(User user);
     void deleteById(String id);
+    List<User> findByKeyword(String keyword);
 }

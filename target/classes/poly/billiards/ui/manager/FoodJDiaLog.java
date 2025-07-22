@@ -4,11 +4,14 @@
  */
 package poly.billiards.ui.manager;
 
+import java.io.File;
 import poly.billiards.dao.FoodDAO;
 import poly.billiards.entity.Food;
 import java.util.List;
+import javax.swing.JFileChooser;
 import javax.swing.table.DefaultTableModel;
 import poly.billiards.util.XDialog;
+import poly.billiards.util.XIcon;
 
 /**
  *
@@ -19,7 +22,7 @@ public class FoodJDiaLog extends javax.swing.JDialog {
     private DefaultTableModel modelTable;
     FoodDAO fdao = new FoodDAO();
     int index = -1;
-
+    private List<Food> foods;
     /**
      * Creates new form FoodJDiaLog
      */
@@ -199,6 +202,34 @@ public class FoodJDiaLog extends javax.swing.JDialog {
         this.edit();
         tbMenu.setRowSelectionInterval(index, index);
     }
+    
+    @Override
+    public void fillToTable() {
+        DefaultTableModel model = (DefaultTableModel) tblDrinks.getModel();
+        model.setRowCount(0);
+        foods = fdao.findAll();
+        for (Food drink : drinks) {
+            model.addRow(new Object[]{
+                drink.getId(),
+                drink.getName(),
+                drink.getPrice(),
+                drink.getDiscount(),
+                drink.isAvailable() ? "Sẵn có" : "Hết hàng",
+                false
+            });
+        }
+        this.clear();
+    }
+    
+    @Override
+    public void chooseFile() {
+        if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            File file = XIcon.copyTo(selectedFile, "images");
+            lblImage.setToolTipText(file.getName());
+            XIcon.setIcon(lblImage, file);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -221,26 +252,18 @@ public class FoodJDiaLog extends javax.swing.JDialog {
         jScrollPane2 = new javax.swing.JScrollPane();
         tblCategories = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
-        txtName = new javax.swing.JTextField();
         btnNew = new javax.swing.JButton();
-        txtIdCategory = new javax.swing.JTextField();
-        txtPrice = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         btnInsert = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
-        txtId = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        txtId1 = new javax.swing.JTextField();
-        txtName1 = new javax.swing.JTextField();
+        txtId = new javax.swing.JTextField();
+        txtName = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        txtUnitPrice = new javax.swing.JTextField();
+        txtPrice = new javax.swing.JTextField();
         sliDiscount = new poly.billiards.ui.component.SliderJPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -367,14 +390,8 @@ public class FoodJDiaLog extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(92, 92, 92)
-                        .addComponent(txtFind, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(63, 100, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 602, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -387,6 +404,12 @@ public class FoodJDiaLog extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addComponent(btnLast)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(txtFind, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(83, 83, 83))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -419,22 +442,6 @@ public class FoodJDiaLog extends javax.swing.JDialog {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel2.setText("ID");
-
-        jLabel3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel3.setText("Tên");
-
-        jLabel4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel4.setText("Tên danh mục");
-
-        jLabel5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel5.setText("Giá");
-
         btnInsert.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         btnInsert.setForeground(new java.awt.Color(0, 0, 0));
         btnInsert.setText("Thêm");
@@ -462,9 +469,6 @@ public class FoodJDiaLog extends javax.swing.JDialog {
             }
         });
 
-        txtId.setText("0");
-        txtId.setEnabled(false);
-
         jPanel6.setLayout(new java.awt.GridLayout(0, 2, 5, 5));
 
         jLabel1.setText("Mã đồ ăn");
@@ -474,8 +478,8 @@ public class FoodJDiaLog extends javax.swing.JDialog {
         jLabel6.setText("Tên đồ ăn");
         jLabel6.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         jPanel6.add(jLabel6);
-        jPanel6.add(txtId1);
-        jPanel6.add(txtName1);
+        jPanel6.add(txtId);
+        jPanel6.add(txtName);
 
         jLabel7.setText("Đơn giá");
         jLabel7.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
@@ -484,7 +488,7 @@ public class FoodJDiaLog extends javax.swing.JDialog {
         jLabel8.setText("Giảm giá");
         jLabel8.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         jPanel6.add(jLabel8);
-        jPanel6.add(txtUnitPrice);
+        jPanel6.add(txtPrice);
         jPanel6.add(sliDiscount);
 
         jLabel9.setText("Loại");
@@ -508,40 +512,16 @@ public class FoodJDiaLog extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(256, 256, 256)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(256, 256, 256)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGap(103, 103, 103)
-                                        .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(btnInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(201, 201, 201)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                                .addComponent(jLabel4)
-                                                .addGap(18, 18, 18))
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                                .addComponent(jLabel5)
-                                                .addGap(17, 17, 17)))
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(txtIdCategory)
-                                            .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGap(103, 103, 103)
+                                .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 263, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(94, 94, 94)
@@ -557,23 +537,7 @@ public class FoodJDiaLog extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(imgImage, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtIdCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addGap(75, 75, 75)
+                .addGap(225, 225, 225)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnUpdate)
                     .addComponent(btnDelete)
@@ -748,10 +712,6 @@ public class FoodJDiaLog extends javax.swing.JDialog {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -768,11 +728,7 @@ public class FoodJDiaLog extends javax.swing.JDialog {
     private javax.swing.JTable tblCategories;
     private javax.swing.JTextField txtFind;
     private javax.swing.JTextField txtId;
-    private javax.swing.JTextField txtId1;
-    private javax.swing.JTextField txtIdCategory;
     private javax.swing.JTextField txtName;
-    private javax.swing.JTextField txtName1;
     private javax.swing.JTextField txtPrice;
-    private javax.swing.JTextField txtUnitPrice;
     // End of variables declaration//GEN-END:variables
 }

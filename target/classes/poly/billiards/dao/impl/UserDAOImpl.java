@@ -60,4 +60,34 @@ public class UserDAOImpl implements UserDAO {
     public void deleteById(String id) {
         XQuery.execute(deleteByIdSql, id);
     }
+
+    @Override
+    public List<User> findByKeyword(String keyword) {
+        List<User> list = new java.util.ArrayList<>();
+        String sql = "SELECT * FROM Users WHERE Username LIKE ? OR Email LIKE ? OR Fullname LIKE ?";
+        try (
+            java.sql.Connection con = poly.billiards.util.XJdbc.getConnection();
+            java.sql.PreparedStatement ps = con.prepareStatement(sql);
+        ) {
+            String kw = "%" + keyword + "%";
+            ps.setString(1, kw);
+            ps.setString(2, kw);
+            ps.setString(3, kw);
+            java.sql.ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                User user = new User();
+                user.setUsername(rs.getString("Username"));
+                user.setPassword(rs.getString("Password"));
+                user.setEmail(rs.getString("Email"));
+                user.setFullname(rs.getString("Fullname"));
+                user.setPhoto(rs.getString("Photo"));
+                user.setManager(rs.getBoolean("Manager"));
+                user.setEnabled(rs.getBoolean("Enabled"));
+                list.add(user);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return list;
+    }
 }
