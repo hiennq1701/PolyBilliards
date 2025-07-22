@@ -5,7 +5,12 @@
 package poly.billiards.ui.manager;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import poly.billiards.dao.UserDAO;
 import poly.billiards.dao.impl.UserDAOImpl;
@@ -32,7 +37,7 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
         initComponents();
         XUI.setupUI(this);
         XUI.setHandCursor(this);
-        userDAO = new UserDAOImpl();
+        userDAO = new UserDAOImpl() ;
         this.fillToTable();
     }
 
@@ -56,6 +61,8 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
         jScrollPane1 = new javax.swing.JScrollPane();
         tblUsers = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
+        txtTkiem = new javax.swing.JTextField();
+        btnTimKiem = new javax.swing.JButton();
         btnCheckAll = new javax.swing.JButton();
         btnUncheckAll = new javax.swing.JButton();
         btnDeleteCheckedItems = new javax.swing.JButton();
@@ -140,6 +147,18 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT, 2, 2));
+
+        txtTkiem.setName(""); // NOI18N
+        txtTkiem.setPreferredSize(new java.awt.Dimension(200, 22));
+        jPanel3.add(txtTkiem);
+
+        btnTimKiem.setText("Tìm Kiếm");
+        btnTimKiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimKiemActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnTimKiem);
 
         btnCheckAll.setText("Chọn tất cả");
         btnCheckAll.addActionListener(new java.awt.event.ActionListener() {
@@ -466,6 +485,32 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEmailActionPerformed
 
+    private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
+        String keyword = txtTkiem.getText().trim();
+        List<User> result;
+        if (keyword.isEmpty()) {
+            result = userDAO.findAll();
+            XDialog.alert(this, "Bạn chưa nhập từ khóa tìm kiếm!");
+            return;
+        } else {
+            result = userDAO.findByKeyword(keyword);
+        }
+        DefaultTableModel model = (DefaultTableModel) tblUsers.getModel();
+        model.setRowCount(0);
+        for (User user : result) {
+            model.addRow(new Object[]{
+                user.getUsername(),
+                user.getEmail(),
+                user.getFullname(),
+                user.getPassword(),
+                user.getPhoto(),
+                user.isManager() ? "Quản lý" : "Nhân viên",
+                user.isEnabled() ? "Hoạt động" : "Tạm dừng",
+                false
+            });
+        }
+    }//GEN-LAST:event_btnTimKiemActionPerformed
+
     private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {
         try {
             if (items == null || items.isEmpty()) {
@@ -538,6 +583,7 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
     private javax.swing.JButton btnMoveLast;
     private javax.swing.JButton btnMoveNext;
     private javax.swing.JButton btnMovePrevious;
+    private javax.swing.JButton btnTimKiem;
     private javax.swing.JButton btnUncheckAll;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JLabel jLabel1;
@@ -566,6 +612,7 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtFullname;
     private javax.swing.JPasswordField txtPassword;
+    private javax.swing.JTextField txtTkiem;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 
@@ -797,4 +844,5 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
             XDialog.alert(this, "Lỗi tải dữ liệu: " + ex.getMessage());
         }
     }
+    
 }
