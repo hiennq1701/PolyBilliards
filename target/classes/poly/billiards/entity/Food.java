@@ -11,7 +11,6 @@ package poly.billiards.entity;
 public class Food {
     private int id;
     private String name;
-    private String nameCategory;
     private int idCategory;
     private float price;
     private String image = "product.png";
@@ -24,7 +23,6 @@ public class Food {
     public Food(int id, String name, String nameCategory, int idCategory, float price, double discount, boolean available) {
         this.id = id;
         this.name = name;
-        this.nameCategory = nameCategory;
         this.idCategory = idCategory;
         this.price = price;
         this.discount = discount;
@@ -45,14 +43,6 @@ public class Food {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getNameCategory() {
-        return nameCategory;
-    }
-
-    public void setNameCategory(String nameCategory) {
-        this.nameCategory = nameCategory;
     }
 
     public int getIdCategory() {
