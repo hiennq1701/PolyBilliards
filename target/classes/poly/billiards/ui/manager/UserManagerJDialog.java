@@ -63,9 +63,9 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
         jPanel3 = new javax.swing.JPanel();
         txtTkiem = new javax.swing.JTextField();
         btnTimKiem = new javax.swing.JButton();
-        btnCheckAll = new javax.swing.JButton();
-        btnUncheckAll = new javax.swing.JButton();
         btnDeleteCheckedItems = new javax.swing.JButton();
+        btnUncheckAll = new javax.swing.JButton();
+        btnCheckAll = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
@@ -105,8 +105,6 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
             }
         });
 
-        jPanel1.setLayout(new java.awt.BorderLayout(0, 5));
-
         tblUsers.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -144,47 +142,95 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
         });
         jScrollPane1.setViewportView(tblUsers);
 
-        jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
-
-        jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT, 2, 2));
-
         txtTkiem.setName(""); // NOI18N
         txtTkiem.setPreferredSize(new java.awt.Dimension(200, 22));
-        jPanel3.add(txtTkiem);
 
+        btnTimKiem.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnTimKiem.setText("Tìm Kiếm");
         btnTimKiem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTimKiemActionPerformed(evt);
             }
         });
-        jPanel3.add(btnTimKiem);
 
-        btnCheckAll.setText("Chọn tất cả");
-        btnCheckAll.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCheckAllActionPerformed(evt);
-            }
-        });
-        jPanel3.add(btnCheckAll);
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(162, 162, 162)
+                .addComponent(txtTkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 513, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnTimKiem)
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(4, 4, 4)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtTkiem, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+                    .addComponent(btnTimKiem))
+                .addContainerGap())
+        );
 
-        btnUncheckAll.setText("Bỏ chọn tất cả");
-        btnUncheckAll.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUncheckAllActionPerformed(evt);
-            }
-        });
-        jPanel3.add(btnUncheckAll);
-
+        btnDeleteCheckedItems.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnDeleteCheckedItems.setText("Xóa các mục chọn");
         btnDeleteCheckedItems.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDeleteCheckedItemsActionPerformed(evt);
             }
         });
-        jPanel3.add(btnDeleteCheckedItems);
 
-        jPanel1.add(jPanel3, java.awt.BorderLayout.PAGE_END);
+        btnUncheckAll.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnUncheckAll.setText("Bỏ chọn tất cả");
+        btnUncheckAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUncheckAllActionPerformed(evt);
+            }
+        });
+
+        btnCheckAll.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnCheckAll.setText("Chọn tất cả");
+        btnCheckAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCheckAllActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 862, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnCheckAll)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnUncheckAll)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnDeleteCheckedItems)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnDeleteCheckedItems)
+                    .addComponent(btnUncheckAll)
+                    .addComponent(btnCheckAll))
+                .addContainerGap())
+        );
 
         tabs.addTab("DANH SÁCH", jPanel1);
 
@@ -385,7 +431,7 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnlPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(122, Short.MAX_VALUE))
         );
 
         jPanel2.add(jPanel5, java.awt.BorderLayout.CENTER);
@@ -405,7 +451,7 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE)
+                .addComponent(tabs)
                 .addContainerGap())
         );
 

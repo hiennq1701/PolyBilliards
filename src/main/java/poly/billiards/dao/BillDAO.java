@@ -22,7 +22,7 @@ import poly.billiards.util.XQuery;
 public class BillDAO extends SysDAO<Bill, Integer> {
 
     String SELECT_ALL_SQL = "SELECT * FROM Bill";
-    String INSERT_SQL = "INSERT INTO Bill(DateCheckin, IdTable, Status) VALUES (?, ?, ?)";
+    String INSERT_SQL = "INSERT INTO Bill(DateCheckin, IdTable, Status, TotalPrice) VALUES (?, ?, ?, ?)";
     String UPDATE_SQL = "UPDATE Bill SET DateCheckout = ?, IdTable = ?, Status = ?, TotalPrice = ? WHERE Id = ?";
     String DELETE_SQL = "DELETE Bill WHERE Id = ?";
     String SELECT_BY_ID = "SELECT * FROM Bill WHERE Id = ?";
@@ -31,7 +31,8 @@ public class BillDAO extends SysDAO<Bill, Integer> {
 
     @Override
     public void insert(Bill entitype) {
-        XJdbc.exeUpdate(INSERT_SQL, entitype.getDatecheckin(), entitype.getIdtable(), entitype.getStatus());
+        // Khi tạo bill mới, TotalPrice mặc định là 0
+        XJdbc.exeUpdate(INSERT_SQL, entitype.getDatecheckin(), entitype.getIdtable(), entitype.getStatus(), 0);
     }
 
     @Override

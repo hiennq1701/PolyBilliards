@@ -13,7 +13,7 @@ import java.util.TimerTask;
  * @author MINH DANG
  */
 public class XHourlyRateCalculator {
-    private double hourlyRate = 5000.0; // Giá tiền giờ (ví dụ: 5000 đồng)
+    private double hourlyRate = 1000.0; // Giá tiền mỗi phút (1k/phút)
     private float totalAmount = 0;
     private Timer timer;
 
@@ -27,7 +27,7 @@ public class XHourlyRateCalculator {
             public void run() {
                 addHourlyRate();
             }
-        }, 0, 5 * 60 * 1000); // Hãy cộng vào tiền mỗi 5 phút (5 * 60 * 1000 milliseconds)
+        }, 0, 60 * 1000); // Cộng tiền mỗi 1 phút (60 * 1000 milliseconds)
     }
     
      private void addHourlyRate() {
@@ -42,5 +42,12 @@ public class XHourlyRateCalculator {
      
     public float getTotalAmount() {
         return totalAmount;
+    }
+
+    public void reset() {
+        totalAmount = 0;
+        if (timer != null) {
+            timer.cancel();
+        }
     }
 }
