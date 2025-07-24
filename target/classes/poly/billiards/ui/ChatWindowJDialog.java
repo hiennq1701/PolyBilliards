@@ -173,11 +173,16 @@ public class ChatWindowJDialog extends JDialog implements ChatController {
 
     private void searchMessages() {
         String searchText = txtSearch.getText().trim().toLowerCase();
+        if (searchText.isEmpty()) {
+            XDialog.alert(this, "Vui lòng nhập từ khóa tìm kiếm!");
+            return;
+        }
         List<ChatMessage> messages = chatMessageDAO.findAll();
-        if (!searchText.isEmpty()) {
-            messages = messages.stream()
-                    .filter(m -> m.getContent().toLowerCase().contains(searchText))
-                    .toList();
+        messages = messages.stream()
+                .filter(m -> m.getContent().toLowerCase().contains(searchText))
+                .toList();
+        if (messages.isEmpty()) {
+            XDialog.alert(this, "Không tìm thấy tin nhắn !");
         }
         setMessagesToPane(messages);
     }

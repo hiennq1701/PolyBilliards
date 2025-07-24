@@ -148,6 +148,10 @@ public class ActivityHistoryJDialog extends JDialog {
     private void search() {
         String selected = (String) cboFilter.getSelectedItem();
         String searchText = txtSearch.getText().trim();
+        if (searchText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập từ khóa tìm kiếm!");
+            return;
+        }
         List<ActivityLog> logs;
         
         switch (selected) {
@@ -161,7 +165,9 @@ public class ActivityHistoryJDialog extends JDialog {
                 logs = activityLogDAO.findAll();
                 break;
         }
-        
+        if (logs == null || logs.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Không tìm thấy kết quả phù hợp!");
+        }
         displayLogs(logs);
     }
     

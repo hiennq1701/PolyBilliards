@@ -81,7 +81,7 @@ public class ChangePasswordJDialog extends javax.swing.JDialog implements Change
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Đổi mật khẩu");
-        setPreferredSize(new java.awt.Dimension(500, 250));
+        setPreferredSize(new java.awt.Dimension(500, 300));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -275,6 +275,23 @@ public class ChangePasswordJDialog extends javax.swing.JDialog implements Change
         String password = txtPassword.getText();
         String newpass = txtNewpass.getText();
         String confirm = txtConfirm.getText();
+
+        if (username.isEmpty()) {
+            XDialog.alert(this, "Vui lòng nhập tên đăng nhập!");
+            return;
+        }
+        if (password.isEmpty()) {
+            XDialog.alert(this, "Vui lòng nhập mật khẩu hiện tại!");
+            return;
+        }
+        if (newpass.isEmpty()) {
+            XDialog.alert(this, "Vui lòng nhập mật khẩu mới!");
+            return;
+        }
+        if (confirm.isEmpty()) {
+            XDialog.alert(this, "Vui lòng xác nhận mật khẩu mới!");
+            return;
+        }
 
         if (!newpass.equals(confirm)) {
             XDialog.alert(this, "Xác nhận mật khẩu không đúng!");
