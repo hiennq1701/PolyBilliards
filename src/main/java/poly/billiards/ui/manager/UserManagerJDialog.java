@@ -753,11 +753,36 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
     @Override
     public void create() {
         try {
+            String username = txtUsername.getText();
+            String email = txtEmail.getText();
+            String fullname = txtFullname.getText();
+            String password = new String(txtPassword.getPassword());
+            String emailRegex = "^(?!.*\\s)(?!.*\\.\\.)([A-Za-z0-9]+[A-Za-z0-9._%+-]*)@([A-Za-z0-9.-]+\\.[A-Za-z]{2,})$";
+            if (username.isEmpty()) {
+                XDialog.alert(this, "Vui lòng nhập tên đăng nhập!");
+                return;
+            }
+            if (email.isEmpty()) {
+                XDialog.alert(this, "Vui lòng nhập email!");
+                return;
+            }
+            if (!email.matches(emailRegex)) {
+                XDialog.alert(this, "Email không đúng định dạng!\nEmail hợp lệ: abc@gmail.com");
+                return;
+            }
+            if (fullname.isEmpty()) {
+                XDialog.alert(this, "Vui lòng nhập họ tên!");
+                return;
+            }
+            if (password.isEmpty()) {
+                XDialog.alert(this, "Vui lòng nhập mật khẩu!");
+                return;
+            }
             User user = new User();
-            user.setUsername(txtUsername.getText());
-            user.setEmail(txtEmail.getText());
-            user.setFullname(txtFullname.getText());
-            user.setPassword(new String(txtPassword.getPassword()));
+            user.setUsername(username);
+            user.setEmail(email);
+            user.setFullname(fullname);
+            user.setPassword(password);
             user.setPhoto(pnlPhoto.getIcon());
             user.setManager(rdoManager.getIndex() == 0);
             user.setEnabled(rdoEnabled.getIndex() == 0);
@@ -778,9 +803,29 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
                 XDialog.alert(this, "Vui lòng chọn tài khoản cần cập nhật!");
                 return;
             }
-            user.setEmail(txtEmail.getText());
-            user.setFullname(txtFullname.getText());
-            user.setPassword(new String(txtPassword.getPassword()));
+            String email = txtEmail.getText();
+            String fullname = txtFullname.getText();
+            String password = new String(txtPassword.getPassword());
+            String emailRegex = "^(?!.*\\s)(?!.*\\.\\.)([A-Za-z0-9]+[A-Za-z0-9._%+-]*)@([A-Za-z0-9.-]+\\.[A-Za-z]{2,})$";
+            if (email.isEmpty()) {
+                XDialog.alert(this, "Vui lòng nhập email!");
+                return;
+            }
+            if (!email.matches(emailRegex)) {
+                XDialog.alert(this, "Email không đúng định dạng!\nEmail hợp lệ: abc@gmail.com");
+                return;
+            }
+            if (fullname.isEmpty()) {
+                XDialog.alert(this, "Vui lòng nhập họ tên!");
+                return;
+            }
+            if (password.isEmpty()) {
+                XDialog.alert(this, "Vui lòng nhập mật khẩu!");
+                return;
+            }
+            user.setEmail(email);
+            user.setFullname(fullname);
+            user.setPassword(password);
             user.setPhoto(pnlPhoto.getIcon());
             user.setManager(rdoManager.getIndex() == 0);
             user.setEnabled(rdoEnabled.getIndex() == 0);
