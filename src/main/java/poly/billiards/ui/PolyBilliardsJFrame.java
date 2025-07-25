@@ -2050,6 +2050,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
 
     //insert Bill
     private void insertBill() {
+        hourlyRateCalculator.reset(); // Đặt lại tiền giờ khi bắt đầu bàn mới
         tinhTienGio();
         txtTimeStart.setText(XDateHelper.stringsnow());
         Bill model = getBill();
