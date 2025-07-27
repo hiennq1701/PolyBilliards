@@ -39,15 +39,15 @@ public interface PolyBilliardsController {
     }
     
     default void showHistoryJDialog(JFrame frame) {
-        this.showJDialog(new HistoryJDialog((PolyBilliardsJFrame) frame, true));
+        this.showJDialog(new BillHistoryJDialog((PolyBilliardsJFrame) frame, true));
     }
     
     default void showDrinkManagerJDialog(JFrame frame) {
-        this.showJDialog(new FoodJDiaLog(frame, true));
+        this.showJDialog(new FoodManagerJDialog(frame, true));
     }
     
     default void showCategoryManagerJDialog(JFrame frame) {
-        this.showJDialog(new FoodCategoryJDiaLog(frame, true));
+        this.showJDialog(new FoodCategoryManagerJDialog(frame, true));
     }
     
 //    default void showCardManagerJDialog(JFrame frame) {

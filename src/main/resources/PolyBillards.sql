@@ -135,7 +135,7 @@ GO
 CREATE TABLE [dbo].[Billinfo](
 	[Id] [int] IDENTITY(100000,1) NOT NULL,
 	[IdBill] [int] NOT NULL,
-	[IdFood] [int] NOT NULL,
+	[IdFood] [nvarchar](20) NOT NULL,
 	[Count] [int] NOT NULL,
 PRIMARY KEY CLUSTERED 
 (
@@ -160,33 +160,33 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Food]    Script Date: 7/18/2025 9:20:08 AM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[Food](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Name] [nvarchar](100) NOT NULL,
-	[IdCategory] [int] NOT NULL,
-	[Price] [float] NOT NULL,
-	[Image] [nvarchar](100) NULL,
-	[Discount] [float] NULL,
-	[Available] [bit] NULL,
-PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
 /****** Object:  Table [dbo].[FoodCategory]    Script Date: 7/18/2025 9:20:08 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[FoodCategory](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Id] [nvarchar](20) NOT NULL,
 	[Name] [nvarchar](50) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Food]    Script Date: 7/18/2025 9:20:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Food](
+	[Id] [nvarchar](20) NOT NULL,
+	[Name] [nvarchar](50) NOT NULL,
+	[UnitPrice] [float] NOT NULL,
+	[Discount] [float] NOT NULL,
+	[Image] [nvarchar](50) NOT NULL,
+	[Available] [bit] NOT NULL,
+	[CategoryId] [nvarchar](20) NOT NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -279,33 +279,28 @@ INSERT [dbo].[BilliardTable] ([Id], [Name], [Status]) VALUES (9, N'PREMIUM 2', N
 INSERT [dbo].[BilliardTable] ([Id], [Name], [Status]) VALUES (10, N'Bàn 6', N'AVAILABLE')
 SET IDENTITY_INSERT [dbo].[BilliardTable] OFF
 GO
-SET IDENTITY_INSERT [dbo].[Food] ON 
-
-INSERT [dbo].[Food] ([Id], [Name], [IdCategory], [Price], [Image], [Discount], [Available]) VALUES (1, N'Coca Cola', 1, 15000, N'cocacola.png', 0, 1)
-INSERT [dbo].[Food] ([Id], [Name], [IdCategory], [Price], [Image], [Discount], [Available]) VALUES (2, N'Pepsi', 1, 15000, N'pepsi.png', 0, 1)
-INSERT [dbo].[Food] ([Id], [Name], [IdCategory], [Price], [Image], [Discount], [Available]) VALUES (3, N'Banh Mi', 2, 20000, N'banhmi.png', 0, 1)
-INSERT [dbo].[Food] ([Id], [Name], [IdCategory], [Price], [Image], [Discount], [Available]) VALUES (4, N'Cà phê sữa', 3, 25000, N'caphe_sua.png', 0, 1)
-INSERT [dbo].[Food] ([Id], [Name], [IdCategory], [Price], [Image], [Discount], [Available]) VALUES (5, N'Bia Tiger', 4, 25000, N'bia_tiger.png', 0, 1)
-INSERT [dbo].[Food] ([Id], [Name], [IdCategory], [Price], [Image], [Discount], [Available]) VALUES (6, N'Cam vắt', 5, 30000, N'camvat.png', 0, 1)
-INSERT [dbo].[Food] ([Id], [Name], [IdCategory], [Price], [Image], [Discount], [Available]) VALUES (7, N'Hamburger', 6, 35000, N'hamburger.png', 0, 1)
-INSERT [dbo].[Food] ([Id], [Name], [IdCategory], [Price], [Image], [Discount], [Available]) VALUES (8, N'Bánh flan', 7, 18000, N'flan.png', 0, 1)
-INSERT [dbo].[Food] ([Id], [Name], [IdCategory], [Price], [Image], [Discount], [Available]) VALUES (9, N'Sprite', 8, 15000, N'sprite.png', 0, 1)
-INSERT [dbo].[Food] ([Id], [Name], [IdCategory], [Price], [Image], [Discount], [Available]) VALUES (10, N'Mojito', 9, 40000, N'mojito.png', 0, 1)
-SET IDENTITY_INSERT [dbo].[Food] OFF
+INSERT [dbo].[FoodCategory] ([Id], [Name]) VALUES (N'CAT001', N'Drinks')
+INSERT [dbo].[FoodCategory] ([Id], [Name]) VALUES (N'CAT002', N'Snacks')
+INSERT [dbo].[FoodCategory] ([Id], [Name]) VALUES (N'CAT003', N'Coffee')
+INSERT [dbo].[FoodCategory] ([Id], [Name]) VALUES (N'CAT004', N'Beer')
+INSERT [dbo].[FoodCategory] ([Id], [Name]) VALUES (N'CAT005', N'Juice')
+INSERT [dbo].[FoodCategory] ([Id], [Name]) VALUES (N'CAT006', N'Fast Food')
+INSERT [dbo].[FoodCategory] ([Id], [Name]) VALUES (N'CAT007', N'Dessert')
+INSERT [dbo].[FoodCategory] ([Id], [Name]) VALUES (N'CAT008', N'Soft Drinks')
+INSERT [dbo].[FoodCategory] ([Id], [Name]) VALUES (N'CAT009', N'Cocktail')
+INSERT [dbo].[FoodCategory] ([Id], [Name]) VALUES (N'CAT010', N'Specialty')
 GO
-SET IDENTITY_INSERT [dbo].[FoodCategory] ON 
 
-INSERT [dbo].[FoodCategory] ([Id], [Name]) VALUES (1, N'Drinks')
-INSERT [dbo].[FoodCategory] ([Id], [Name]) VALUES (2, N'Snacks')
-INSERT [dbo].[FoodCategory] ([Id], [Name]) VALUES (3, N'Coffee')
-INSERT [dbo].[FoodCategory] ([Id], [Name]) VALUES (4, N'Beer')
-INSERT [dbo].[FoodCategory] ([Id], [Name]) VALUES (5, N'Juice')
-INSERT [dbo].[FoodCategory] ([Id], [Name]) VALUES (6, N'Fast Food')
-INSERT [dbo].[FoodCategory] ([Id], [Name]) VALUES (7, N'Dessert')
-INSERT [dbo].[FoodCategory] ([Id], [Name]) VALUES (8, N'Soft Drinks')
-INSERT [dbo].[FoodCategory] ([Id], [Name]) VALUES (9, N'Cocktail')
-INSERT [dbo].[FoodCategory] ([Id], [Name]) VALUES (10, N'Specialty')
-SET IDENTITY_INSERT [dbo].[FoodCategory] OFF
+INSERT [dbo].[Food] ([Id], [Name], [UnitPrice], [Discount], [Image], [Available], [CategoryId]) VALUES (N'FOOD001', N'Coca Cola', 15000, 0, N'cocacola.png', 1, N'CAT001')
+INSERT [dbo].[Food] ([Id], [Name], [UnitPrice], [Discount], [Image], [Available], [CategoryId]) VALUES (N'FOOD002', N'Pepsi', 15000, 0, N'pepsi.png', 1, N'CAT001')
+INSERT [dbo].[Food] ([Id], [Name], [UnitPrice], [Discount], [Image], [Available], [CategoryId]) VALUES (N'FOOD003', N'Banh Mi', 20000, 0, N'banhmi.png', 1, N'CAT002')
+INSERT [dbo].[Food] ([Id], [Name], [UnitPrice], [Discount], [Image], [Available], [CategoryId]) VALUES (N'FOOD004', N'Cà phê sữa', 25000, 0, N'caphe_sua.png', 1, N'CAT003')
+INSERT [dbo].[Food] ([Id], [Name], [UnitPrice], [Discount], [Image], [Available], [CategoryId]) VALUES (N'FOOD005', N'Bia Tiger', 25000, 0, N'bia_tiger.png', 1, N'CAT004')
+INSERT [dbo].[Food] ([Id], [Name], [UnitPrice], [Discount], [Image], [Available], [CategoryId]) VALUES (N'FOOD006', N'Cam vắt', 30000, 0, N'camvat.png', 1, N'CAT005')
+INSERT [dbo].[Food] ([Id], [Name], [UnitPrice], [Discount], [Image], [Available], [CategoryId]) VALUES (N'FOOD007', N'Hamburger', 35000, 0, N'hamburger.png', 1, N'CAT006')
+INSERT [dbo].[Food] ([Id], [Name], [UnitPrice], [Discount], [Image], [Available], [CategoryId]) VALUES (N'FOOD008', N'Bánh flan', 18000, 0, N'flan.png', 1, N'CAT007')
+INSERT [dbo].[Food] ([Id], [Name], [UnitPrice], [Discount], [Image], [Available], [CategoryId]) VALUES (N'FOOD009', N'Sprite', 15000, 0, N'sprite.png', 1, N'CAT008')
+INSERT [dbo].[Food] ([Id], [Name], [UnitPrice], [Discount], [Image], [Available], [CategoryId]) VALUES (N'FOOD010', N'Mojito', 40000, 0, N'mojito.png', 1, N'CAT009')
 GO
 INSERT [dbo].[Users] ([Username], [Password], [Enabled], [Fullname], [Photo], [Manager], [Email]) VALUES (N'a', N'1234$', 1, N'NgoQuangHien', N'53B963D6.jpg', 1, N'quanghien1701@gmail.com')
 INSERT [dbo].[Users] ([Username], [Password], [Enabled], [Fullname], [Photo], [Manager], [Email]) VALUES (N'b', N'1234$', 1, N'NgoQuangHien2', N'aaa', 0, N'hiennqth06730@gmail.com')
@@ -316,11 +311,7 @@ ALTER TABLE [dbo].[ChatMessages] ADD  DEFAULT (getdate()) FOR [Timestamp]
 GO
 ALTER TABLE [dbo].[ChatMessages] ADD  DEFAULT ((0)) FOR [IsRead]
 GO
-ALTER TABLE [dbo].[Food] ADD  DEFAULT ('product.png') FOR [Image]
-GO
-ALTER TABLE [dbo].[Food] ADD  DEFAULT ((0)) FOR [Discount]
-GO
-ALTER TABLE [dbo].[Food] ADD  DEFAULT ((1)) FOR [Available]
+
 GO
 ALTER TABLE [dbo].[Users] ADD  DEFAULT ('photo.png') FOR [Photo]
 GO
@@ -345,7 +336,7 @@ GO
 ALTER TABLE [dbo].[ChatMessages]  WITH CHECK ADD FOREIGN KEY([SenderUsername])
 REFERENCES [dbo].[Users] ([Username])
 GO
-ALTER TABLE [dbo].[Food]  WITH CHECK ADD FOREIGN KEY([IdCategory])
+ALTER TABLE [dbo].[Food]  WITH CHECK ADD FOREIGN KEY([CategoryId])
 REFERENCES [dbo].[FoodCategory] ([Id])
 ON UPDATE CASCADE
 ON DELETE CASCADE
@@ -370,7 +361,7 @@ GO
 CREATE TABLE [dbo].[BillInfoDeleted](
     [Id] [int] NOT NULL,
     [IdBill] [int] NOT NULL,
-    [IdFood] [int] NOT NULL,
+    [IdFood] [nvarchar](20) NOT NULL,
     [Count] [int] NOT NULL,
     [DeletedAt] [datetime] NOT NULL DEFAULT (getdate())
 );

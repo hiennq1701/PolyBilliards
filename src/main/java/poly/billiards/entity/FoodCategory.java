@@ -1,30 +1,31 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package poly.billiards.entity;
 
-/**
- *
- * @author MINH DANG
- */
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+//@NoArgsConstructor
+//@AllArgsConstructor
+//@Builder
+//@Data
 public class FoodCategory {
-    private int id;
+    private String id;
     private String name;
 
     public FoodCategory() {
     }
 
-    public FoodCategory(int id, String name) {
+    public FoodCategory(String id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -38,6 +39,6 @@ public class FoodCategory {
 
     @Override
     public String toString() {
-        return this.id + ""; 
+        return this.name;
     }
 }

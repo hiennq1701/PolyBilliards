@@ -1,39 +1,41 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package poly.billiards.entity;
 
-/**
- *
- * @author MINH DANG
- */
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+//
+//@NoArgsConstructor
+//@AllArgsConstructor
+//@Builder
+//@Data
 public class Food {
-    private int id;
+    private String id;
     private String name;
-    private int idCategory;
-    private float price;
+    @Builder.Default
     private String image = "product.png";
+    private double unitPrice;
     private double discount;
     private boolean available;
+    private String categoryId;
 
     public Food() {
     }
 
-    public Food(int id, String name, String nameCategory, int idCategory, float price, double discount, boolean available) {
+    public Food(String id, String name, double unitPrice, double discount, boolean available, String categoryId) {
         this.id = id;
         this.name = name;
-        this.idCategory = idCategory;
-        this.price = price;
+        this.unitPrice = unitPrice;
         this.discount = discount;
         this.available = available;
+        this.categoryId = categoryId;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -45,28 +47,20 @@ public class Food {
         this.name = name;
     }
 
-    public int getIdCategory() {
-        return idCategory;
-    }
-
-    public void setIdCategory(int idCategory) {
-        this.idCategory = idCategory;
-    }
-
-    public float getPrice() {
-        return price;
-    }
-
-    public void setPrice(float price) {
-        this.price = price;
-    }
-
     public String getImage() {
         return image;
     }
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public double getUnitPrice() {
+        return unitPrice;
+    }
+
+    public void setUnitPrice(double unitPrice) {
+        this.unitPrice = unitPrice;
     }
 
     public double getDiscount() {
@@ -85,9 +79,12 @@ public class Food {
         this.available = available;
     }
 
-
-    @Override
-    public String toString() {
-        return this.name + " ["+price+"]";
+    public String getCategoryId() {
+        return categoryId;
     }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
+    }
+    
 }

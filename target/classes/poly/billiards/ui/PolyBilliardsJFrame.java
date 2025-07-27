@@ -35,8 +35,8 @@ import poly.billiards.entity.FoodCategory;
 import poly.billiards.entity.Menu;
 import poly.billiards.entity.User;
 import poly.billiards.ui.ChatWindowJDialog;
-import poly.billiards.ui.manager.FoodCategoryJDiaLog;
-import poly.billiards.ui.manager.FoodJDiaLog;
+import poly.billiards.ui.manager.FoodCategoryManagerJDialog;
+import poly.billiards.ui.manager.FoodManagerJDialog;
 import poly.billiards.ui.manager.UserManagerJDialog;
 import poly.billiards.util.XDialog;
 import poly.billiards.util.XActivity;
@@ -55,6 +55,8 @@ import poly.billiards.dao.BillInfoDAO;
 import poly.billiards.dao.FoodCategoryDAO;
 import poly.billiards.dao.FoodDAO;
 import poly.billiards.dao.MenuDAO;
+import poly.billiards.dao.impl.FoodCategoryDAOImpl;
+import poly.billiards.dao.impl.FoodDAOImpl;
 import poly.billiards.util.XDateHelper;
 import poly.billiards.util.XHourlyRateCalculator;
 
@@ -72,9 +74,9 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
     private XHourlyRateCalculator hourlyRateCalculator;
 
     private DefaultTableModel modelTable;
-    FoodCategoryDAO fcatedao = new FoodCategoryDAO();
+    FoodCategoryDAO fcatedao = new FoodCategoryDAOImpl() ;
 
-    FoodDAO fdao = new FoodDAO();
+    FoodDAO fdao = new FoodDAOImpl();
     MenuDAO menudao = new MenuDAO();
     BillDAO billdao = new BillDAO();
     BillInfoDAO billifdao = new BillInfoDAO();
@@ -567,26 +569,34 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnLiber5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnLiber9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(41, 41, 41)
-                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnLiber6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnLiber2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnLiber10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(btnLiber1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(btnLiber3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnLiber11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnLiber7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(44, 44, 44)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnLiber4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnLiber8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnLiber12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(50, 50, 50))
+                            .addGroup(jPanel10Layout.createSequentialGroup()
+                                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnLiber5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnLiber9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(41, 41, 41)
+                                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnLiber6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnLiber2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnLiber10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel10Layout.createSequentialGroup()
+                                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnLiber1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(btnLiber3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnLiber11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(btnLiber7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(44, 44, 44)
+                                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(btnLiber4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnLiber8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnLiber12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(50, 50, 50))
+                        )
+                    )
+                )
+            )
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1850,7 +1860,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         DefaultComboBoxModel cboModel = (DefaultComboBoxModel) cboCategory.getModel();
         cboModel.removeAllElements();
         try {
-            List<FoodCategory> list = fcatedao.selectAll();
+            List<FoodCategory> list = fcatedao.findAll();
             for (FoodCategory f : list) {
                 cboModel.addElement(f.getName());
             }
@@ -1867,7 +1877,10 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         try {
             int id = cboCategory.getSelectedIndex();
             if (id >= 0) {
-                List<Food> listfood = fdao.select_by_idcategory(id + 1);
+                // Lấy đối tượng FoodCategory theo chỉ số được chọn
+                FoodCategory selectedCategory = fcatedao.findAll().get(id);
+                // Truyền id (kiểu String) vào findByCategoryId
+                List<Food> listfood = fdao.findByCategoryId(selectedCategory.getId());
                 for (Food f : listfood) {
                     cboModel.addElement(f);
                 }
@@ -1926,8 +1939,8 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
     }
 
     //showIdFood
-    private Integer showIdFood() {
-        Integer idfood = null;
+    private String showIdFood() {
+        String idfood = null;
         try {
             Food food = (Food) cboFood.getSelectedItem();
             if (food != null) {
@@ -1993,7 +2006,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         count = (int) snpCount.getValue();
         Billinfo model = new Billinfo();
         model.setIdbill(showIdBill());
-        model.setIdfood(showIdFood());
+        model.setIdfood(Integer.parseInt(showIdFood())); // ép kiểu String -> int
         model.setCount(count);
         return model;
     }
@@ -2177,12 +2190,12 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         List<Billinfo> billInfos = billifdao.selectByBillId(bill.getId());
         for (Billinfo info : billInfos) {
             // Lấy tên món từ FoodDAO
-            Food food = fdao.findById(info.getIdfood());
+            Food food = fdao.findById(String.valueOf(info.getIdfood()));
             Object[] row = {
                 food != null ? food.getName() : "",
                 info.getCount(),
-                food != null ? food.getPrice() : "",
-                (food != null ? food.getPrice() : 0) * info.getCount()
+                food != null ? food.getUnitPrice() : "",
+                (food != null ? food.getUnitPrice() : 0) * info.getCount()
             };
             model.addRow(row);
         }

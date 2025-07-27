@@ -281,8 +281,8 @@ public class XExcel {
                 Row row = sheet.createRow(rowNum++);
                 row.createCell(0).setCellValue(drink.getId());
                 row.createCell(1).setCellValue(drink.getName());
-                row.createCell(2).setCellValue(drink.getIdCategory());
-                row.createCell(3).setCellValue(drink.getPrice());
+                row.createCell(2).setCellValue(drink.getCategoryId());
+                row.createCell(3).setCellValue(drink.getUnitPrice());
                 row.createCell(4).setCellValue(drink.getDiscount());
                 row.createCell(5).setCellValue(drink.isAvailable());
                 row.createCell(6).setCellValue(drink.getImage());
@@ -339,7 +339,7 @@ public class XExcel {
                 // Validate required fields
                 if (drink.getId() == -1
                         || drink.getName() == null || drink.getName().isEmpty()
-                        || drink.getIdCategory() == -1) {
+                        || drink.getCategoryId()== -1) {
                     throw new IOException("Lỗi, thiếu dữ liệu quan trọng, hãy xem lại file excel!");
                 }
 

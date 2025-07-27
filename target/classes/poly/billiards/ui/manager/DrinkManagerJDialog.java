@@ -12,6 +12,8 @@ import javax.swing.JFileChooser;
 import javax.swing.table.DefaultTableModel;
 import poly.billiards.dao.FoodCategoryDAO;
 import poly.billiards.dao.FoodDAO;
+import poly.billiards.dao.impl.FoodCategoryDAOImpl;
+import poly.billiards.dao.impl.FoodDAOImpl;
 import poly.billiards.entity.FoodCategory;
 import poly.billiards.entity.Food;
 import poly.billiards.util.XDialog;
@@ -23,7 +25,7 @@ import poly.billiards.util.XUI;
  *
  * @author DELL
  */
-public class DrinkManagerJDialog extends javax.swing.JDialog implements DrinkController {
+public class DrinkManagerJDialog extends javax.swing.JDialog implements FoodController {
 
     /**
      * Creates new form DrinkJDialog
@@ -33,7 +35,7 @@ public class DrinkManagerJDialog extends javax.swing.JDialog implements DrinkCon
         initComponents();
         XUI.setupUI(this);
         XUI.setHandCursor(this);
-        dao = new FoodDAO();
+        dao = new FoodDAOImpl();
         this.fillToTable();
     }
 
@@ -97,7 +99,7 @@ public class DrinkManagerJDialog extends javax.swing.JDialog implements DrinkCon
             }
         });
 
-        jPanel1.setLayout(new java.awt.BorderLayout(5, 5));
+        jPanel1.setLayout(new java.awt.BorderLayout());
 
         tblDrinks.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -285,11 +287,11 @@ public class DrinkManagerJDialog extends javax.swing.JDialog implements DrinkCon
 
         jPanel6.setLayout(new java.awt.GridLayout(0, 2, 5, 5));
 
-        jLabel1.setText("Mã đồ ăn");
+        jLabel1.setText("Mã đồ uống");
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         jPanel6.add(jLabel1);
 
-        jLabel2.setText("Tên đồ ăn");
+        jLabel2.setText("Tên đồ uống");
         jLabel2.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         jPanel6.add(jLabel2);
         jPanel6.add(txtId);
@@ -327,7 +329,7 @@ public class DrinkManagerJDialog extends javax.swing.JDialog implements DrinkCon
                 .addContainerGap()
                 .addComponent(imgImage, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 544, Short.MAX_VALUE)
+                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 502, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -357,7 +359,7 @@ public class DrinkManagerJDialog extends javax.swing.JDialog implements DrinkCon
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 357, Short.MAX_VALUE)
+                .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -443,7 +445,7 @@ public class DrinkManagerJDialog extends javax.swing.JDialog implements DrinkCon
                 return;
             }
             XExcel.exportDrinks(drinks);
-            XDialog.info(this, "Xuất dữ liệu thành công!");
+            XDialog.alert(this, "Xuất dữ liệu thành công!");
         } catch (IOException ex) {
             XDialog.alert(this, "Lỗi xuất dữ liệu: " + ex.getMessage());
         }
@@ -549,9 +551,8 @@ public class DrinkManagerJDialog extends javax.swing.JDialog implements DrinkCon
     private javax.swing.JTextField txtUnitPrice;
     // End of variables declaration//GEN-END:variables
 
-    private DefaultTableModel modelTable;
-    FoodDAO fdao = new FoodDAO();
-    int index = -1;
+    private FoodDAO dao;
+    private List<Food> drinks;
 
     List<FoodCategory> categories = List.of();
 
@@ -571,7 +572,7 @@ public class DrinkManagerJDialog extends javax.swing.JDialog implements DrinkCon
         DefaultTableModel tblModel = (DefaultTableModel) tblCategories.getModel();
         tblModel.setRowCount(0);
 
-        FoodCategoryDAO cdao = new FoodCategoryDAO();
+        FoodCategoryDAO cdao = new FoodCategoryDAOImpl();
         categories = cdao.findAll();
 
         categories.forEach(category -> {
@@ -583,36 +584,19 @@ public class DrinkManagerJDialog extends javax.swing.JDialog implements DrinkCon
             tblCategories.setRowSelectionInterval(0, 0);
         }
     }
-private void loadData() {
-        modelTable = (DefaultTableModel) tbMenu.getModel();
-        modelTable.setRowCount(0);
-        try {
-            List<Food> list = fdao.selectAll();
-            for (Food f : list) {
-                Object[] row = {
-                    f.getId(),
-                    f.getName(),
-                    f.getIdCategory(),
-                    f.getPrice()
-                };
-                modelTable.addRow(row);
-            }
-        } catch (Exception e) {
-            XDialog.alert(this, "Lỗi truy vấn");
-        }
-    }
+
     @Override
     public void fillToTable() {
         DefaultTableModel model = (DefaultTableModel) tblDrinks.getModel();
         model.setRowCount(0);
         drinks = dao.findAll();
-        for (Food drink : drinks) {
+        for (Food food : drinks) {
             model.addRow(new Object[]{
-                drink.getId(),
-                drink.getName(),
-                drink.getPrice(),
-                drink.getDiscount(),
-                drink.isAvailable() ? "Sẵn có" : "Hết hàng",
+                food.getId(),
+                food.getName(),
+                food.getUnitPrice(),
+                food.getDiscount(),
+                food.isAvailable() ? "Sẵn có" : "Hết hàng",
                 false
             });
         }
@@ -656,7 +640,7 @@ private void loadData() {
     }
 
     @Override
-    public void setForm(Drink entity) {
+    public void setForm(Food entity) {
         txtId.setText(entity.getId());
         txtName.setText(entity.getName());
         txtUnitPrice.setText(String.valueOf(entity.getUnitPrice()));
@@ -666,21 +650,21 @@ private void loadData() {
         
         // Only set category if there are categories and a valid selection
         if (!categories.isEmpty() && tblCategories.getSelectedRow() >= 0) {
-            Category category = categories.get(tblCategories.getSelectedRow());
+            FoodCategory category = categories.get(tblCategories.getSelectedRow());
             cboCategories.setSelectedItem(category);
         }
     }
 
     @Override
     public Food getForm() {
-        Food entity = new Drink();
+        Food entity = new Food();
         entity.setId(txtId.getText());
         entity.setName(txtName.getText());
         entity.setDiscount(sliDiscount.getValue() / 100.0);
         entity.setUnitPrice(Double.parseDouble(txtUnitPrice.getText()));
         entity.setImage(imgImage.getIcon());
         entity.setAvailable(rdoAvailable.getIndex() == 0);
-        Category category = categories.get(cboCategories.getSelectedIndex());
+        FoodCategory category = categories.get(cboCategories.getSelectedIndex());
         entity.setCategoryId(category.getId());
         //entity.setImage(lblImage.getToolTipText());
         return entity;
