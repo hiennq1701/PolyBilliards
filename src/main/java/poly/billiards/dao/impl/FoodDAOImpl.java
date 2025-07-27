@@ -11,9 +11,9 @@ import poly.billiards.dao.FoodDAO;
 
 public class FoodDAOImpl implements FoodDAO {
 
-    private final String createSql = "INSERT INTO Drinks(Id, Name, Image, UnitPrice, Discount, Available, CategoryId) VALUES(?, ?, ?, ?, ?, ?, ?)";
-    private final String updateSql = "UPDATE Drinks SET Name=?, Image=?, UnitPrice=?, Discount=?, Available=?, CategoryId=? WHERE Id=?";
-    private final String deleteByIdSql = "DELETE FROM Drinks WHERE Id=?";
+    private final String createSql = "INSERT INTO Food(Id, Name, Image, UnitPrice, Discount, Available, CategoryId) VALUES(?, ?, ?, ?, ?, ?, ?)";
+    private final String updateSql = "UPDATE Food SET Name=?, Image=?, UnitPrice=?, Discount=?, Available=?, CategoryId=? WHERE Id=?";
+    private final String deleteByIdSql = "DELETE FROM Food WHERE Id=?";
     
     private final String findAllSql = "SELECT * FROM Food";
     private final String findByIdSql = findAllSql + " WHERE Id=?";

@@ -8,11 +8,11 @@ import poly.billiards.dao.FoodCategoryDAO;
 
 public class FoodCategoryDAOImpl implements FoodCategoryDAO {
 
-    private final String createSql = "INSERT INTO Categories(Id, Name) VALUES(?, ?)";
-    private final String updateSql = "UPDATE Categories SET Name=? WHERE Id=?";
-    private final String deleteByIdSql = "DELETE FROM Categories WHERE Id=?";
+    private final String createSql = "INSERT INTO FoodCategory(Id, Name) VALUES(?, ?)";
+    private final String updateSql = "UPDATE FoodCategory SET Name=? WHERE Id=?";
+    private final String deleteByIdSql = "DELETE FROM FoodCategory WHERE Id=?";
     
-    private final String findAllSql = "SELECT * FROM Categories";
+    private final String findAllSql = "SELECT * FROM FoodCategory";
     private final String findByIdSql = findAllSql + " WHERE Id=?";
 
     @Override
