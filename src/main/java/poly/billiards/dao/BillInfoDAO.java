@@ -65,7 +65,7 @@ public class BillInfoDAO extends SysDAO<Billinfo, Integer> {
                 Billinfo tb = new Billinfo();
                 tb.setId(rs.getInt("id"));
                 tb.setIdbill(rs.getInt("idBill"));
-                tb.setIdfood(rs.getInt("idFood"));
+                tb.setIdfood(rs.getString("idFood"));
                 tb.setCount(rs.getInt("count"));
                 list.add(tb);
             }

@@ -328,18 +328,18 @@ public class XExcel {
                 }
 
                 Food drink = new Food();
-                drink.setId(getIntegerCellValue(row.getCell(0)));
+                drink.setId(getStringCellValue(row.getCell(0)));
                 drink.setName(getStringCellValue(row.getCell(1)));
-                drink.setIdCategory(getIntegerCellValue(row.getCell(2)));
-                drink.setPrice(getFloatCellValue(row.getCell(3)));
+                drink.setCategoryId(getStringCellValue(row.getCell(2)));
+                drink.setUnitPrice(getDoubleCellValue(row.getCell(3)));
                 drink.setDiscount(getDoubleCellValue(row.getCell(4)));
                 drink.setAvailable(getBooleanCellValue(row.getCell(5)));
                 drink.setImage(getStringCellValue(row.getCell(6)));
 
                 // Validate required fields
-                if (drink.getId() == -1
+                if (drink.getId() == null || drink.getId().isEmpty()
                         || drink.getName() == null || drink.getName().isEmpty()
-                        || drink.getCategoryId()== -1) {
+                        || drink.getCategoryId() == null || drink.getCategoryId().isEmpty()) {
                     throw new IOException("Lỗi, thiếu dữ liệu quan trọng, hãy xem lại file excel!");
                 }
 
@@ -414,11 +414,11 @@ public class XExcel {
                 }
 
                 FoodCategory category = new FoodCategory();
-                category.setId(getIntegerCellValue(row.getCell(0)));
+                category.setId(getStringCellValue(row.getCell(0)));
                 category.setName(getStringCellValue(row.getCell(1)));
 
                 // Validate required fields
-                if (category.getId() == -1
+                if (category.getId() == null || category.getId().isEmpty()
                         || category.getName() == null || category.getName().isEmpty()) {
                     throw new IOException("Lỗi, thiếu dữ liệu quan trọng, hãy xem lại file excel!");
                 }
@@ -492,7 +492,7 @@ public class XExcel {
                 row.createCell(0).setCellValue(info.getId());
                 row.createCell(1).setCellValue(info.getIdbill());
                 row.createCell(2).setCellValue(info.getIdfood());
-                row.createCell(4).setCellValue(info.getCount());
+                row.createCell(3).setCellValue(info.getCount());
             }
 
             // Auto-size columns

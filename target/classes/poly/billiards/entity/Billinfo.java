@@ -9,12 +9,13 @@ package poly.billiards.entity;
  * @author MINH DANG
  */
 public class Billinfo {
-    private int id, idbill, idfood, count;
+    private int id, idbill, count;
+    private String idfood;
  
     public Billinfo() {
     }
 
-    public Billinfo(int id, int idbill, int idfood, int count) {
+    public Billinfo(int id, int idbill, String idfood, int count) {
         this.id = id;
         this.idbill = idbill;
         this.idfood = idfood;
@@ -37,11 +38,11 @@ public class Billinfo {
         this.idbill = idbill;
     }
 
-    public int getIdfood() {
+    public String getIdfood() {
         return idfood;
     }
 
-    public void setIdfood(int idfood) {
+    public void setIdfood(String idfood) {
         this.idfood = idfood;
     }
 

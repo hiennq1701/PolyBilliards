@@ -106,7 +106,7 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
 
             },
             new String [] {
-                "Mã đồ uống", "Tên đồ uống", "Đơn giá", "Giảm giá", "Trạng thái", ""
+                "Mã đồ ăn", "Tên đồ ăn", "Đơn giá", "Giảm giá", "Trạng thái", ""
             }
         ) {
             Class[] types = new Class [] {
@@ -177,7 +177,7 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
 
             },
             new String [] {
-                "Loại đồ uống"
+                "Loại đồ ăn"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -287,11 +287,11 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
 
         jPanel6.setLayout(new java.awt.GridLayout(0, 2, 5, 5));
 
-        jLabel1.setText("Mã đồ uống");
+        jLabel1.setText("Mã đồ ăn");
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         jPanel6.add(jLabel1);
 
-        jLabel2.setText("Tên đồ uống");
+        jLabel2.setText("Tên đồ ăn");
         jLabel2.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         jPanel6.add(jLabel2);
         jPanel6.add(txtId);

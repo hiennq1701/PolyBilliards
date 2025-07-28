@@ -858,7 +858,10 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
         rdoManager.setIndex(0);
         rdoEnabled.setIndex(0);
         txtUsername.requestFocus();
+        
+        this.setEditable(false);
     }
+    
 
     @Override
     public void setEditable(boolean editable) {

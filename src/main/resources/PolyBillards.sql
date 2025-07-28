@@ -287,6 +287,7 @@ INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (17, N'Bàn 17', N'
 INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (18, N'Bàn 18', N'Tốt')
 INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (19, N'Bàn 19', N'Tốt')
 INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (20, N'Bàn 20', N'Tốt')
+INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (20, N'Bàn 21', N'Tốt')
 SET IDENTITY_INSERT [dbo].[BilliardTable] OFF
 GO
 INSERT [dbo].[FoodCategory] ([Id], [Name]) VALUES (N'CAT001', N'Drinks')
@@ -320,8 +321,6 @@ GO
 ALTER TABLE [dbo].[ChatMessages] ADD  DEFAULT (getdate()) FOR [Timestamp]
 GO
 ALTER TABLE [dbo].[ChatMessages] ADD  DEFAULT ((0)) FOR [IsRead]
-GO
-
 GO
 ALTER TABLE [dbo].[Users] ADD  DEFAULT ('photo.png') FOR [Photo]
 GO
