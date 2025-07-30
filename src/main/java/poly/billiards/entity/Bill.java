@@ -15,17 +15,19 @@ public class Bill {
     private Date datecheckin, datecheckout;
     private int idtable, status;
     private float totalPrice;
+    private String username;
 
     public Bill() {
     }
 
-    public Bill(int id, Date datecheckin, Date datecheckout, int idtable, int status, float totalPrice) {
+    public Bill(int id, Date datecheckin, Date datecheckout, int idtable, int status, float totalPrice, String username) {
         this.id = id;
         this.datecheckin = datecheckin;
         this.datecheckout = datecheckout;
         this.idtable = idtable;
         this.status = status;
         this.totalPrice = totalPrice;
+        this.username = username;
     }
 
     public int getId() {
@@ -75,6 +77,15 @@ public class Bill {
     public void setTotalPrice(float totalPrice) {
         this.totalPrice = totalPrice;
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    
 
     @Override
     public String toString() {

@@ -606,16 +606,26 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
         DefaultTableModel model = (DefaultTableModel) tblDrinks.getModel();
         model.setRowCount(0);
         drinks = dao.findAll();
+
         for (Food food : drinks) {
+            String unitPriceStr = (food.getUnitPrice() % 1 == 0)
+                    ? String.valueOf((int) food.getUnitPrice())
+                    : String.valueOf(food.getUnitPrice());
+
+            String discountStr = (food.getDiscount() % 1 == 0)
+                    ? String.valueOf((int) food.getDiscount())
+                    : String.valueOf(food.getDiscount());
+
             model.addRow(new Object[]{
                 food.getId(),
                 food.getName(),
-                food.getUnitPrice(),
-                food.getDiscount(),
+                unitPriceStr,
+                discountStr,
                 food.isAvailable() ? "Sẵn có" : "Hết hàng",
                 false
             });
         }
+
         this.clear();
     }
 
@@ -663,7 +673,7 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
         sliDiscount.setValue((int) (entity.getDiscount() * 100));
         imgImage.setIcon(entity.getImage());
         rdoAvailable.setIndex(entity.isAvailable() ? 0 : 1);
-        
+
         // Only set category if there are categories and a valid selection
         if (!categories.isEmpty() && tblCategories.getSelectedRow() >= 0) {
             FoodCategory category = categories.get(tblCategories.getSelectedRow());

@@ -10,7 +10,7 @@ public class XDialog {
     }
     
     public static void info(Component parent, String message){
-        JOptionPane.showMessageDialog(parent, message, "Thông báo!", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(parent, message, "Thông báo!", JOptionPane.INFORMATION_MESSAGE);
     }
     
     public static boolean confirm(Component parent, String message) {

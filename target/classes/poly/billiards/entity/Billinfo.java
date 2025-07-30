@@ -11,6 +11,8 @@ package poly.billiards.entity;
 public class Billinfo {
     private int id, idbill, count;
     private String idfood;
+    private String foodName;
+    private double discount,unitPrice;
  
     public Billinfo() {
     }

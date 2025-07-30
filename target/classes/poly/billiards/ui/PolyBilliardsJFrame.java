@@ -2032,7 +2032,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         try {
             Food food = (Food) cboFood.getSelectedItem();
             if (food != null) {
-                idfood = food.getId();
+                idfood = food.getName();
             } else {
                 System.out.println("Select food is null");
             }
@@ -2164,7 +2164,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         Bill model = getBill();
         try {
             billdao.insert(model);
-            XDialog.alert(this, "Thành công");
+            XDialog.info(this, "Thành công");
         } catch (Exception e) {
             e.printStackTrace();
             XDialog.alert(this, "Lỗi!");
