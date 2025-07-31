@@ -63,6 +63,7 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
         jPanel3 = new javax.swing.JPanel();
         txtTkiem = new javax.swing.JTextField();
         btnTimKiem = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         btnDeleteCheckedItems = new javax.swing.JButton();
         btnUncheckAll = new javax.swing.JButton();
         btnCheckAll = new javax.swing.JButton();
@@ -153,24 +154,31 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
             }
         });
 
+        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButton1.setText("Làm mới");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(162, 162, 162)
-                .addComponent(txtTkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 513, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtTkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnTimKiem)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(153, 153, 153))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(4, 4, 4)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtTkiem, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
-                    .addComponent(btnTimKiem))
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtTkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnTimKiem)))
                 .addContainerGap())
         );
 
@@ -632,6 +640,7 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
     private javax.swing.JButton btnTimKiem;
     private javax.swing.JButton btnUncheckAll;
     private javax.swing.JButton btnUpdate;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
