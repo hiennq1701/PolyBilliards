@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -729,19 +730,40 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
     }
     private void setCheckedAll(boolean checked) {
         for (int i = 0; i < tblUsers.getRowCount(); i++) {
-            tblUsers.setValueAt(checked, i, 6);
+            tblUsers.setValueAt(checked, i, 7);
         }
     }
 
     @Override
     public void deleteCheckedItems() {
         if (XDialog.confirm(this, "Bạn thực sự muốn xóa các mục chọn?")) {
+            int deletedCount = 0;
+            List<String> usernamesToDelete = new ArrayList<>();
+            
+            // Thu thập các username cần xóa
             for (int i = 0; i < tblUsers.getRowCount(); i++) {
-                if ((Boolean) tblUsers.getValueAt(i, 6)) {
-                    userDAO.deleteById(items.get(i).getUsername());
+                Boolean isChecked = (Boolean) tblUsers.getValueAt(i, 7);
+                System.out.println("Row " + i + ": checked = " + isChecked);
+                if (isChecked != null && isChecked) {
+                    String username = items.get(i).getUsername();
+                    System.out.println("Will delete user with username: " + username);
+                    usernamesToDelete.add(username);
                 }
             }
+            
+            // Thực hiện xóa
+            for (String username : usernamesToDelete) {
+                userDAO.deleteById(username);
+                deletedCount++;
+            }
+            
+            System.out.println("Total deleted: " + deletedCount);
             this.fillToTable();
+            if (deletedCount > 0) {
+                XDialog.info(this, "Đã xóa " + deletedCount + " mục được chọn!");
+            } else {
+                XDialog.alert(this, "Không có mục nào được chọn để xóa!");
+            }
         }
     }
 
@@ -763,7 +785,8 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
         entity.setUsername(txtUsername.getText());
         entity.setPassword(new String(txtPassword.getPassword()));
         entity.setEnabled(rdoEnabled.getIndex() == 0);
-        entity.setFullname(txtEmail.getText());
+        entity.setEmail(txtEmail.getText());
+        entity.setFullname(txtFullname.getText());
         entity.setPhoto(pnlPhoto.getIcon());
         entity.setManager(rdoManager.getIndex() == 0);
         return entity;

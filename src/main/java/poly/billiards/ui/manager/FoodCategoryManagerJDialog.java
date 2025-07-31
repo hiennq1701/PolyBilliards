@@ -5,6 +5,7 @@
 package poly.billiards.ui.manager;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import poly.billiards.dao.FoodCategoryDAO;
@@ -472,7 +473,8 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
         for (FoodCategory category : categories) {
             model.addRow(new Object[]{
                 category.getId(),
-                category.getName()
+                category.getName(),
+                false  // Giá trị mặc định cho checkbox
             });
         }
     }
@@ -504,12 +506,33 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
     @Override
     public void deleteCheckedItems() {
         if (XDialog.confirm(this, "Bạn thực sự muốn xóa các mục chọn?")) {
+            int deletedCount = 0;
+            List<String> idsToDelete = new ArrayList<>();
+            
+            // Thu thập các ID cần xóa
             for (int i = 0; i < tblCategories.getRowCount(); i++) {
-                if ((Boolean) tblCategories.getValueAt(i, 2)) {
-                    dao.deleteById(categories.get(i).getId());
+                Boolean isChecked = (Boolean) tblCategories.getValueAt(i, 2);
+                System.out.println("Row " + i + ": checked = " + isChecked);
+                if (isChecked != null && isChecked) {
+                    String id = categories.get(i).getId();
+                    System.out.println("Will delete category with ID: " + id);
+                    idsToDelete.add(id);
                 }
             }
+            
+            // Thực hiện xóa
+            for (String id : idsToDelete) {
+                dao.deleteById(id);
+                deletedCount++;
+            }
+            
+            System.out.println("Total deleted: " + deletedCount);
             this.fillToTable();
+            if (deletedCount > 0) {
+                XDialog.info(this, "Đã xóa " + deletedCount + " mục được chọn!");
+            } else {
+                XDialog.alert(this, "Không có mục nào được chọn để xóa!");
+            }
         }
     }
 
