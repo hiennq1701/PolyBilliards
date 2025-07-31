@@ -758,16 +758,21 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
             String fullname = txtFullname.getText();
             String password = new String(txtPassword.getPassword());
             String emailRegex = "^(?!.*\\s)(?!.*\\.\\.)([A-Za-z0-9]+[A-Za-z0-9._%+-]*)@([A-Za-z0-9.-]+\\.[A-Za-z]{2,})$";
-            if (username.isEmpty()) {
-                XDialog.alert(this, "Vui lòng nhập tên đăng nhập!");
+            String usernameRegex = "^[a-zA-Z0-9]{1,20}$";
+            if (username.isEmpty() || !username.matches(usernameRegex)) {
+                XDialog.alert(this, "Tên đăng nhập không hợp lệ!\n" +
+                    "Yêu cầu:\n" +
+                    "- Không được để trống\n" +
+                    "- Chỉ được sử dụng chữ cái (a-z, A-Z) và số (0-9)\n" +
+                    "- Không được chứa dấu, khoảng cách hoặc ký tự đặc biệt\n" +
+                    "- Độ dài từ 1-20 ký tự");
                 return;
             }
-            if (email.isEmpty()) {
-                XDialog.alert(this, "Vui lòng nhập email!");
-                return;
-            }
-            if (!email.matches(emailRegex)) {
-                XDialog.alert(this, "Email không đúng định dạng!\nEmail hợp lệ: abc@gmail.com");
+            if (!email.isEmpty() && !email.matches(emailRegex)) {
+                XDialog.alert(this, "Email không hợp lệ!\n" +
+                    "Yêu cầu:\n" +
+                    "- Phải đúng định dạng email\n" +
+                    "Mẫu email hợp lệ: abc@gmail.com");
                 return;
             }
             if (fullname.isEmpty()) {
@@ -807,12 +812,11 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
             String fullname = txtFullname.getText();
             String password = new String(txtPassword.getPassword());
             String emailRegex = "^(?!.*\\s)(?!.*\\.\\.)([A-Za-z0-9]+[A-Za-z0-9._%+-]*)@([A-Za-z0-9.-]+\\.[A-Za-z]{2,})$";
-            if (email.isEmpty()) {
-                XDialog.alert(this, "Vui lòng nhập email!");
-                return;
-            }
-            if (!email.matches(emailRegex)) {
-                XDialog.alert(this, "Email không đúng định dạng!\nEmail hợp lệ: abc@gmail.com");
+            if (!email.isEmpty() && !email.matches(emailRegex)) {
+                XDialog.alert(this, "Email không hợp lệ!\n" +
+                    "Yêu cầu:\n" +
+                    "- Phải đúng định dạng email\n" +
+                    "Mẫu email hợp lệ: abc@gmail.com");
                 return;
             }
             if (fullname.isEmpty()) {
