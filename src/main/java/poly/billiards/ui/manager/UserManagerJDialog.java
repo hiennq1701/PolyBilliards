@@ -63,7 +63,7 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
         jPanel3 = new javax.swing.JPanel();
         txtTkiem = new javax.swing.JTextField();
         btnTimKiem = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnLamMoi = new javax.swing.JButton();
         btnDeleteCheckedItems = new javax.swing.JButton();
         btnUncheckAll = new javax.swing.JButton();
         btnCheckAll = new javax.swing.JButton();
@@ -147,15 +147,20 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
         txtTkiem.setPreferredSize(new java.awt.Dimension(200, 22));
 
         btnTimKiem.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnTimKiem.setText("Tìm Kiếm");
+        btnTimKiem.setText("Tìm kiếm tên người dùng");
         btnTimKiem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTimKiemActionPerformed(evt);
             }
         });
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton1.setText("Làm mới");
+        btnLamMoi.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnLamMoi.setText("Làm mới");
+        btnLamMoi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLamMoiActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -167,15 +172,15 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnTimKiem)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(153, 153, 153))
+                .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(100, 100, 100))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnLamMoi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtTkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnTimKiem)))
@@ -537,6 +542,7 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
 
     private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_txtEmailActionPerformed
 
     private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
@@ -564,6 +570,11 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
             });
         }
     }//GEN-LAST:event_btnTimKiemActionPerformed
+
+    private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
+        // TODO add your handling code here:
+        this.fillToTable();
+    }//GEN-LAST:event_btnLamMoiActionPerformed
 
     private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {
         try {
@@ -633,6 +644,7 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
     private javax.swing.JButton btnCreate;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnDeleteCheckedItems;
+    private javax.swing.JButton btnLamMoi;
     private javax.swing.JButton btnMoveFirst;
     private javax.swing.JButton btnMoveLast;
     private javax.swing.JButton btnMoveNext;
@@ -640,7 +652,6 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
     private javax.swing.JButton btnTimKiem;
     private javax.swing.JButton btnUncheckAll;
     private javax.swing.JButton btnUpdate;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -792,6 +803,15 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
                 XDialog.alert(this, "Vui lòng nhập mật khẩu!");
                 return;
             }
+            
+            // Kiểm tra username đã tồn tại hay chưa
+            User existingUser = userDAO.findByUsername(username);
+            if (existingUser != null) {
+                XDialog.alert(this, "Tên đăng nhập đã tồn tại!\n" +
+                    "Vui lòng chọn tên đăng nhập khác.");
+                return;
+            }
+            
             User user = new User();
             user.setUsername(username);
             user.setEmail(email);
