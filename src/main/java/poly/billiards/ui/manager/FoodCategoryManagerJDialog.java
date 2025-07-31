@@ -7,6 +7,7 @@ package poly.billiards.ui.manager;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.table.DefaultTableModel;
 import poly.billiards.dao.FoodCategoryDAO;
 import poly.billiards.dao.impl.FoodCategoryDAOImpl;
@@ -14,6 +15,7 @@ import poly.billiards.entity.FoodCategory;
 import poly.billiards.util.XDialog;
 import poly.billiards.util.XExcel;
 import poly.billiards.util.XUI;
+import poly.billiards.utils.AutoCodeGenerator;
 
 /**
  *
@@ -33,6 +35,16 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
         XUI.setupUI(this);
         XUI.setHandCursor(this);
         dao = new FoodCategoryDAOImpl();
+        
+        // Thêm sự kiện focus để tự động sinh mã
+        txtId.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                if (txtId.getText().trim().isEmpty()) {
+                    generateAutoCode();
+                }
+            }
+        });
+        
         this.fillToTable();
     }
 
@@ -477,6 +489,10 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
                 false  // Giá trị mặc định cho checkbox
             });
         }
+        // Cập nhật mã tự động sau khi load dữ liệu
+        if (txtId.getText().trim().isEmpty()) {
+            generateAutoCode();
+        }
     }
 
     @Override
@@ -552,17 +568,33 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
 
     @Override
     public void create() {
+        // Validate dữ liệu trước khi tạo
+        if (!validateForm()) {
+            return;
+        }
+        
         FoodCategory entity = this.getForm();
         dao.create(entity);
         this.fillToTable();
         this.clear();
+        
+        // Thông báo thành công
+        XDialog.info(this, "Tạo loại đồ uống mới thành công!");
     }
 
     @Override
     public void update() {
+        // Validate dữ liệu trước khi cập nhật
+        if (!validateForm()) {
+            return;
+        }
+        
         FoodCategory entity = this.getForm();
         dao.update(entity);
         this.fillToTable();
+        
+        // Thông báo thành công
+        XDialog.info(this, "Cập nhật loại đồ uống thành công!");
     }
 
     @Override
@@ -572,6 +604,9 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
             dao.deleteById(id);
             this.fillToTable();
             this.clear();
+            
+            // Thông báo xóa thành công
+            XDialog.info(this, "Xóa loại đồ uống thành công!");
         }
     }
 
@@ -579,6 +614,8 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
     public void clear() {
         this.setForm(new FoodCategory());
         this.setEditable(false);
+        // Tự động sinh mã mới khi clear form
+        generateAutoCode();
     }
 
     @Override
@@ -626,5 +663,106 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
             tblCategories.setRowSelectionInterval(index, index);
             this.edit();
         }
+    }
+    
+    /**
+     * Sinh mã tự động cho đồ uống mới
+     */
+    private void generateAutoCode() {
+        if (categories == null) {
+            txtId.setText("001");
+            return;
+        }
+        
+        // Lấy danh sách mã hiện tại
+        List<String> existingCodes = categories.stream()
+            .map(FoodCategory::getId)
+            .collect(Collectors.toList());
+        
+        // Sinh mã mới
+        String newCode = AutoCodeGenerator.generateNextCode(existingCodes);
+        txtId.setText(newCode);
+    }
+    
+    /**
+     * Sinh mã với khoảng trống (tìm mã bị thiếu)
+     */
+    private void generateCodeWithGap() {
+        if (categories == null) {
+            txtId.setText("001");
+            return;
+        }
+        
+        // Lấy danh sách mã hiện tại
+        List<String> existingCodes = categories.stream()
+            .map(FoodCategory::getId)
+            .collect(Collectors.toList());
+        
+        // Sinh mã mới với khoảng trống
+        String newCode = AutoCodeGenerator.generateCodeWithGap(existingCodes);
+        txtId.setText(newCode);
+    }
+    
+    /**
+     * Validate form trước khi tạo/cập nhật
+     */
+    private boolean validateForm() {
+        // Kiểm tra mã
+        String id = txtId.getText().trim();
+        if (id.isEmpty()) {
+            XDialog.alert(this, "Mã loại đồ uống không được để trống!");
+            txtId.requestFocus();
+            return false;
+        }
+        
+        // Kiểm tra tên
+        String name = txtName.getText().trim();
+        if (name.isEmpty()) {
+            XDialog.alert(this, "Tên loại đồ uống không được để trống!");
+            txtName.requestFocus();
+            return false;
+        }
+        
+        // Kiểm tra độ dài tên
+        if (name.length() < 2) {
+            XDialog.alert(this, "Tên loại đồ uống phải có ít nhất 2 ký tự!");
+            txtName.requestFocus();
+            return false;
+        }
+        
+        if (name.length() > 100) {
+            XDialog.alert(this, "Tên loại đồ uống không được quá 100 ký tự!");
+            txtName.requestFocus();
+            return false;
+        }
+        
+        // Kiểm tra mã có hợp lệ không
+        if (!AutoCodeGenerator.isValidCode(id)) {
+            XDialog.alert(this, "Mã loại đồ uống không đúng định dạng!");
+            txtId.requestFocus();
+            return false;
+        }
+        
+        // Kiểm tra mã đã tồn tại chưa (chỉ khi tạo mới)
+        if (categories != null && !isUpdateMode()) {
+            List<String> existingCodes = categories.stream()
+                .map(FoodCategory::getId)
+                .collect(Collectors.toList());
+                
+            if (AutoCodeGenerator.isCodeExists(id, existingCodes)) {
+                XDialog.alert(this, "Mã loại đồ uống đã tồn tại!");
+                txtId.requestFocus();
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    /**
+     * Kiểm tra xem có đang ở chế độ cập nhật không
+     */
+    private boolean isUpdateMode() {
+        return btnUpdate.isEnabled();
     }
 }
