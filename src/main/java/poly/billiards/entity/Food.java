@@ -87,4 +87,8 @@ public class Food {
         this.categoryId = categoryId;
     }
     
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }

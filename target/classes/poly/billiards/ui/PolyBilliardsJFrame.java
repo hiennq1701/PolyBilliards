@@ -1028,7 +1028,15 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
             new String [] {
                 "Tên SP", "Số lượng", "Đơn giá", "Thành tiền"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         jScrollPane5.setViewportView(tbInfo);
 
         jLabel31.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -2032,7 +2040,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         try {
             Food food = (Food) cboFood.getSelectedItem();
             if (food != null) {
-                idfood = food.getName();
+                idfood = food.getId();
             } else {
                 System.out.println("Select food is null");
             }

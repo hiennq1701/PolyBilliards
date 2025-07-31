@@ -42,12 +42,6 @@ public class ChangePasswordJDialog extends javax.swing.JDialog implements Change
         XUI.customizeButton(btnClose, new Color(0, 120, 212));
         XUI.customizeButton(btnSave, new Color(108, 117, 125));
 
-        // Customize text fields
-        XUI.customizeTextField(txtUsername);
-        XUI.customizeTextField(txtPassword);
-        XUI.customizeTextField(txtNewpass);
-        XUI.customizeTextField(txtConfirm);
-
         // Customize labels
         XUI.customizeLabel(jLabel2);
         XUI.customizeLabel(jLabel3);
@@ -81,7 +75,7 @@ public class ChangePasswordJDialog extends javax.swing.JDialog implements Change
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Đổi mật khẩu");
-        setPreferredSize(new java.awt.Dimension(500, 300));
+        setPreferredSize(new java.awt.Dimension(500, 250));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
