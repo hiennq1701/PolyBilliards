@@ -248,6 +248,13 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
         jLabel1.setText("Mã loại");
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         jPanel6.add(jLabel1);
+
+        txtId.setEnabled(false);
+        txtId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIdActionPerformed(evt);
+            }
+        });
         jPanel6.add(txtId);
 
         jLabel2.setText("Tên loại");
@@ -362,6 +369,10 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
         // TODO add your handling code here:
         this.moveLast();
     }//GEN-LAST:event_btnMoveLastActionPerformed
+
+    private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIdActionPerformed
 
     private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {
         try {
@@ -620,7 +631,6 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
 
     @Override
     public void setEditable(boolean editable) {
-        txtId.setEnabled(!editable);
         btnCreate.setEnabled(!editable);
         btnUpdate.setEnabled(editable);
         btnDelete.setEnabled(editable);
