@@ -860,7 +860,6 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
 
     @Override
     public void setEditable(boolean editable) {
-        txtId.setEnabled(!editable);
         btnCreate.setEnabled(!editable);
         btnUpdate.setEnabled(editable);
         btnDelete.setEnabled(editable);
