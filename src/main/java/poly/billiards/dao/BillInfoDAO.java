@@ -109,4 +109,20 @@ public class BillInfoDAO extends SysDAO<Billinfo, Integer> {
         String sql = "SELECT * FROM BillInfo WHERE idBill = ?";
         return selectBySQL(sql, billId);
     }
+    
+    /**
+     * Xóa Billinfo theo id bill và id food
+     */
+    public void deleteByBillIdAndFoodId(int billId, String foodId) {
+        String sql = "DELETE FROM BillInfo WHERE idBill = ? AND idFood = ?";
+        XJdbc.exeUpdate(sql, billId, foodId);
+    }
+    
+    /**
+     * Cập nhật số lượng theo id bill và id food
+     */
+    public void updateCountByBillIdAndFoodId(int billId, String foodId, int newCount) {
+        String sql = "UPDATE BillInfo SET count = ? WHERE idBill = ? AND idFood = ?";
+        XJdbc.exeUpdate(sql, newCount, billId, foodId);
+    }
 }
