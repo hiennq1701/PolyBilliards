@@ -297,6 +297,8 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
         jLabel2.setText("Tên đồ ăn");
         jLabel2.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         jPanel6.add(jLabel2);
+
+        txtId.setEnabled(false);
         jPanel6.add(txtId);
         jPanel6.add(txtName);
 
