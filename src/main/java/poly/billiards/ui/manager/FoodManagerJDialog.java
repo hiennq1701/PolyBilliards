@@ -7,6 +7,7 @@ package poly.billiards.ui.manager;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import javax.swing.table.DefaultTableModel;
@@ -20,6 +21,8 @@ import poly.billiards.util.XDialog;
 import poly.billiards.util.XIcon;
 import poly.billiards.util.XExcel;
 import poly.billiards.util.XUI;
+import poly.billiards.util.AutoCodeGenerator;
+import poly.billiards.util.XValidation;
 
 /**
  *
@@ -578,6 +581,10 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
         this.fillCategories();
         this.fillToTable();
         this.clear();
+        
+        // Đảm bảo mã được sinh chính xác dựa vào vị trí khi mở form
+        String newCode = generateNewFoodCode();
+        txtId.setText(newCode);
     }
 
     @Override
@@ -605,9 +612,17 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
     public void fillToTable() {
         DefaultTableModel model = (DefaultTableModel) tblDrinks.getModel();
         model.setRowCount(0);
+        
+        // Cập nhật danh sách đồ ăn từ database
         drinks = dao.findAll();
 
-        for (Food food : drinks) {
+        for (int i = 0; i < drinks.size(); i++) {
+            Food food = drinks.get(i);
+            
+            // Cập nhật mã theo vị trí trong bảng
+            String positionCode = String.format("%03d", i + 1);
+            food.setId(positionCode);
+            
             String unitPriceStr = (food.getUnitPrice() % 1 == 0)
                     ? String.valueOf((int) food.getUnitPrice())
                     : String.valueOf(food.getUnitPrice());
@@ -617,7 +632,7 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
                     : String.valueOf(food.getDiscount());
 
             model.addRow(new Object[]{
-                food.getId(),
+                positionCode, // Hiển thị mã theo vị trí
                 food.getName(),
                 unitPriceStr,
                 discountStr,
@@ -684,31 +699,66 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
     @Override
     public Food getForm() {
         Food entity = new Food();
-        entity.setId(txtId.getText());
-        entity.setName(txtName.getText());
+        
+        // Chỉ set ID nếu không rỗng (trường hợp cập nhật)
+        String id = txtId.getText().trim();
+        if (!id.isEmpty()) {
+            entity.setId(id);
+        }
+        
+        entity.setName(txtName.getText().trim());
         entity.setDiscount(sliDiscount.getValue() / 100.0);
-        entity.setUnitPrice(Double.parseDouble(txtUnitPrice.getText()));
+        
+        // Parse giá với xử lý lỗi
+        try {
+            entity.setUnitPrice(Double.parseDouble(txtUnitPrice.getText().trim()));
+        } catch (NumberFormatException e) {
+            entity.setUnitPrice(0.0);
+        }
+        
         entity.setImage(imgImage.getIcon());
         entity.setAvailable(rdoAvailable.getIndex() == 0);
-        FoodCategory category = categories.get(cboCategories.getSelectedIndex());
-        entity.setCategoryId(category.getId());
-        //entity.setImage(lblImage.getToolTipText());
+        
+        // Kiểm tra index hợp lệ trước khi lấy category
+        if (cboCategories.getSelectedIndex() >= 0 && cboCategories.getSelectedIndex() < categories.size()) {
+            FoodCategory category = categories.get(cboCategories.getSelectedIndex());
+            entity.setCategoryId(category.getId());
+        }
+        
         return entity;
     }
 
     @Override
     public void create() {
+        // Validate dữ liệu trước khi tạo
+        if (!validateForm()) {
+            return;
+        }
+        
+        // Tự động sinh mã cho đồ ăn mới dựa vào vị trí
+        String newCode = generateNewFoodCode();
+        
         Food entity = this.getForm();
+        entity.setId(newCode);
+        
+        // Tạo đồ ăn với mã đã sinh
         dao.create(entity);
         this.fillToTable();
         this.clear();
+        XDialog.alert(this, "Tạo đồ ăn thành công!");
     }
 
     @Override
     public void update() {
+        // Validate dữ liệu trước khi cập nhật
+        if (!validateForm()) {
+            return;
+        }
+        
         Food entity = this.getForm();
         dao.update(entity);
         this.fillToTable();
+        XDialog.alert(this, "Cập nhật đồ ăn thành công!");
     }
 
     @Override
@@ -723,8 +773,87 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
 
     @Override
     public void clear() {
-        this.setForm(new Food());
+        // Tạo entity mới với mã tự sinh dựa vào vị trí
+        Food newFood = new Food();
+        String newCode = generateNewFoodCode();
+        newFood.setId(newCode);
+        
+        this.setForm(newFood);
         this.setEditable(false);
+        
+        // Đảm bảo mã được hiển thị đúng
+        txtId.setText(newCode);
+        
+        // Focus vào trường tên đồ ăn
+        txtName.requestFocus();
+    }
+    
+    /**
+     * Validate tất cả các trường dữ liệu trong form
+     * @return true nếu tất cả đều hợp lệ
+     */
+    private boolean validateForm() {
+        // Validate tên đồ ăn
+        if (!XValidation.isValidRequired(txtName)) {
+            return false;
+        }
+        
+        // Kiểm tra tên đồ ăn không được trùng lặp
+        String foodName = txtName.getText().trim();
+        String currentId = txtId.getText().trim();
+        
+        for (Food food : drinks) {
+            if (food.getName().equalsIgnoreCase(foodName) && !food.getId().equals(currentId)) {
+                XDialog.alert(this, "Tên đồ ăn đã tồn tại!");
+                txtName.requestFocus();
+                return false;
+            }
+        }
+        
+        // Validate giá
+        if (!XValidation.isValidRequired(txtUnitPrice)) {
+            return false;
+        }
+        
+        if (!XValidation.isValidPrice(txtUnitPrice)) {
+            return false;
+        }
+        
+        // Kiểm tra giá phải lớn hơn 0
+        try {
+            double price = Double.parseDouble(txtUnitPrice.getText().trim());
+            if (price <= 0) {
+                XDialog.alert(this, "Giá phải lớn hơn 0!");
+                txtUnitPrice.requestFocus();
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            XDialog.alert(this, "Giá không hợp lệ!");
+            txtUnitPrice.requestFocus();
+            return false;
+        }
+        
+        // Validate danh mục
+        if (!XValidation.isValidSelection(cboCategories)) {
+            return false;
+        }
+        
+        return true;
+    }
+    
+    /**
+     * Sinh mã mới cho đồ ăn dựa vào vị trí trong bảng
+     * @return Mã mới
+     */
+    private String generateNewFoodCode() {
+        // Cập nhật danh sách đồ ăn từ database trước khi sinh mã
+        drinks = dao.findAll();
+        
+        // Mã mới = vị trí hiện tại + 1 (bắt đầu từ 001)
+        int newPosition = drinks.size() + 1;
+        
+        // Format thành 3 chữ số với số 0 ở đầu
+        return String.format("%03d", newPosition);
     }
 
     @Override

@@ -22,7 +22,10 @@ public class FoodDAOImpl implements FoodDAO {
 
     @Override
     public Food create(Food entity) {
-        entity.setId(XStr.getKey());
+        // Chỉ sinh mã nếu chưa có mã
+        if (entity.getId() == null || entity.getId().trim().isEmpty()) {
+            entity.setId(XStr.getKey());
+        }
         Object[] values = {
             entity.getId(),
             entity.getName(),

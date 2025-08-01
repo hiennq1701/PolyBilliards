@@ -15,7 +15,7 @@ import poly.billiards.entity.FoodCategory;
 import poly.billiards.util.XDialog;
 import poly.billiards.util.XExcel;
 import poly.billiards.util.XUI;
-import poly.billiards.utils.AutoCodeGenerator;
+import poly.billiards.util.AutoCodeGenerator;
 
 /**
  *
