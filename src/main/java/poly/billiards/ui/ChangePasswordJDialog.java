@@ -76,6 +76,7 @@ public class ChangePasswordJDialog extends javax.swing.JDialog implements Change
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Đổi mật khẩu");
         setPreferredSize(new java.awt.Dimension(500, 250));
+        setSize(new java.awt.Dimension(500, 250));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);

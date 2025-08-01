@@ -17,7 +17,7 @@ import poly.billiards.util.XJdbc;
  */
 public class MenuDAO extends SysDAO<Menu, Integer>{
 
-    String SELECT_BY_IDTABLE = "SELECT name, count, unitprice, count*unitprice as totalPrice FROM Bill inner join BillInfo on Bill.id = BillInfo.idBill inner join Food on BillInfo.idFood = Food.id WHERE idTable = ?";
+    String SELECT_BY_IDTABLE = "SELECT Food.name, BillInfo.count, Food.UnitPrice, BillInfo.count*Food.UnitPrice as totalPrice FROM Bill inner join BillInfo on Bill.id = BillInfo.idBill inner join Food on BillInfo.idFood = Food.id WHERE idTable = ?";
     
     @Override
     public void insert(Menu entitype) {

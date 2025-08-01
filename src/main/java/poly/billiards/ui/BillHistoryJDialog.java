@@ -34,25 +34,6 @@ public class BillHistoryJDialog extends javax.swing.JDialog implements BillHisto
         super(parent, modal);
         this.parentFrame = parent;
         initComponents();
-        
-        
-        DatePicker datePicker = new DatePicker();
-        datePicker.setDateSelectionMode(DatePicker.DateSelectionMode.BETWEEN_DATE_SELECTED);
-        datePicker.setSeparator(" đến ngày ");
-        datePicker.setUsePanelOption(true);
-        datePicker.setDateSelectionAble(localDate -> !localDate.isAfter(localDate.now()));
-
-        datePicker.addDateSelectionListener(new DateSelectionListener() {
-            @Override
-            public void dateSelected(DateSelectionEvent dateSelectionEvent) {
-                LocalDate[] dates = datePicker.getSelectedDateRange();
-                DateTimeFormatter df = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-                if (dates != null) {
-                    System.out.println(df.format(dates[0]) + " - " + df.format(dates[1]));
-                }
-            }
-        });
-        
     }
 
     /**

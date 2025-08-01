@@ -228,16 +228,6 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
             }
-            
-            public void windowClosing(java.awt.event.WindowEvent evt) {
-                // Kiểm tra bàn chưa thanh toán trước khi đóng cửa sổ
-                if (checkUnpaidTables()) {
-                    // Có bàn chưa thanh toán, không làm gì cả (giữ cửa sổ mở)
-                    return;
-                }
-                // Không có bàn chưa thanh toán, thoát bình thường
-                System.exit(0);
-            }
         });
 
         pnlLeft.setBackground(new java.awt.Color(255, 153, 102));
@@ -1001,10 +991,9 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         );
 
         lbTable.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        lbTable.setText("Liber 1");
 
         lbDateNow.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        lbDateNow.setText("12 / 12 / 2023 00:00:00");
+        lbDateNow.setText("00 / 00 / 2000 00:00:00");
 
         jLabel27.setText("Thời gian kết thúc :");
 
@@ -1106,7 +1095,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         jLabel35.setText("Tổng thời gian đã chơi :");
 
         lbTime.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        lbTime.setText("02:00:00");
+        lbTime.setText("00:00:00");
 
         btnXoasp.setBackground(new java.awt.Color(255, 51, 51));
         btnXoasp.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
