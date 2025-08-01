@@ -2108,7 +2108,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         
         // Cập nhật UI
         btnStopContinue.setText("Dừng giờ");
-        btnStopContinue.setBackground(null); // Màu mặc định
+        btnStopContinue.setBackground(new Color(255,0,0)); // Màu mặc định
         
         // Xóa thời gian dừng
         txtTimeStop.setText("");
