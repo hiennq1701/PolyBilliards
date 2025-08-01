@@ -92,7 +92,7 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
         lblImage.setText("jLabel7");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Quản lý đồ uống");
+        setTitle("Quản lý đồ ăn");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);

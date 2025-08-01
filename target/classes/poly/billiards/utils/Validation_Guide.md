@@ -78,6 +78,13 @@ if (name.length() > 100) {
 4. **Validation thành công** → Cập nhật database
 5. **Thông báo thành công** → Hiển thị "Cập nhật loại đồ uống thành công!"
 
+### 3. Khi xóa:
+1. **Chọn item** → User chọn item cần xóa
+2. **Click "Xóa"** → Hiển thị dialog xác nhận
+3. **Xác nhận xóa** → User xác nhận muốn xóa
+4. **Xóa thành công** → Xóa khỏi database
+5. **Thông báo thành công** → Hiển thị "Xóa loại đồ uống thành công!"
+
 ## Thông báo lỗi
 
 ### Các thông báo lỗi có thể gặp:

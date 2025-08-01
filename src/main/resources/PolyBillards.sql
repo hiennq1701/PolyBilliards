@@ -137,6 +137,9 @@ CREATE TABLE [dbo].[Billinfo](
 	[IdBill] [int] NOT NULL,
 	[IdFood] [nvarchar](20) NOT NULL,
 	[Count] [int] NOT NULL,
+	[FoodName] [nvarchar](50) NULL,
+	[Discount] [float] NULL,
+	[UnitPrice] [float] NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -372,6 +375,9 @@ CREATE TABLE [dbo].[BillInfoDeleted](
     [IdBill] [int] NOT NULL,
     [IdFood] [nvarchar](20) NOT NULL,
     [Count] [int] NOT NULL,
+    [FoodName] [nvarchar](50) NULL,
+    [Discount] [float] NULL,
+    [UnitPrice] [float] NULL,
     [DeletedAt] [datetime] NOT NULL DEFAULT (getdate())
 );
 GO
@@ -389,8 +395,8 @@ BEGIN
     WHERE Status = 1; -- Chỉ xóa bill đã thanh toán
 
     -- Lưu thông tin Billinfo sắp xóa vào DeletedBillInfo
-    INSERT INTO BillInfoDeleted (Id, IdBill, IdFood, Count)
-    SELECT bi.Id, bi.IdBill, bi.IdFood, bi.Count
+    INSERT INTO BillInfoDeleted (Id, IdBill, IdFood, Count, FoodName, Discount, UnitPrice)
+    SELECT bi.Id, bi.IdBill, bi.IdFood, bi.Count, bi.FoodName, bi.Discount, bi.UnitPrice
     FROM Billinfo bi
     INNER JOIN Bill b ON bi.IdBill = b.Id
     WHERE b.Status = 1;
