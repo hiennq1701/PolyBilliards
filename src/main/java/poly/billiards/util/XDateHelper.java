@@ -31,6 +31,16 @@ public class XDateHelper {
     }
     
     /**
+     * Lấy thời gian hiện tại theo định dạng "HH:mm:ss - dd/MM/yyyy"
+     * @return String thời gian hiện tại
+     */
+    public static String stringsnowFormatted() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss - dd/MM/yyyy");
+        String formattedDateTime = dateFormat.format(XDateHelper.now());
+        return formattedDateTime;
+    }
+    
+    /**
      * Chuyển đổi String sang Date
      *
      * @param date là String cần chuyển
@@ -67,6 +77,19 @@ public class XDateHelper {
             date = XDateHelper.now();
         }
         return DATE_FORMAT.format(date);
+    }
+
+    /**
+     * Chuyển đổi Date sang String theo định dạng "HH:mm:ss - dd/MM/yyyy"
+     * @param date Date cần chuyển đổi
+     * @return String thời gian theo định dạng mới
+     */
+    public static String toStringFormatted(Date date) {
+        if (date == null) {
+            date = XDateHelper.now();
+        }
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss - dd/MM/yyyy");
+        return dateFormat.format(date);
     }
 
     /**

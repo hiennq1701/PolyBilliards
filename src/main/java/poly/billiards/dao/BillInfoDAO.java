@@ -86,14 +86,22 @@ public class BillInfoDAO extends SysDAO<Billinfo, Integer> {
     public List<Object[]> deleteBillInfo(){
         List<Object[]> list = new ArrayList<>();
         try {
-            ResultSet rs = null;
-            try {
-                String sql = "{call dbo.usp_LogAndShowDeletedBills}";
-                rs = XJdbc.exeQuery(sql);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }finally{
-                rs.getStatement().getConnection().close();  
+            String sql = "{call dbo.usp_LogAndShowDeletedBills}";
+            try (ResultSet rs = XJdbc.exeQuery(sql)) {
+                // Đọc kết quả trả về từ stored procedure
+                while (rs.next()) {
+                    Object[] row = {
+                        rs.getInt("Id"),
+                        rs.getDate("DateCheckin"),
+                        rs.getDate("DateCheckout"),
+                        rs.getInt("IdTable"),
+                        rs.getInt("Status"),
+                        rs.getFloat("TotalPrice"),
+                        rs.getString("Username"),
+                        rs.getDate("DeletedAt")
+                    };
+                    list.add(row);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

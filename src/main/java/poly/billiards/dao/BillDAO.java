@@ -23,7 +23,7 @@ public class BillDAO extends SysDAO<Bill, Integer> {
 
     String SELECT_ALL_SQL = "SELECT * FROM Bill";
     String INSERT_SQL = "INSERT INTO Bill(DateCheckin, IdTable, Status, TotalPrice) VALUES (?, ?, ?, ?)";
-    String UPDATE_SQL = "UPDATE Bill SET DateCheckout = ?, IdTable = ?, Status = ?, TotalPrice = ? WHERE Id = ?";
+    String UPDATE_SQL = "UPDATE Bill SET DateCheckout = ?, IdTable = ?, Status = ?, TotalPrice = ?, Username = ? WHERE Id = ?";
     String DELETE_SQL = "DELETE Bill WHERE Id = ?";
     String SELECT_BY_ID = "SELECT * FROM Bill WHERE Id = ?";
     String SELECT_ID_BY_IDTABLE = "select Id from bill where IdTable = ?";
@@ -42,6 +42,7 @@ public class BillDAO extends SysDAO<Bill, Integer> {
                 entitype.getIdtable(),
                 entitype.getStatus(),
                 entitype.getTotalPrice(),
+                entitype.getUsername(),
                 entitype.getId());
     }
 
