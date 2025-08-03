@@ -17,8 +17,8 @@ import poly.billiards.util.XJdbc;
 public class BillInfoDAO extends SysDAO<Billinfo, Integer> {
 
     String SELECT_ALL_SQL = "SELECT * FROM BillInfo";
-    String INSERT_SQL = "INSERT INTO BillInfo(idBill, idFood, count) VALUES (?, ?, ?)";
-    String UPDATE_SQL = "UPDATE BillInfo SET idBill = ?, idFood = ?, count = ? WHERE id = ?";
+    String INSERT_SQL = "INSERT INTO BillInfo(idBill, idFood, count, FoodName, Discount, UnitPrice) VALUES (?, ?, ?, ?, ?, ?)";
+    String UPDATE_SQL = "UPDATE BillInfo SET idBill = ?, idFood = ?, count = ?, FoodName = ?, Discount = ?, UnitPrice = ? WHERE id = ?";
     String DELETE_SQL = "DELETE BillInfo WHERE id = ?";
     String SELECT_BY_ID = "SELECT * FROM BillInfo WHERE id = ?";
     String SELECT_ID_BY_IDTABLE = "SELECT id FROM BillInfo WHERE idTable = ?";
@@ -28,7 +28,10 @@ public class BillInfoDAO extends SysDAO<Billinfo, Integer> {
         XJdbc.exeUpdate(INSERT_SQL, 
                 entitype.getIdbill(),
                 entitype.getIdfood(),
-                entitype.getCount());
+                entitype.getCount(),
+                entitype.getFoodName(),
+                entitype.getDiscount(),
+                entitype.getUnitPrice());
     }
 
     @Override
@@ -37,6 +40,9 @@ public class BillInfoDAO extends SysDAO<Billinfo, Integer> {
                 entitype.getIdbill(), 
                 entitype.getIdfood(), 
                 entitype.getCount(),
+                entitype.getFoodName(),
+                entitype.getDiscount(),
+                entitype.getUnitPrice(),
                 entitype.getId());
     }
 
@@ -67,6 +73,9 @@ public class BillInfoDAO extends SysDAO<Billinfo, Integer> {
                 tb.setIdbill(rs.getInt("idBill"));
                 tb.setIdfood(rs.getString("idFood"));
                 tb.setCount(rs.getInt("count"));
+                tb.setFoodName(rs.getString("FoodName"));
+                tb.setDiscount(rs.getFloat("Discount"));
+                tb.setUnitPrice(rs.getFloat("UnitPrice"));
                 list.add(tb);
             }
         } catch (Exception e) {

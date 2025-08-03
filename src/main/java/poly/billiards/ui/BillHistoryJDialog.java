@@ -4,9 +4,16 @@
  */
 package poly.billiards.ui;
 
+import com.raven.datechooser.DateBetween;
+import com.raven.datechooser.DateChooser;
+import com.raven.datechooser.listener.DateChooserAction;
+import com.raven.datechooser.listener.DateChooserAdapter;
 import java.awt.Frame;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
@@ -15,9 +22,8 @@ import poly.billiards.entity.Bill;
 import poly.billiards.util.TimeRange;
 import poly.billiards.util.XAuth;
 import poly.billiards.util.XDate;
-import raven.datetime.DatePicker;
-import raven.datetime.event.DateSelectionEvent;
-import raven.datetime.event.DateSelectionListener;
+import poly.billiards.util.XDialog;
+import poly.billiards.entity.User;
 
 /**
  *
@@ -30,10 +36,26 @@ public class BillHistoryJDialog extends javax.swing.JDialog implements BillHisto
      */
     private PolyBilliardsJFrame parentFrame;
 
+    private DateChooser chDate = new DateChooser();
+
     public BillHistoryJDialog(PolyBilliardsJFrame parent, boolean modal) {
         super(parent, modal);
         this.parentFrame = parent;
         initComponents();
+
+        chDate.setTextField(txtDate);
+        chDate.setDateSelectionMode(DateChooser.DateSelectionMode.BETWEEN_DATE_SELECTED);
+        chDate.setDateFormat(new SimpleDateFormat("dd-MM-yyyy"));
+        chDate.addActionDateChooserListener(new DateChooserAdapter() {
+            @Override
+            public void dateBetweenChanged(DateBetween date, DateChooserAction action) {
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                String dateFrom = df.format(date.getFromDate());
+                String toDate = df.format(date.getToDate());
+                loadBillsByDateRange(dateFrom, toDate);
+            }
+        });
+        
     }
 
     /**
@@ -49,12 +71,18 @@ public class BillHistoryJDialog extends javax.swing.JDialog implements BillHisto
         jScrollPane1 = new javax.swing.JScrollPane();
         tblBills = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        btnCheckAll = new javax.swing.JButton();
+        btnUncheckAll = new javax.swing.JButton();
+        btnDeleteCheckedItems = new javax.swing.JButton();
+        lbDoanhThuTitle = new javax.swing.JLabel();
+        lbTongDoanhThu = new javax.swing.JLabel();
+        txtDate = new javax.swing.JTextField();
+        btnLastWeek = new javax.swing.JButton();
+        btnLast28Days = new javax.swing.JButton();
+        cboFilter = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
-        txtBegin = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        txtEnd = new javax.swing.JTextField();
-        btnFilter = new javax.swing.JButton();
-        cboTimeRanges = new javax.swing.JComboBox<>();
+        btnFilterShowAll = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Lịch sử bán hàng của bạn");
@@ -64,21 +92,19 @@ public class BillHistoryJDialog extends javax.swing.JDialog implements BillHisto
             }
         });
 
-        jPanel2.setLayout(new java.awt.BorderLayout());
-
         tblBills.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Mã hoá đơn", "Bàn số", "Thời điểm tạo hoá đơn", "Thời điểm thanh toán", "Trạng thái"
+                "Mã hoá đơn", "Tên bàn", "Thời điểm tạo", "Thời điểm thanh toán", "Tổng tiền", "Người dùng", ""
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Long.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Long.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Long.class, java.lang.String.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -100,38 +126,157 @@ public class BillHistoryJDialog extends javax.swing.JDialog implements BillHisto
             }
         });
         jScrollPane1.setViewportView(tblBills);
+        if (tblBills.getColumnModel().getColumnCount() > 0) {
+            tblBills.getColumnModel().getColumn(0).setPreferredWidth(30);
+            tblBills.getColumnModel().getColumn(6).setPreferredWidth(10);
+        }
 
-        jPanel2.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 791, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 33, Short.MAX_VALUE)
+        );
 
-        jLabel1.setText("Từ ngày: ");
-        jPanel3.add(jLabel1);
-
-        txtBegin.setColumns(8);
-        jPanel3.add(txtBegin);
-
-        jLabel2.setText("Đến ngày: ");
-        jPanel3.add(jLabel2);
-
-        txtEnd.setColumns(8);
-        jPanel3.add(txtEnd);
-
-        btnFilter.setText("Lọc");
-        btnFilter.addActionListener(new java.awt.event.ActionListener() {
+        btnCheckAll.setText("Chọn tất cả");
+        btnCheckAll.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFilterActionPerformed(evt);
+                btnCheckAllActionPerformed(evt);
             }
         });
-        jPanel3.add(btnFilter);
 
-        cboTimeRanges.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hôm nay", "Tuần này", "Tháng này", "Quý này", "Năm nay" }));
-        cboTimeRanges.addActionListener(new java.awt.event.ActionListener() {
+        btnUncheckAll.setText("Bỏ chọn tất cả");
+        btnUncheckAll.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cboTimeRangesActionPerformed(evt);
+                btnUncheckAllActionPerformed(evt);
             }
         });
-        jPanel3.add(cboTimeRanges);
 
-        jPanel2.add(jPanel3, java.awt.BorderLayout.PAGE_START);
+        btnDeleteCheckedItems.setText("Xóa các mục chọn");
+        btnDeleteCheckedItems.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteCheckedItemsActionPerformed(evt);
+            }
+        });
+
+        lbDoanhThuTitle.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        lbDoanhThuTitle.setText("Doanh thu của quán:");
+
+        lbTongDoanhThu.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        lbTongDoanhThu.setText("012345");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbDoanhThuTitle)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lbTongDoanhThu)
+                .addGap(268, 268, 268)
+                .addComponent(btnCheckAll)
+                .addGap(2, 2, 2)
+                .addComponent(btnUncheckAll)
+                .addGap(2, 2, 2)
+                .addComponent(btnDeleteCheckedItems))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(2, 2, 2)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbDoanhThuTitle)
+                            .addComponent(lbTongDoanhThu))
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnCheckAll)))
+                    .addComponent(btnUncheckAll)
+                    .addComponent(btnDeleteCheckedItems)))
+        );
+
+        txtDate.setColumns(8);
+
+        btnLastWeek.setText("Xem tuần qua");
+        btnLastWeek.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLastWeekActionPerformed(evt);
+            }
+        });
+
+        btnLast28Days.setText("Xem 28 ngày qua");
+        btnLast28Days.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLast28DaysActionPerformed(evt);
+            }
+        });
+
+        cboFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Thời điểm tạo", "Thời điểm thanh toán", "Người dùng", "Tên bàn" }));
+        cboFilter.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboFilterItemStateChanged(evt);
+            }
+        });
+
+        jLabel1.setText("Lọc theo:");
+
+        btnFilterShowAll.setText("Xem tất cả");
+        btnFilterShowAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFilterShowAllActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 81, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cboFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnLastWeek)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnLast28Days)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnFilterShowAll)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLastWeek)
+                    .addComponent(btnLast28Days)
+                    .addComponent(cboFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(btnFilterShowAll))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -139,14 +284,14 @@ public class BillHistoryJDialog extends javax.swing.JDialog implements BillHisto
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 716, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -165,15 +310,39 @@ public class BillHistoryJDialog extends javax.swing.JDialog implements BillHisto
         this.open();
     }//GEN-LAST:event_formWindowOpened
 
-    private void btnFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFilterActionPerformed
+    private void btnLast28DaysActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLast28DaysActionPerformed
         // TODO add your handling code here:
-        this.fillBills();
-    }//GEN-LAST:event_btnFilterActionPerformed
+        chDate.setSelectedDateBetween(new DateBetween(getLast28days(), new Date()));
+    }//GEN-LAST:event_btnLast28DaysActionPerformed
 
-    private void cboTimeRangesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboTimeRangesActionPerformed
+    private void btnCheckAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckAllActionPerformed
         // TODO add your handling code here:
-        this.selectTimeRange();
-    }//GEN-LAST:event_cboTimeRangesActionPerformed
+        this.checkAll();
+    }//GEN-LAST:event_btnCheckAllActionPerformed
+
+    private void btnUncheckAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUncheckAllActionPerformed
+        // TODO add your handling code here:
+        this.uncheckAll();
+    }//GEN-LAST:event_btnUncheckAllActionPerformed
+
+    private void btnDeleteCheckedItemsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteCheckedItemsActionPerformed
+        // TODO add your handling code here:
+        this.deleteCheckedItems();
+    }//GEN-LAST:event_btnDeleteCheckedItemsActionPerformed
+
+    private void btnLastWeekActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLastWeekActionPerformed
+        // TODO add your handling code here:
+        chDate.setSelectedDateBetween(new DateBetween(getLastWeek(), new Date()));
+    }//GEN-LAST:event_btnLastWeekActionPerformed
+
+    private void cboFilterItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboFilterItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboFilterItemStateChanged
+
+    private void btnFilterShowAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFilterShowAllActionPerformed
+        // TODO add your handling code here:
+        loadBillsByPermission();
+    }//GEN-LAST:event_btnFilterShowAllActionPerformed
 
     /**
      * @param args the command line arguments
@@ -208,6 +377,14 @@ public class BillHistoryJDialog extends javax.swing.JDialog implements BillHisto
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -225,16 +402,22 @@ public class BillHistoryJDialog extends javax.swing.JDialog implements BillHisto
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnFilter;
-    private javax.swing.JComboBox<String> cboTimeRanges;
+    private javax.swing.JButton btnCheckAll;
+    private javax.swing.JButton btnDeleteCheckedItems;
+    private javax.swing.JButton btnFilterShowAll;
+    private javax.swing.JButton btnLast28Days;
+    private javax.swing.JButton btnLastWeek;
+    private javax.swing.JButton btnUncheckAll;
+    private javax.swing.JComboBox<String> cboFilter;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbDoanhThuTitle;
+    private javax.swing.JLabel lbTongDoanhThu;
     private javax.swing.JTable tblBills;
-    private javax.swing.JTextField txtBegin;
-    private javax.swing.JTextField txtEnd;
+    private javax.swing.JTextField txtDate;
     // End of variables declaration//GEN-END:variables
 
     BillDAO billDao = new BillDAO();
@@ -243,52 +426,31 @@ public class BillHistoryJDialog extends javax.swing.JDialog implements BillHisto
     @Override
     public void open() {
         this.setLocationRelativeTo(null);
-        this.selectTimeRange();
-        this.fillBills();
+        checkManagerPermission();
+        loadBillsByPermission();
     }
 
-    @Override
-    public void fillBills() {
-        Date begin = XDate.parse(txtBegin.getText());
-        Date end = XDate.parse(txtEnd.getText());
-        // Chuyển sang java.sql.Date để truyền vào DAO
-        java.sql.Date sqlBegin = begin != null ? new java.sql.Date(begin.getTime()) : null;
-        java.sql.Date sqlEnd = end != null ? new java.sql.Date(end.getTime()) : null;
-        // Lấy danh sách hóa đơn theo khoảng thời gian
-        bills = billDao.selectByDateRange(sqlBegin, sqlEnd);
+    public void fillBills(String sql) {
+        // Lấy dữ liệu từ database
+        bills = billDao.selectBySQL(sql);
+        
         // Đổ dữ liệu vào bảng
         DefaultTableModel model = (DefaultTableModel) tblBills.getModel();
         model.setRowCount(0);
         for (Bill bill : bills) {
             Object[] row = {
                 bill.getId(),
-                bill.getIdtable(),
-                bill.getDatecheckin() != null ? XDate.format(bill.getDatecheckin(), Bill.DATE_PATTERN) : "",
-                bill.getDatecheckout() != null ? XDate.format(bill.getDatecheckout(), Bill.DATE_PATTERN) : "",
-                Bill.Status.values()[bill.getStatus()].name()
+                bill.getTableName() != null ? bill.getTableName() : "Bàn " + bill.getIdtable(),
+                bill.getDatecheckin() != null ? XDate.format(bill.getDatecheckin(), "dd-MM-yyyy HH:mm:ss") : "",
+                bill.getDatecheckout() != null ? XDate.format(bill.getDatecheckout(), "dd-MM-yyyy HH:mm:ss") : "",
+                bill.getTotalPrice(),
+                bill.getUsername() != null ? bill.getUsername() : ""
             };
             model.addRow(row);
         }
-    }
-
-    @Override
-    public void selectTimeRange() {
-        TimeRange range = TimeRange.today();
-        switch (cboTimeRanges.getSelectedIndex()) {
-            case 0 ->
-                range = TimeRange.today();
-            case 1 ->
-                range = TimeRange.thisWeek();
-            case 2 ->
-                range = TimeRange.thisMonth();
-            case 3 ->
-                range = TimeRange.thisQuarter();
-            case 4 ->
-                range = TimeRange.thisYear();
-        }
-        txtBegin.setText(XDate.format(range.getBegin()));
-        txtEnd.setText(XDate.format(range.getEnd()));
-        this.fillBills();
+        
+        // Tính tổng doanh thu sau khi load dữ liệu
+        calculateTotalRevenue();
     }
 
     @Override
@@ -299,5 +461,169 @@ public class BillHistoryJDialog extends javax.swing.JDialog implements BillHisto
             parentFrame.showBillDetail(bill);
             this.dispose();
         }
+    }
+
+    private Date getLast28days() {
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -28);
+        return cal.getTime();
+    }
+    private Date getLastWeek() {
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -7);
+        return cal.getTime();
+    }
+
+    @Override
+    public void selectTimeRange() {
+        // Có thể để trống hoặc thêm logic chọn khoảng thời gian
+        // Hiện tại đã có DateChooser để chọn thời gian
+    }
+    @Override
+    public void fillBills() {
+        loadBillsByPermission();
+    }
+    
+    public void checkAll() {
+        this.setCheckedAll(true);
+    }
+
+    public void uncheckAll() {
+        this.setCheckedAll(false);
+    }
+
+    private void setCheckedAll(boolean checked) {
+        for (int i = 0; i < tblBills.getRowCount(); i++) {
+            tblBills.setValueAt(checked, i, 6);
+        }
+    }
+    public void deleteCheckedItems() {
+        if (XDialog.confirm(this, "Bạn thực sự muốn xóa các mục chọn?")) {
+            int deletedCount = 0;
+            List<Integer> idsToDelete = new ArrayList<>();
+            
+            // Thu thập các ID cần xóa
+            for (int i = 0; i < tblBills.getRowCount(); i++) {
+                Boolean isChecked = (Boolean) tblBills.getValueAt(i, 6);
+                System.out.println("Row " + i + ": checked = " + isChecked);
+                if (isChecked != null && isChecked) {
+                    Integer id = bills.get(i).getId();
+                    System.out.println("Will delete category with ID: " + id);
+                    idsToDelete.add(id);
+                }
+            }
+            
+            // Thực hiện xóa
+            for (Integer id : idsToDelete) {
+                billDao.deleteFromBillDeleted(id);
+                deletedCount++;
+            }
+            
+            System.out.println("Total deleted: " + deletedCount);
+            this.loadBillsByPermission();
+            if (deletedCount > 0) {
+                XDialog.info(this, "Đã xóa " + deletedCount + " mục được chọn!");
+            } else {
+                XDialog.alert(this, "Không có mục nào được chọn để xóa!");
+            }
+        }
+    }
+    
+    /**
+     * Kiểm tra quyền Manager và ẩn/hiện các nút xóa hàng loạt
+     */
+    private void checkManagerPermission() {
+        if (parentFrame != null && parentFrame.getCurrentUser() != null) {
+            User currentUser = parentFrame.getCurrentUser();
+            if (currentUser.isManager()) {
+                // Manager: hiện tất cả các nút
+                btnCheckAll.setVisible(true);
+                btnUncheckAll.setVisible(true);
+                btnDeleteCheckedItems.setVisible(true);
+            } else {
+                // Non-manager: chỉ ẩn 3 nút này
+                btnCheckAll.setVisible(false);
+                btnUncheckAll.setVisible(false);
+                btnDeleteCheckedItems.setVisible(false);
+            }
+        } else {
+            // Fallback: ẩn 3 nút nếu không có thông tin user
+            btnCheckAll.setVisible(false);
+            btnUncheckAll.setVisible(false);
+            btnDeleteCheckedItems.setVisible(false);
+        }
+    }
+    
+    /**
+     * Load bill theo quyền của user
+     */
+    private void loadBillsByPermission() {
+        if (parentFrame != null && parentFrame.getCurrentUser() != null) {
+            User currentUser = parentFrame.getCurrentUser();
+            if (currentUser.isManager()) {
+                // Nếu là Manager, hiện tất cả bill
+                this.fillBills("SELECT * FROM BillDeleted");
+            } else {
+                // Nếu không phải Manager, chỉ hiện bill của user đó
+                this.fillBills("SELECT * FROM BillDeleted WHERE Username = '" + currentUser.getUsername() + "'");
+            }
+        } else {
+            // Nếu không có thông tin user, hiện tất cả để an toàn
+            this.fillBills("SELECT * FROM BillDeleted");
+        }
+    }
+    
+    /**
+     * Load bill theo khoảng thời gian và quyền của user
+     */
+    private void loadBillsByDateRange(String dateFrom, String toDate) {
+        if (parentFrame != null && parentFrame.getCurrentUser() != null) {
+            User currentUser = parentFrame.getCurrentUser();
+            if (currentUser.isManager()) {
+                // Nếu là Manager, hiện tất cả bill trong khoảng thời gian
+                this.fillBills("SELECT * FROM BillDeleted WHERE DateCheckin >='" + dateFrom + "' AND DateCheckin <= '" + toDate + "'");
+            } else {
+                // Nếu không phải Manager, chỉ hiện bill của user đó trong khoảng thời gian
+                this.fillBills("SELECT * FROM BillDeleted WHERE DateCheckin >='" + dateFrom + "' AND DateCheckin <= '" + toDate + "' AND Username = '" + currentUser.getUsername() + "'");
+            }
+        } else {
+            // Nếu không có thông tin user, hiện tất cả trong khoảng thời gian
+            this.fillBills("SELECT * FROM BillDeleted WHERE DateCheckin >='" + dateFrom + "' AND DateCheckin <= '" + toDate + "'");
+        }
+    }
+    
+    /**
+     * Tính tổng doanh thu từ dữ liệu trong bảng
+     */
+    private void calculateTotalRevenue() {
+        double totalRevenue = 0.0;
+        
+        // Duyệt qua tất cả các dòng trong bảng
+        for (int i = 0; i < tblBills.getRowCount(); i++) {
+            Object value = tblBills.getValueAt(i, 4); // Cột "Tổng tiền" (index 4)
+            
+            // Xử lý các kiểu dữ liệu khác nhau
+            if (value instanceof Float) {
+                totalRevenue += (Float) value;
+            } else if (value instanceof Double) {
+                totalRevenue += (Double) value;
+            } else if (value instanceof Integer) {
+                totalRevenue += (Integer) value;
+            } else if (value instanceof String) {
+                try {
+                    // Loại bỏ ký tự đặc biệt và chuyển đổi
+                    String cleanValue = ((String) value).replaceAll("[^0-9.]", "");
+                    if (!cleanValue.isEmpty()) {
+                        totalRevenue += Double.parseDouble(cleanValue);
+                    }
+                } catch (NumberFormatException e) {
+                    // Bỏ qua nếu không parse được
+                }
+            }
+        }
+        
+        // Format và hiển thị kết quả
+        String formattedRevenue = String.format("%,.0f VNĐ", totalRevenue);
+        lbTongDoanhThu.setText(formattedRevenue);
     }
 }

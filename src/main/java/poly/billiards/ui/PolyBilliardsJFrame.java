@@ -77,14 +77,14 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
     private javax.swing.Timer playTimeTimer;
     private long startTime;
     private boolean isPlaying = false;
-    
+
     // Thêm biến để theo dõi trạng thái dừng/tiếp tục
     private boolean isPaused = false;
     private long pauseTime = 0;
     private long totalPausedTime = 0;
 
     private DefaultTableModel modelTable;
-    FoodCategoryDAO fcatedao = new FoodCategoryDAOImpl() ;
+    FoodCategoryDAO fcatedao = new FoodCategoryDAOImpl();
 
     FoodDAO fdao = new FoodDAOImpl();
     MenuDAO menudao = new MenuDAO();
@@ -413,9 +413,9 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         btnLiber10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnLiber10.setForeground(new java.awt.Color(255, 0, 51));
         btnLiber10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/billiards/icons/trump-small.png"))); // NOI18N
-        btnLiber10.setText("Bàn 10");
+        btnLiber10.setText("Bàn liber 10");
         btnLiber10.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnLiber10.setName("11"); // NOI18N
+        btnLiber10.setName("10"); // NOI18N
         btnLiber10.setPreferredSize(new java.awt.Dimension(100, 100));
         btnLiber10.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnLiber10.addActionListener(new java.awt.event.ActionListener() {
@@ -428,9 +428,9 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         btnLiber11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnLiber11.setForeground(new java.awt.Color(255, 0, 51));
         btnLiber11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/billiards/icons/trump-small.png"))); // NOI18N
-        btnLiber11.setText("Bàn 11");
+        btnLiber11.setText("Bàn liber 11");
         btnLiber11.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnLiber11.setName("12"); // NOI18N
+        btnLiber11.setName("11"); // NOI18N
         btnLiber11.setPreferredSize(new java.awt.Dimension(100, 100));
         btnLiber11.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnLiber11.addActionListener(new java.awt.event.ActionListener() {
@@ -443,9 +443,9 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         btnLiber1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnLiber1.setForeground(new java.awt.Color(255, 0, 51));
         btnLiber1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/billiards/icons/trump-small.png"))); // NOI18N
-        btnLiber1.setText("Bàn 1");
+        btnLiber1.setText("Bàn liber 1");
         btnLiber1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnLiber1.setName("2"); // NOI18N
+        btnLiber1.setName("1"); // NOI18N
         btnLiber1.setPreferredSize(new java.awt.Dimension(100, 100));
         btnLiber1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnLiber1.addActionListener(new java.awt.event.ActionListener() {
@@ -458,11 +458,11 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         btnLiber6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnLiber6.setForeground(new java.awt.Color(255, 0, 51));
         btnLiber6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/billiards/icons/trump-small.png"))); // NOI18N
-        btnLiber6.setText("Bàn 6");
+        btnLiber6.setText("Bàn liber 6");
         btnLiber6.setBorderPainted(false);
         btnLiber6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnLiber6.setInheritsPopupMenu(true);
-        btnLiber6.setName("7"); // NOI18N
+        btnLiber6.setName("6"); // NOI18N
         btnLiber6.setPreferredSize(new java.awt.Dimension(100, 100));
         btnLiber6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnLiber6.addActionListener(new java.awt.event.ActionListener() {
@@ -475,9 +475,9 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         btnLiber9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnLiber9.setForeground(new java.awt.Color(255, 0, 51));
         btnLiber9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/billiards/icons/trump-small.png"))); // NOI18N
-        btnLiber9.setText("Bàn 9");
+        btnLiber9.setText("Bàn liber 9");
         btnLiber9.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnLiber9.setName("10"); // NOI18N
+        btnLiber9.setName("9"); // NOI18N
         btnLiber9.setPreferredSize(new java.awt.Dimension(100, 100));
         btnLiber9.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
@@ -485,11 +485,11 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         btnLiber12.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnLiber12.setForeground(new java.awt.Color(255, 0, 51));
         btnLiber12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/billiards/icons/trump-small.png"))); // NOI18N
-        btnLiber12.setText("Bàn 12");
+        btnLiber12.setText("Bàn liber 12");
         btnLiber12.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnLiber12.setMaximumSize(new java.awt.Dimension(100, 100));
         btnLiber12.setMinimumSize(new java.awt.Dimension(100, 100));
-        btnLiber12.setName("13"); // NOI18N
+        btnLiber12.setName("12"); // NOI18N
         btnLiber12.setPreferredSize(new java.awt.Dimension(100, 100));
         btnLiber12.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnLiber12.addActionListener(new java.awt.event.ActionListener() {
@@ -502,19 +502,20 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         btnLiber3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnLiber3.setForeground(new java.awt.Color(255, 0, 51));
         btnLiber3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/billiards/icons/trump-small.png"))); // NOI18N
-        btnLiber3.setText("Bàn 3");
+        btnLiber3.setText("Bàn liber 3");
         btnLiber3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnLiber3.setName("4"); // NOI18N
+        btnLiber3.setName("3"); // NOI18N
         btnLiber3.setPreferredSize(new java.awt.Dimension(100, 100));
         btnLiber3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+
 
         btnLiber5.setBackground(new java.awt.Color(204, 204, 204));
         btnLiber5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnLiber5.setForeground(new java.awt.Color(255, 0, 51));
         btnLiber5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/billiards/icons/trump-small.png"))); // NOI18N
-        btnLiber5.setText("Bàn 5");
+        btnLiber5.setText("Bàn liber 5");
         btnLiber5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnLiber5.setName("6"); // NOI18N
+        btnLiber5.setName("5"); // NOI18N
         btnLiber5.setPreferredSize(new java.awt.Dimension(100, 100));
         btnLiber5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
@@ -522,9 +523,9 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         btnLiber4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnLiber4.setForeground(new java.awt.Color(255, 0, 51));
         btnLiber4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/billiards/icons/trump-small.png"))); // NOI18N
-        btnLiber4.setText("Bàn 4");
+        btnLiber4.setText("Bàn liber 4");
         btnLiber4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnLiber4.setName("5"); // NOI18N
+        btnLiber4.setName("4"); // NOI18N
         btnLiber4.setPreferredSize(new java.awt.Dimension(100, 100));
         btnLiber4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
@@ -532,9 +533,9 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         btnLiber8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnLiber8.setForeground(new java.awt.Color(255, 0, 51));
         btnLiber8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/billiards/icons/trump-small.png"))); // NOI18N
-        btnLiber8.setText("Bàn 8");
+        btnLiber8.setText("Bàn liber 8");
         btnLiber8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnLiber8.setName("9"); // NOI18N
+        btnLiber8.setName("8"); // NOI18N
         btnLiber8.setPreferredSize(new java.awt.Dimension(100, 100));
         btnLiber8.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
@@ -542,9 +543,9 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         btnLiber2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnLiber2.setForeground(new java.awt.Color(255, 0, 51));
         btnLiber2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/billiards/icons/trump-small.png"))); // NOI18N
-        btnLiber2.setText("Bàn 2");
+        btnLiber2.setText("Bàn liber 2");
         btnLiber2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnLiber2.setName("3"); // NOI18N
+        btnLiber2.setName("2"); // NOI18N
         btnLiber2.setPreferredSize(new java.awt.Dimension(100, 100));
         btnLiber2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
@@ -552,11 +553,11 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         btnLiber7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnLiber7.setForeground(new java.awt.Color(255, 0, 51));
         btnLiber7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/billiards/icons/trump-small.png"))); // NOI18N
-        btnLiber7.setText("Bàn 7");
+        btnLiber7.setText("Bàn liber 7");
         btnLiber7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnLiber7.setMaximumSize(new java.awt.Dimension(100, 100));
         btnLiber7.setMinimumSize(new java.awt.Dimension(100, 100));
-        btnLiber7.setName("8"); // NOI18N
+        btnLiber7.setName("7"); // NOI18N
         btnLiber7.setPreferredSize(new java.awt.Dimension(100, 100));
         btnLiber7.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
@@ -630,7 +631,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         btnVip2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnVip2.setMaximumSize(new java.awt.Dimension(100, 100));
         btnVip2.setMinimumSize(new java.awt.Dimension(100, 100));
-        btnVip2.setName("20"); // NOI18N
+        btnVip2.setName("14"); // NOI18N
         btnVip2.setPreferredSize(new java.awt.Dimension(100, 100));
         btnVip2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnVip2.addActionListener(new java.awt.event.ActionListener() {
@@ -647,7 +648,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         btnVip3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnVip3.setMaximumSize(new java.awt.Dimension(100, 100));
         btnVip3.setMinimumSize(new java.awt.Dimension(100, 100));
-        btnVip3.setName("21"); // NOI18N
+        btnVip3.setName("15"); // NOI18N
         btnVip3.setPreferredSize(new java.awt.Dimension(100, 100));
         btnVip3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnVip3.addActionListener(new java.awt.event.ActionListener() {
@@ -664,7 +665,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         btnVip1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnVip1.setMaximumSize(new java.awt.Dimension(100, 100));
         btnVip1.setMinimumSize(new java.awt.Dimension(100, 100));
-        btnVip1.setName("19"); // NOI18N
+        btnVip1.setName("13"); // NOI18N
         btnVip1.setPreferredSize(new java.awt.Dimension(100, 100));
         btnVip1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnVip1.addActionListener(new java.awt.event.ActionListener() {
@@ -709,7 +710,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         btnLo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/billiards/icons/trump-small.png"))); // NOI18N
         btnLo1.setText("Bàn lỗ 1");
         btnLo1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnLo1.setName("14"); // NOI18N
+        btnLo1.setName("16"); // NOI18N
         btnLo1.setPreferredSize(new java.awt.Dimension(100, 100));
         btnLo1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnLo1.addActionListener(new java.awt.event.ActionListener() {
@@ -724,7 +725,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         btnLo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/billiards/icons/trump-small.png"))); // NOI18N
         btnLo2.setText("Bàn lỗ 2");
         btnLo2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnLo2.setName("15"); // NOI18N
+        btnLo2.setName("17"); // NOI18N
         btnLo2.setPreferredSize(new java.awt.Dimension(100, 100));
         btnLo2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnLo2.addActionListener(new java.awt.event.ActionListener() {
@@ -741,7 +742,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         btnLo3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnLo3.setMaximumSize(new java.awt.Dimension(100, 100));
         btnLo3.setMinimumSize(new java.awt.Dimension(100, 100));
-        btnLo3.setName("16"); // NOI18N
+        btnLo3.setName("18"); // NOI18N
         btnLo3.setPreferredSize(new java.awt.Dimension(100, 100));
         btnLo3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnLo3.addActionListener(new java.awt.event.ActionListener() {
@@ -758,7 +759,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         btnLo4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnLo4.setMaximumSize(new java.awt.Dimension(100, 100));
         btnLo4.setMinimumSize(new java.awt.Dimension(100, 100));
-        btnLo4.setName("17"); // NOI18N
+        btnLo4.setName("19"); // NOI18N
         btnLo4.setPreferredSize(new java.awt.Dimension(100, 100));
         btnLo4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnLo4.addActionListener(new java.awt.event.ActionListener() {
@@ -775,7 +776,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         btnLo5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnLo5.setMaximumSize(new java.awt.Dimension(100, 100));
         btnLo5.setMinimumSize(new java.awt.Dimension(100, 100));
-        btnLo5.setName("18"); // NOI18N
+        btnLo5.setName("20"); // NOI18N
         btnLo5.setPreferredSize(new java.awt.Dimension(100, 100));
         btnLo5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnLo5.addActionListener(new java.awt.event.ActionListener() {
@@ -1294,7 +1295,6 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                     .addGroup(jPanel13Layout.createSequentialGroup()
                         .addGap(4, 4, 4)
                         .addComponent(jLabel21)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel13Layout.createSequentialGroup()
                                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1590,7 +1590,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
 
     private void btnStopContinueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStopContinueActionPerformed
         // TODO add your handling code here:
-        if (idtable <= 1) {
+        if (idtable <= 0) {
             XDialog.alert(this, "Chưa chọn bàn chơi !");
             return;
         }
@@ -1598,7 +1598,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
             XDialog.alert(this, "Chưa có thời gian bắt đầu");
             return;
         }
-        
+
         // Kiểm tra trạng thái hiện tại để quyết định hành động
         if (!isPaused) {
             // Đang chạy → Dừng
@@ -1620,10 +1620,10 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
             XDialog.alert(this, "Chưa dừng giờ");
         } else {
             if (XDialog.confirm(this, "Bạn muốn thanh toán bàn này?")) {
-            this.updateBill();
-            clickThanhToan();
-            XDialog.info(this, "ĐÃ THANH TOÁN");
-            btnStart.setEnabled(true);
+                this.updateBill();
+                clickThanhToan();
+                XDialog.info(this, "ĐÃ THANH TOÁN");
+                btnStart.setEnabled(true);
             }
         }
     }//GEN-LAST:event_btnThanhToanActionPerformed
@@ -1661,14 +1661,14 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
 
     private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartActionPerformed
         // TODO add your handling code here:
-        if (idtable <= 1) {
+        if (idtable <= 0) {
             XDialog.alert(this, "Chưa chọn bàn chơi !");
             return;
         }
         this.insertBill();
         btnStart.setEnabled(false);
         btnStopContinue.setEnabled(true);
-        
+
         // Bắt đầu theo dõi thời gian chơi
         startPlayTime();
     }//GEN-LAST:event_btnStartActionPerformed
@@ -1720,33 +1720,33 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
             String productName = (String) tbInfo.getValueAt(selectedRow, 0);
             int currentQuantity = (Integer) tbInfo.getValueAt(selectedRow, 1);
             float unitPrice = (Float) tbInfo.getValueAt(selectedRow, 2);
-            
+
             if (currentQuantity > 1) {
                 // Nếu số lượng > 1, hiện dialog nhập số lượng cần xóa
-                String input = XDialog.prompt(this, 
-                    "Nhập số lượng cần xóa.\nSố lượng hiện có: " + currentQuantity);
-                
+                String input = XDialog.prompt(this,
+                        "Nhập số lượng cần xóa.\nSố lượng hiện có: " + currentQuantity);
+
                 if (input != null && !input.trim().isEmpty()) {
                     try {
                         int quantityToRemove = Integer.parseInt(input.trim());
-                        
+
                         // Kiểm tra số lượng nhập vào
                         if (quantityToRemove <= 0) {
                             XDialog.alert(this, "Số lượng phải lớn hơn 0!");
                             return;
                         }
-                        
+
                         if (quantityToRemove > currentQuantity) {
                             XDialog.alert(this, "Số lượng xóa không được lớn hơn số lượng hiện có!");
                             return;
                         }
-                        
+
                         // Xử lý xóa số lượng
                         if (quantityToRemove == currentQuantity) {
                             // Xóa toàn bộ sản phẩm
                             modelTable = (DefaultTableModel) tbInfo.getModel();
                             modelTable.removeRow(selectedRow);
-                            
+
                             // Xóa trong database
                             try {
                                 String foodId = showIdFood(); // Lấy ID của sản phẩm được chọn
@@ -1756,17 +1756,17 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-                            
+
                             XDialog.info(this, "Đã xóa toàn bộ " + productName + " khỏi hóa đơn!");
                         } else {
                             // Giảm số lượng
                             int newQuantity = currentQuantity - quantityToRemove;
                             float newTotalPrice = newQuantity * unitPrice;
-                            
+
                             // Cập nhật trên bảng
                             tbInfo.setValueAt(newQuantity, selectedRow, 1);
                             tbInfo.setValueAt(newTotalPrice, selectedRow, 3);
-                            
+
                             // Cập nhật trong database
                             try {
                                 String foodId = showIdFood(); // Lấy ID của sản phẩm được chọn
@@ -1776,13 +1776,13 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-                            
+
                             XDialog.info(this, "Đã xóa " + quantityToRemove + " " + productName + " khỏi hóa đơn!");
                         }
-                        
+
                         // Tính lại tổng tiền
                         calTotalPice();
-                        
+
                     } catch (NumberFormatException e) {
                         XDialog.alert(this, "Vui lòng nhập số hợp lệ!");
                     }
@@ -1792,7 +1792,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                 if (XDialog.confirm(this, "Bạn có muốn xóa sản phẩm này khỏi hóa đơn?")) {
                     modelTable = (DefaultTableModel) tbInfo.getModel();
                     modelTable.removeRow(selectedRow);
-                    
+
                     // Xóa trong database
                     try {
                         String foodId = showIdFood(); // Lấy ID của sản phẩm được chọn
@@ -1802,10 +1802,10 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    
+
                     // Tính lại tổng tiền
                     calTotalPice();
-                    
+
                     XDialog.info(this, "Đã xóa sản phẩm khỏi hóa đơn!");
                 }
             }
@@ -1839,6 +1839,10 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(PolyBilliardsJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -1996,13 +2000,13 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         // Set hand cursor for all buttons
         XUI.setHandCursor(this);
 
-
         hourlyRateCalculator = new XHourlyRateCalculator();
         snpCount.setValue(1);
         setlbDateNow();
         dataCboCategory();
         eventAction();
-        
+        clickTable(); // Gọi clickTable() để gán ActionListener cho tất cả button bàn
+
         // Khởi tạo timer cho thời gian chơi
         initPlayTimeTimer();
     }
@@ -2027,26 +2031,26 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         if (!isPlaying || isPaused) {
             return; // Không cập nhật khi dừng
         }
-        
+
         if (startTime > 0) {
             long currentTime = System.currentTimeMillis();
             long elapsedTime = currentTime - startTime - totalPausedTime;
-            
+
             // Chuyển đổi milliseconds thành giờ:phút:giây
             long hours = elapsedTime / (1000 * 60 * 60);
             long minutes = (elapsedTime % (1000 * 60 * 60)) / (1000 * 60);
             long seconds = (elapsedTime % (1000 * 60)) / 1000;
-            
+
             String timeString = String.format("%02d:%02d:%02d", hours, minutes, seconds);
             lbTime.setText(timeString);
         }
     }
-    
+
     // Khởi tạo timer cho thời gian chơi
     private void initPlayTimeTimer() {
         playTimeTimer = new javax.swing.Timer(1000, e -> updatePlayTime());
     }
-    
+
     // Bắt đầu theo dõi thời gian chơi
     private void startPlayTime() {
         if (!isPaused) {
@@ -2055,13 +2059,13 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
             totalPausedTime = 0;
         }
         // Nếu đang pause, không reset startTime
-        
+
         isPlaying = true;
         if (playTimeTimer != null) {
             playTimeTimer.start();
         }
     }
-    
+
     // Dừng theo dõi thời gian chơi
     private void stopPlayTime() {
         isPlaying = false;
@@ -2069,7 +2073,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
             playTimeTimer.stop();
         }
     }
-    
+
     // Reset thời gian chơi
     private void resetPlayTime() {
         stopPlayTime();
@@ -2079,47 +2083,46 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         pauseTime = 0;
         lbTime.setText("00:00:00");
         txtTimeStop.setText("");
-        
+
         // Reset UI
         btnStopContinue.setText("Dừng giờ");
-        btnStopContinue.setBackground(new Color(255,0,0));
+        btnStopContinue.setBackground(new Color(255, 0, 0));
     }
-    
+
     private void pauseGame() {
         isPaused = true;
         pauseTime = System.currentTimeMillis();
-        
+
         // Dừng timer
         if (playTimeTimer != null) {
             playTimeTimer.stop();
         }
-        
+
         // Cập nhật UI
         btnStopContinue.setText("Tiếp tục");
-        btnStopContinue.setBackground(new Color(0,102,102));
-        
+        btnStopContinue.setBackground(new Color(0, 102, 102));
+
         // Hiển thị thời gian dừng theo định dạng mới
         txtTimeStop.setText(XDateHelper.stringsnowFormatted());
     }
-    
+
     private void resumeGame() {
         isPaused = false;
-        
+
         // Tính tổng thời gian đã dừng
         long currentTime = System.currentTimeMillis();
         totalPausedTime += (currentTime - pauseTime);
-        
+
         // KHÔNG cập nhật startTime - để nguyên như cũ
-        
         // Khởi động lại timer
         if (playTimeTimer != null) {
             playTimeTimer.start();
         }
-        
+
         // Cập nhật UI
         btnStopContinue.setText("Dừng giờ");
-        btnStopContinue.setBackground(new Color(255,0,0)); // Màu mặc định
-        
+        btnStopContinue.setBackground(new Color(255, 0, 0)); // Màu mặc định
+
         // Xóa thời gian dừng
         txtTimeStop.setText("");
     }
@@ -2268,7 +2271,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         modelTable.setRowCount(0);
         btnStart.setEnabled(true);
         btnStopContinue.setEnabled(false);
-        
+
         // Reset thời gian chơi
         resetPlayTime();
     }
@@ -2276,7 +2279,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
     //getBill
     private Bill getBill() {
         Bill model = new Bill();
-        
+
         // Sửa: Parse từ định dạng hiển thị về Date cho DateCheckin
         String displayTimeStart = txtTimeStart.getText();
         if (displayTimeStart != null && !displayTimeStart.trim().isEmpty()) {
@@ -2290,7 +2293,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                 model.setDatecheckin(XDateHelper.toDate(txtTimeStart.getText()));
             }
         }
-        
+
         // Sửa: Parse từ định dạng hiển thị về Date cho DateCheckout
         if (txtTimeStop.getText().equals("")) {
             model.setDatecheckout(XDateHelper.toDate(null));
@@ -2306,8 +2309,9 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                 model.setDatecheckout(XDateHelper.toDate(txtTimeStop.getText()));
             }
         }
-        
+
         model.setIdtable(idtable);
+        model.setTableName(lbTable.getText());
         return model;
     }
 
@@ -2318,6 +2322,15 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         model.setIdbill(showIdBill());
         model.setIdfood(showIdFood()); // Giữ nguyên String
         model.setCount(count);
+        
+        // Thêm thông tin từ Food được chọn
+        Food selectedFood = (Food) cboFood.getSelectedItem();
+        if (selectedFood != null) {
+            model.setFoodName(selectedFood.getName());
+            model.setDiscount(selectedFood.getDiscount());
+            model.setUnitPrice(selectedFood.getUnitPrice());
+        }
+        
         return model;
     }
 
@@ -2331,41 +2344,41 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                 XDialog.alert(this, "Vui lòng chọn đồ ăn!");
                 return;
             }
-            
+
             String selectedFoodName = selectedFood.getName();
             boolean foodExists = false;
             int existingRowIndex = -1;
-            
+
             // Tìm kiếm trong bảng hiện tại
             for (int i = 0; i < tbInfo.getRowCount(); i++) {
                 Object tableValue = tbInfo.getValueAt(i, 0);
                 String tableFoodName = null;
-                
+
                 // Xử lý cả trường hợp tableValue là Food hoặc String
                 if (tableValue instanceof Food) {
                     tableFoodName = ((Food) tableValue).getName();
                 } else if (tableValue instanceof String) {
                     tableFoodName = (String) tableValue;
                 }
-                
+
                 if (selectedFoodName.equals(tableFoodName)) {
                     foodExists = true;
                     existingRowIndex = i;
                     break;
                 }
             }
-            
+
             if (foodExists) {
                 // Nếu đồ ăn đã có, tăng số lượng
                 int currentCount = (Integer) tbInfo.getValueAt(existingRowIndex, 1);
                 int newCount = currentCount + billinfo.getCount();
                 float unitPrice = (Float) tbInfo.getValueAt(existingRowIndex, 2);
                 float newTotalPrice = newCount * unitPrice;
-                
+
                 // Cập nhật dòng trong bảng
                 tbInfo.setValueAt(newCount, existingRowIndex, 1);
                 tbInfo.setValueAt(newTotalPrice, existingRowIndex, 3);
-                
+
                 // Cập nhật trong database - thay vì insert mới, update record cũ
                 try {
                     // Tìm record cũ trong database và update số lượng
@@ -2381,7 +2394,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                
+
                 XDialog.info(this, "Đã tăng số lượng " + selectedFoodName + " lên " + newCount);
             } else {
                 // Nếu đồ ăn chưa có, thêm mới
@@ -2389,7 +2402,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                 this.loadDataonTable();
                 XDialog.info(this, "Đã thêm " + selectedFoodName + " vào hóa đơn");
             }
-            
+
             snpCount.setValue(1);
             calTotalPice(); // Tính lại tổng tiền
         } catch (Exception e) {
@@ -2517,22 +2530,22 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                 txtTimeStart.setText(XDateHelper.toStringFormatted(bill));
                 btnStart.setEnabled(false);
                 btnStopContinue.setEnabled(true);
-                
+
                 // Khôi phục thời gian chơi nếu bàn đang được sử dụng
                 if (bill != null) {
                     // Tính toán thời gian đã chơi từ thời điểm bắt đầu
                     long startTimeMillis = bill.getTime();
                     long currentTime = System.currentTimeMillis();
                     long elapsedTime = currentTime - startTimeMillis;
-                    
+
                     // Cập nhật thời gian đã chơi
                     long hours = elapsedTime / (1000 * 60 * 60);
                     long minutes = (elapsedTime % (1000 * 60 * 60)) / (1000 * 60);
                     long seconds = (elapsedTime % (1000 * 60)) / 1000;
-                    
+
                     String timeString = String.format("%02d:%02d:%02d", hours, minutes, seconds);
                     lbTime.setText(timeString);
-                    
+
                     // Bắt đầu timer để tiếp tục cập nhật thời gian
                     startTime = startTimeMillis;
                     isPlaying = true;
@@ -2544,7 +2557,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                 txtTimeStart.setText("");
                 btnStart.setEnabled(true);
                 btnStopContinue.setEnabled(false);
-                
+
                 // Reset thời gian chơi nếu bàn trống
                 resetPlayTime();
             }
@@ -2561,13 +2574,13 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         try {
             // 1. Update bill trước (set status = 1 và username)
             this.updateBill();
-            
+
             // 2. Sau đó mới gọi stored procedure để xóa
             billifdao.deleteBillInfo();
-            
+
             // 3. Load lại data
             this.loadDataonTable();
-            
+
             // Reset thời gian chơi sau khi thanh toán
             resetPlayTime();
         } catch (Exception e) {
@@ -2579,7 +2592,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
     private void billTamTinh() {
         try {
             List<Menu> m = menudao.selectAllMenuByIdTable(idtable);
-            XDialog.info(this, 
+            XDialog.info(this,
                     "Mã hóa đơn :" + lbMaHoaDon.getText()
                     + "\nNgày tạo :" + txtTimeStop.getText()
                     + "\nBàn khách chơi :" + lbTable.getText()
@@ -2602,43 +2615,67 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
 
     /**
      * Lấy tên hiển thị của bàn dựa trên ID
+     *
      * @param tableId ID của bàn
      * @return Tên hiển thị của bàn
      */
     private String getTableDisplayName(int tableId) {
         switch (tableId) {
             // Bàn Liber (Thường) - ID 2-13
-            case 2: return "Bàn 1";
-            case 3: return "Bàn 2";
-            case 4: return "Bàn 3";
-            case 5: return "Bàn 4";
-            case 6: return "Bàn 5";
-            case 7: return "Bàn 6";
-            case 8: return "Bàn 7";
-            case 9: return "Bàn 8";
-            case 10: return "Bàn 9";
-            case 11: return "Bàn 10";
-            case 12: return "Bàn 11";
-            case 13: return "Bàn 12";
-            
-            // Bàn Lỗ - ID 14-18
-            case 14: return "Bàn lỗ 1";
-            case 15: return "Bàn lỗ 2";
-            case 16: return "Bàn lỗ 3";
-            case 17: return "Bàn lỗ 4";
-            case 18: return "Bàn lỗ 5";
-            
+            case 1:
+                return "Bàn liber 1";
+            case 2:
+                return "Bàn liber 2";
+            case 3:
+                return "Bàn liber 3";
+            case 4:
+                return "Bàn liber 4";
+            case 5:
+                return "Bàn liber 5";
+            case 6:
+                return "Bàn liber 6";
+            case 7:
+                return "Bàn liber 7";
+            case 8:
+                return "Bàn liber 8";
+            case 9:
+                return "Bàn liber 9";
+            case 10:
+                return "Bàn liber 10";
+            case 11:
+                return "Bàn liber 11";
+            case 12:
+                return "Bàn liber 12";
+
             // Bàn VIP - ID 19-21
-            case 19: return "Bàn VIP 1";
-            case 20: return "Bàn VIP 2";
-            case 21: return "Bàn VIP 3";
-            
-            default: return "Bàn " + tableId;
+            case 13:
+                return "Bàn VIP 1";
+            case 14:
+                return "Bàn VIP 2";
+            case 15:
+                return "Bàn VIP 3";
+                
+                
+            // Bàn Lỗ - ID 14-18
+            case 16:
+                return "Bàn lỗ 1";
+            case 17:
+                return "Bàn lỗ 2";
+            case 18:
+                return "Bàn lỗ 3";
+            case 19:
+                return "Bàn lỗ 4";
+            case 20:
+                return "Bàn lỗ 5";
+
+            default:
+                return "Bàn " + tableId;
         }
     }
 
     /**
      * Kiểm tra xem có bàn nào chưa thanh toán không
+     *
      * @return true nếu có bàn chưa thanh toán, false nếu tất cả đã thanh toán
      */
     private boolean checkUnpaidTables() {
@@ -2646,13 +2683,13 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
             // Lấy danh sách tất cả các bàn có bill chưa thanh toán (status = 0)
             String sql = "SELECT DISTINCT idTable FROM Bill WHERE status = 0";
             List<Integer> unpaidTables = new ArrayList<>();
-            
+
             try (java.sql.ResultSet rs = poly.billiards.util.XJdbc.exeQuery(sql)) {
                 while (rs.next()) {
                     unpaidTables.add(rs.getInt("idTable"));
                 }
             }
-            
+
             if (!unpaidTables.isEmpty()) {
                 // Tạo danh sách tên bàn chưa thanh toán
                 StringBuilder tableNames = new StringBuilder();
@@ -2663,11 +2700,11 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                     // Sử dụng mapping để hiển thị tên bàn chính xác
                     tableNames.append(getTableDisplayName(unpaidTables.get(i)));
                 }
-                
+
                 XDialog.alert(this, "Các bàn sau chưa thanh toán xong:\n" + tableNames.toString());
                 return true;
             }
-            
+
             return false;
         } catch (Exception e) {
             e.printStackTrace();
@@ -2678,9 +2715,10 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
     public void showBillDetail(Bill bill) {
         // Chuyển sang tab chi tiết (index 1)
         tabs.setSelectedIndex(1);
+        btnStart.setEnabled(false);
         // Hiển thị thông tin bill lên các trường cơ bản
         lbMaHoaDon.setText(String.valueOf(bill.getId()));
-        lbTable.setText("Bàn " + bill.getIdtable());
+        lbTable.setText(bill.getTableName());
         txtTimeStart.setText(bill.getDatecheckin() != null ? XDateHelper.toString(bill.getDatecheckin(), "yyyy-MM-dd HH:mm:ss") : "");
         txtTimeStop.setText(bill.getDatecheckout() != null ? XDateHelper.toString(bill.getDatecheckout(), "yyyy-MM-dd HH:mm:ss") : "");
         lbTongTien.setText(bill.getTotalPrice() > 0 ? formatCurrency(bill.getTotalPrice()) : "");
@@ -2689,15 +2727,21 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         model.setRowCount(0);
         List<Billinfo> billInfos = billifdao.selectByBillId(bill.getId());
         for (Billinfo info : billInfos) {
-            // Lấy tên món từ FoodDAO
-            Food food = fdao.findById(info.getIdfood());
+            // Sử dụng dữ liệu đã lưu trong Billinfo thay vì query FoodDAO
             Object[] row = {
-                food != null ? food.getName() : "",
+                info.getFoodName() != null ? info.getFoodName() : "",
                 info.getCount(),
-                food != null ? food.getUnitPrice() : "",
-                (food != null ? food.getUnitPrice() : 0) * info.getCount()
+                info.getUnitPrice(),
+                info.getUnitPrice() * info.getCount()
             };
             model.addRow(row);
         }
+    }
+    
+    /**
+     * Getter cho currentUser
+     */
+    public User getCurrentUser() {
+        return currentUser;
     }
 }

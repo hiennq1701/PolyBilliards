@@ -22,9 +22,9 @@ import poly.billiards.util.XQuery;
 public class BillDAO extends SysDAO<Bill, Integer> {
 
     String SELECT_ALL_SQL = "SELECT * FROM Bill";
-    String INSERT_SQL = "INSERT INTO Bill(DateCheckin, IdTable, Status, TotalPrice) VALUES (?, ?, ?, ?)";
-    String UPDATE_SQL = "UPDATE Bill SET DateCheckout = ?, IdTable = ?, Status = ?, TotalPrice = ?, Username = ? WHERE Id = ?";
-    String DELETE_SQL = "DELETE Bill WHERE Id = ?";
+    String INSERT_SQL = "INSERT INTO Bill(DateCheckin, IdTable, Status, TotalPrice, TableName) VALUES (?, ?, ?, ?, ?)";
+    String UPDATE_SQL = "UPDATE Bill SET DateCheckout = ?, IdTable = ?, Status = ?, TotalPrice = ?, Username = ?, TableName = ? WHERE Id = ?";
+    String DELETE_SQL = "DELETE FROM Bill WHERE Id = ?";
     String SELECT_BY_ID = "SELECT * FROM Bill WHERE Id = ?";
     String SELECT_ID_BY_IDTABLE = "select Id from bill where IdTable = ?";
     String SELECT_DATECHECKIN_BY_IDTABLE = "select DateCheckin from Bill where IdTable = ?";
@@ -32,7 +32,7 @@ public class BillDAO extends SysDAO<Bill, Integer> {
     @Override
     public void insert(Bill entitype) {
         // Khi tạo bill mới, TotalPrice mặc định là 0
-        XJdbc.exeUpdate(INSERT_SQL, entitype.getDatecheckin(), entitype.getIdtable(), entitype.getStatus(), 0);
+        XJdbc.exeUpdate(INSERT_SQL, entitype.getDatecheckin(), entitype.getIdtable(), entitype.getStatus(), 0, entitype.getTableName());
     }
 
     @Override
@@ -43,6 +43,7 @@ public class BillDAO extends SysDAO<Bill, Integer> {
                 entitype.getStatus(),
                 entitype.getTotalPrice(),
                 entitype.getUsername(),
+                entitype.getTableName(),
                 entitype.getId());
     }
 
@@ -70,10 +71,12 @@ public class BillDAO extends SysDAO<Bill, Integer> {
             while (rs.next()) {
                 Bill b = new Bill();
                 b.setId(rs.getInt("Id"));
-                b.setDatecheckin(rs.getDate("DateCheckin"));
-                b.setDatecheckout(rs.getDate("DateCheckout"));
+                b.setDatecheckin(rs.getTimestamp("DateCheckin"));
+                b.setDatecheckout(rs.getTimestamp("DateCheckout"));
                 b.setIdtable(rs.getInt("IdTable"));
                 b.setStatus(rs.getInt("Status"));
+                b.setUsername(rs.getString("Username"));
+                b.setTableName(rs.getString("TableName"));
                 list.add(b);
             }
         } catch (Exception e) {
@@ -110,7 +113,14 @@ public class BillDAO extends SysDAO<Bill, Integer> {
      * Lấy danh sách hóa đơn theo khoảng thời gian DateCheckIn
      */
     public List<Bill> selectByDateRange(Date begin, Date end) {
-        String sql = "SELECT * FROM Bill WHERE DateCheckin >= ? AND DateCheckin <= ?";
+        String sql = "SELECT * FROM BillDeleted WHERE DateCheckin >= ? AND DateCheckin <= ?";  
         return selectBySQL(sql, begin, end);
+    }
+    
+    /**
+     * Xóa từ bảng BillDeleted
+     */
+    public void deleteFromBillDeleted(Integer id) {
+        XJdbc.exeUpdate("DELETE FROM BillDeleted WHERE Id = ?", id);
     }
 }

@@ -106,6 +106,7 @@ CREATE TABLE [dbo].[Bill](
 	[Status] [int] NOT NULL,
 	[TotalPrice] [float] NOT NULL,
 	[Username] [nvarchar](20),
+	[TableName] [nvarchar](50) NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -223,27 +224,26 @@ SET IDENTITY_INSERT [dbo].[ActivityLogs] OFF
 GO
 SET IDENTITY_INSERT [dbo].[BilliardTable] ON 
 
-INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (1, N'Bàn 1', N'Tốt')
-INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (2, N'Bàn 2', N'Tốt')
-INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (3, N'Bàn 3', N'Tốt')
-INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (4, N'Bàn 4', N'Tốt')
-INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (5, N'Bàn 5', N'Hư nhẹ')
-INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (6, N'Bàn 6', N'Tốt')
-INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (7, N'Bàn 7', N'Tốt')
-INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (8, N'Bàn 8', N'Tốt')
-INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (9, N'Bàn 9', N'Tốt')
+INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (1, N'Bàn liber 1', N'Tốt')
+INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (2, N'Bàn liber 2', N'Tốt')
+INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (3, N'Bàn liber 3', N'Tốt')
+INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (4, N'Bàn liber 4', N'Tốt')
+INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (5, N'Bàn liber 5', N'Hư nhẹ')
+INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (6, N'Bàn liber 6', N'Tốt')
+INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (7, N'Bàn liber 7', N'Tốt')
+INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (8, N'Bàn liber 8', N'Tốt')
+INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (9, N'Bàn liber 9', N'Tốt')
 INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (10, N'Bàn 10', N'Hư')
 INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (11, N'Bàn 11', N'Tốt')
 INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (12, N'Bàn 12', N'Tốt')
-INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (13, N'Bàn 13', N'Tốt')
-INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (14, N'Bàn 14', N'Tốt')
-INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (15, N'Bàn 15', N'Tốt')
-INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (16, N'Bàn 16', N'Tốt')
-INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (17, N'Bàn 17', N'Tốt')
-INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (18, N'Bàn 18', N'Tốt')
-INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (19, N'Bàn 19', N'Tốt')
-INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (20, N'Bàn 20', N'Tốt')
-INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (21, N'Bàn 21', N'Tốt')
+INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (13, N'Bàn VIP 1', N'Tốt')
+INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (14, N'Bàn VIP 2', N'Tốt')
+INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (15, N'Bàn VIP 3', N'Tốt')
+INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (16, N'Bàn lỗ 1', N'Tốt')
+INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (17, N'Bàn lỗ 2', N'Tốt')
+INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (18, N'Bàn lỗ 3', N'Tốt')
+INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (19, N'Bàn lỗ 4', N'Tốt')
+INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (20, N'Bàn lỗ 5', N'Tốt')
 SET IDENTITY_INSERT [dbo].[BilliardTable] OFF
 GO
 INSERT [dbo].[FoodCategory] ([Id], [Name]) VALUES (N'CAT001', N'Drinks')
@@ -320,6 +320,7 @@ CREATE TABLE [dbo].[BillDeleted](
     [Status] [int] NOT NULL,
     [TotalPrice] [float] NOT NULL,
     [Username] [nvarchar](20) NULL,
+    [TableName] [nvarchar](50) NULL,
     [DeletedAt] [datetime] NOT NULL DEFAULT (getdate())
 );
 GO
@@ -342,8 +343,8 @@ AS
 BEGIN
     SET NOCOUNT ON;
     -- Lưu thông tin Bill sắp xóa vào BillDeleted
-    INSERT INTO BillDeleted (Id, DateCheckin, DateCheckout, IdTable, Status, TotalPrice, Username)
-    SELECT Id, DateCheckin, DateCheckout, IdTable, Status, TotalPrice, Username
+    INSERT INTO BillDeleted (Id, DateCheckin, DateCheckout, IdTable, Status, TotalPrice, Username, TableName)
+    SELECT Id, DateCheckin, DateCheckout, IdTable, Status, TotalPrice, Username, TableName
     FROM Bill
     WHERE Status = 1; -- Chỉ xóa bill đã thanh toán
 

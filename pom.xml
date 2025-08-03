@@ -43,9 +43,9 @@
             <version>1.4</version>
         </dependency>
         <dependency>
-            <groupId>io.github.dj-raven</groupId>
-            <artifactId>swing-datetime-picker</artifactId>
-            <version>2.1.2</version>
+            <groupId>com.toedter</groupId>
+            <artifactId>datechooser-swing</artifactId>
+            <version>1.4.2</version>
         </dependency>
     </dependencies>
     <properties>

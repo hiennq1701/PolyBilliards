@@ -16,6 +16,7 @@ public class Bill {
     private int idtable, status;
     private float totalPrice;
     private String username;
+    private String tableName;
 
     public Bill() {
     }
@@ -84,6 +85,14 @@ public class Bill {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getTableName() {
+        return tableName;
+    }
+
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
     }
     
 
