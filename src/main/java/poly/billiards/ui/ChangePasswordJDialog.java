@@ -23,9 +23,9 @@ public class ChangePasswordJDialog extends javax.swing.JDialog implements Change
     public ChangePasswordJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        XUI.setupUI(this);
+//        XUI.setupUI(this);
         XUI.setHandCursor(this);
-        setupUI();
+//        setupUI();
     }
 
     private void setupUI() {
@@ -75,8 +75,8 @@ public class ChangePasswordJDialog extends javax.swing.JDialog implements Change
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Đổi mật khẩu");
-        setPreferredSize(new java.awt.Dimension(500, 250));
-        setSize(new java.awt.Dimension(500, 250));
+        setPreferredSize(new java.awt.Dimension(500, 300));
+        setSize(new java.awt.Dimension(500, 300));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -148,7 +148,7 @@ public class ChangePasswordJDialog extends javax.swing.JDialog implements Change
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnClose)
                     .addComponent(btnSave))
@@ -168,8 +168,7 @@ public class ChangePasswordJDialog extends javax.swing.JDialog implements Change
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();

@@ -8,6 +8,7 @@ import poly.billiards.entity.Bill;
 import poly.billiards.entity.Billinfo;
 import java.sql.Date;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -75,6 +76,16 @@ public class BillDAO extends SysDAO<Bill, Integer> {
                 b.setDatecheckout(rs.getTimestamp("DateCheckout"));
                 b.setIdtable(rs.getInt("IdTable"));
                 b.setStatus(rs.getInt("Status"));
+                
+                // Xử lý TotalPrice cho cả Bill và BillDeleted
+                try {
+                    b.setTotalPrice(rs.getFloat("TotalPrice"));
+                } catch (SQLException e) {
+                    // Nếu không có cột TotalPrice, set mặc định
+                    b.setTotalPrice(0.0f);
+                    System.err.println("Warning: TotalPrice column not found for Bill ID: " + b.getId());
+                }
+                
                 b.setUsername(rs.getString("Username"));
                 b.setTableName(rs.getString("TableName"));
                 list.add(b);

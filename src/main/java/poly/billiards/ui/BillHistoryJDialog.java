@@ -70,19 +70,19 @@ public class BillHistoryJDialog extends javax.swing.JDialog implements BillHisto
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblBills = new javax.swing.JTable();
-        jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         btnCheckAll = new javax.swing.JButton();
         btnUncheckAll = new javax.swing.JButton();
         btnDeleteCheckedItems = new javax.swing.JButton();
         lbDoanhThuTitle = new javax.swing.JLabel();
         lbTongDoanhThu = new javax.swing.JLabel();
-        txtDate = new javax.swing.JTextField();
-        btnLastWeek = new javax.swing.JButton();
-        btnLast28Days = new javax.swing.JButton();
         cboFilter = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
+        pnlFilterTime = new javax.swing.JPanel();
         btnFilterShowAll = new javax.swing.JButton();
+        btnLast28Days = new javax.swing.JButton();
+        btnLastWeek = new javax.swing.JButton();
+        txtDate = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Lịch sử bán hàng của bạn");
@@ -130,17 +130,6 @@ public class BillHistoryJDialog extends javax.swing.JDialog implements BillHisto
             tblBills.getColumnModel().getColumn(0).setPreferredWidth(30);
             tblBills.getColumnModel().getColumn(6).setPreferredWidth(10);
         }
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 791, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 33, Short.MAX_VALUE)
-        );
 
         btnCheckAll.setText("Chọn tất cả");
         btnCheckAll.addActionListener(new java.awt.event.ActionListener() {
@@ -190,31 +179,13 @@ public class BillHistoryJDialog extends javax.swing.JDialog implements BillHisto
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(2, 2, 2)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lbDoanhThuTitle)
-                            .addComponent(lbTongDoanhThu))
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnCheckAll)))
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lbDoanhThuTitle)
+                        .addComponent(lbTongDoanhThu))
+                    .addComponent(btnCheckAll)
                     .addComponent(btnUncheckAll)
                     .addComponent(btnDeleteCheckedItems)))
         );
-
-        txtDate.setColumns(8);
-
-        btnLastWeek.setText("Xem tuần qua");
-        btnLastWeek.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLastWeekActionPerformed(evt);
-            }
-        });
-
-        btnLast28Days.setText("Xem 28 ngày qua");
-        btnLast28Days.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLast28DaysActionPerformed(evt);
-            }
-        });
 
         cboFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Thời điểm tạo", "Thời điểm thanh toán", "Người dùng", "Tên bàn" }));
         cboFilter.addItemListener(new java.awt.event.ItemListener() {
@@ -232,13 +203,51 @@ public class BillHistoryJDialog extends javax.swing.JDialog implements BillHisto
             }
         });
 
+        btnLast28Days.setText("Xem 28 ngày qua");
+        btnLast28Days.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLast28DaysActionPerformed(evt);
+            }
+        });
+
+        btnLastWeek.setText("Xem tuần qua");
+        btnLastWeek.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLastWeekActionPerformed(evt);
+            }
+        });
+
+        txtDate.setColumns(8);
+
+        javax.swing.GroupLayout pnlFilterTimeLayout = new javax.swing.GroupLayout(pnlFilterTime);
+        pnlFilterTime.setLayout(pnlFilterTimeLayout);
+        pnlFilterTimeLayout.setHorizontalGroup(
+            pnlFilterTimeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFilterTimeLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnLastWeek)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnLast28Days)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnFilterShowAll))
+        );
+        pnlFilterTimeLayout.setVerticalGroup(
+            pnlFilterTimeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFilterTimeLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(pnlFilterTimeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLastWeek)
+                    .addComponent(btnLast28Days)
+                    .addComponent(btnFilterShowAll)))
+        );
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 81, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -249,28 +258,19 @@ public class BillHistoryJDialog extends javax.swing.JDialog implements BillHisto
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cboFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnLastWeek)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnLast28Days)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnFilterShowAll)
+                        .addComponent(pnlFilterTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnLastWeek)
-                    .addComponent(btnLast28Days)
-                    .addComponent(cboFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1)
-                    .addComponent(btnFilterShowAll))
+                .addContainerGap(161, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cboFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1))
+                    .addComponent(pnlFilterTime, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -411,11 +411,11 @@ public class BillHistoryJDialog extends javax.swing.JDialog implements BillHisto
     private javax.swing.JComboBox<String> cboFilter;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbDoanhThuTitle;
     private javax.swing.JLabel lbTongDoanhThu;
+    private javax.swing.JPanel pnlFilterTime;
     private javax.swing.JTable tblBills;
     private javax.swing.JTextField txtDate;
     // End of variables declaration//GEN-END:variables
@@ -433,6 +433,15 @@ public class BillHistoryJDialog extends javax.swing.JDialog implements BillHisto
     public void fillBills(String sql) {
         // Lấy dữ liệu từ database
         bills = billDao.selectBySQL(sql);
+        
+        // Debug log
+        System.out.println("SQL Query: " + sql);
+        System.out.println("Number of bills loaded: " + bills.size());
+        for (Bill bill : bills) {
+            System.out.println("Bill ID: " + bill.getId() + 
+                             ", TotalPrice: " + bill.getTotalPrice() + 
+                             ", Status: " + bill.getStatus());
+        }
         
         // Đổ dữ liệu vào bảng
         DefaultTableModel model = (DefaultTableModel) tblBills.getModel();

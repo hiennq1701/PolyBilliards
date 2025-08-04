@@ -507,7 +507,11 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         btnLiber3.setName("3"); // NOI18N
         btnLiber3.setPreferredSize(new java.awt.Dimension(100, 100));
         btnLiber3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-
+        btnLiber3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLiber3ActionPerformed(evt);
+            }
+        });
 
         btnLiber5.setBackground(new java.awt.Color(204, 204, 204));
         btnLiber5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -829,7 +833,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                     .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
                         .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(17, 17, 17))
         );
@@ -995,7 +999,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         lbTable.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
 
         lbDateNow.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        lbDateNow.setText("00 / 00 / 2000 00:00:00");
+        lbDateNow.setText("00 / 00 / 2000");
 
         jLabel27.setText("Thời gian kết thúc :");
 
@@ -1218,7 +1222,6 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 573, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel13Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                         .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel22)
                             .addGroup(jPanel13Layout.createSequentialGroup()
@@ -1230,9 +1233,10 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lbDateNow)
                                     .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(lbTable, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(lbMaHoaDon, javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(lbTime, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lbTable, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(145, 145, 145))
                     .addGroup(jPanel13Layout.createSequentialGroup()
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1620,7 +1624,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
             XDialog.alert(this, "Chưa dừng giờ");
         } else {
             if (XDialog.confirm(this, "Bạn muốn thanh toán bàn này?")) {
-                this.updateBill();
+                // Chỉ gọi clickThanhToan(), không gọi updateBill() riêng
                 clickThanhToan();
                 XDialog.info(this, "ĐÃ THANH TOÁN");
                 btnStart.setEnabled(true);
@@ -2219,6 +2223,18 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         return String.format("%.0f", amount);
     }
 
+    // Thêm hàm parse ngược an toàn
+    private float parseCurrency(String currencyString) {
+        try {
+            // Loại bỏ các ký tự không phải số
+            String cleanString = currencyString.replaceAll("[^0-9.-]", "");
+            return Float.parseFloat(cleanString);
+        } catch (NumberFormatException e) {
+            System.err.println("Lỗi parse currency: " + currencyString);
+            return 0.0f;
+        }
+    }
+
     //showIdFood
     private String showIdFood() {
         String idfood = null;
@@ -2435,16 +2451,28 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         this.checkinput();
         float tong = 0;
         this.updatelbTienGio();
+        
+        // Tính tổng từ bảng với validation
         for (int i = 0; i < tbInfo.getRowCount(); i++) {
-            float thanhtien = (float) tbInfo.getValueAt(i, 3);
-            tong += thanhtien;
+            Object value = tbInfo.getValueAt(i, 3);
+            if (value != null) {
+                float thanhtien = 0;
+                if (value instanceof Number) {
+                    thanhtien = ((Number) value).floatValue();
+                } else if (value instanceof String) {
+                    thanhtien = parseCurrency((String) value);
+                }
+                tong += thanhtien;
+            }
         }
-        tong += Float.parseFloat(lbTienGio.getText());  //tiengio
-        tong -= Float.parseFloat(txtGiamGia.getText()); //giamgia
-        tong += Float.parseFloat(txtPhiDichVu.getText()); //Phidichvu
-        tong += Float.parseFloat(txtPhiKhac.getText());  //PhiKhac
+        
+        // Cộng các khoản khác với validation
+        tong += parseCurrency(lbTienGio.getText());
+        tong -= parseCurrency(txtGiamGia.getText());
+        tong += parseCurrency(txtPhiDichVu.getText());
+        tong += parseCurrency(txtPhiKhac.getText());
+        
         lbTongTien.setText(formatCurrency(tong));
-
     }
 
     //insert Bill
@@ -2479,14 +2507,20 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                 }
             }
             model.setStatus(1);
-            model.setTotalPrice(Float.parseFloat(lbTongTien.getText()));
+            float totalPrice = parseCurrency(lbTongTien.getText());
+            model.setTotalPrice(totalPrice);
             model.setId(showIdBill());
+            
+            // Debug log
+            System.out.println("Updating bill ID: " + model.getId() + 
+                             " with TotalPrice: " + totalPrice);
+            
             // Lưu thông tin user hiện tại đang đăng nhập
             if (currentUser != null) {
                 model.setUsername(currentUser.getUsername());
             }
             billdao.update(model);
-            this.clearBill();
+            // KHÔNG gọi clearBill() ở đây nữa để tránh reset TotalPrice
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -2578,8 +2612,8 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
             // 2. Sau đó mới gọi stored procedure để xóa
             billifdao.deleteBillInfo();
 
-            // 3. Load lại data
-            this.loadDataonTable();
+            // 3. Clear bill sau khi đã lưu thành công
+            this.clearBill();
 
             // Reset thời gian chơi sau khi thanh toán
             resetPlayTime();
@@ -2716,6 +2750,11 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         // Chuyển sang tab chi tiết (index 1)
         tabs.setSelectedIndex(1);
         btnStart.setEnabled(false);
+        
+        // Debug log
+        System.out.println("Showing bill detail - ID: " + bill.getId() + 
+                         ", TotalPrice: " + bill.getTotalPrice());
+        
         // Hiển thị thông tin bill lên các trường cơ bản
         lbMaHoaDon.setText(String.valueOf(bill.getId()));
         lbTable.setText(bill.getTableName());
@@ -2744,4 +2783,9 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
     public User getCurrentUser() {
         return currentUser;
     }
+    
+    private void btnLiber3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLiber3ActionPerformed
+        // TODO: Thêm code xử lý sự kiện cho btnLiber3
+        clickTable();
+    }//GEN-LAST:event_btnLiber3ActionPerformed
 }
