@@ -739,7 +739,12 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
     public void deleteCheckedItems() {
         if (XDialog.confirm(this, "Bạn thực sự muốn xóa các mục chọn?")) {
             int deletedCount = 0;
+            int skippedCount = 0;
             List<String> usernamesToDelete = new ArrayList<>();
+            List<String> skippedUsernames = new ArrayList<>();
+            
+            // Lấy thông tin người dùng hiện tại đang đăng nhập
+            String currentUsername = poly.billiards.util.XAuth.user.getUsername();
             
             // Thu thập các username cần xóa
             for (int i = 0; i < tblUsers.getRowCount(); i++) {
@@ -748,6 +753,15 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
                 if (isChecked != null && isChecked) {
                     String username = items.get(i).getUsername();
                     System.out.println("Will delete user with username: " + username);
+                    
+                    // Kiểm tra không cho phép xóa chính bản thân
+                    if (username.equals(currentUsername)) {
+                        System.out.println("Cannot delete current user: " + username);
+                        skippedUsernames.add(username);
+                        skippedCount++;
+                        continue;
+                    }
+                    
                     usernamesToDelete.add(username);
                 }
             }
@@ -758,10 +772,17 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
                 deletedCount++;
             }
             
-            System.out.println("Total deleted: " + deletedCount);
+            System.out.println("Total deleted: " + deletedCount + ", Skipped: " + skippedCount);
             this.fillToTable();
-            if (deletedCount > 0) {
+            
+            // Hiển thị thông báo kết quả
+            if (deletedCount > 0 && skippedCount > 0) {
+                XDialog.info(this, "Đã xóa " + deletedCount + " mục được chọn!\n" +
+                    "Bỏ qua " + skippedCount + " mục (không thể xóa chính bản thân).");
+            } else if (deletedCount > 0) {
                 XDialog.info(this, "Đã xóa " + deletedCount + " mục được chọn!");
+            } else if (skippedCount > 0) {
+                XDialog.alert(this, "Không thể xóa " + skippedCount + " mục được chọn vì không thể xóa chính bản thân!");
             } else {
                 XDialog.alert(this, "Không có mục nào được chọn để xóa!");
             }
@@ -895,11 +916,25 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
 
     @Override
     public void delete() {
-        if (XDialog.confirm(this, "Bạn thực sự muốn xóa?")) {
-            String id = txtUsername.getText();
-            userDAO.deleteById(id);
-            this.fillToTable();
-            this.clear();
+        // Lấy thông tin người dùng hiện tại đang đăng nhập
+        String currentUsername = poly.billiards.util.XAuth.user.getUsername();
+        String usernameToDelete = txtUsername.getText();
+        
+        // Kiểm tra không cho phép xóa chính bản thân
+        if (usernameToDelete.equals(currentUsername)) {
+            XDialog.alert(this, "Không thể xóa chính bản thân!\nBạn đang đăng nhập với tài khoản này.");
+            return;
+        }
+        
+        if (XDialog.confirm(this, "Bạn thực sự muốn xóa tài khoản '" + usernameToDelete + "'?")) {
+            try {
+                userDAO.deleteById(usernameToDelete);
+                this.fillToTable();
+                this.clear();
+                XDialog.info(this, "Xóa tài khoản thành công!");
+            } catch (Exception e) {
+                XDialog.alert(this, "Lỗi xóa tài khoản: " + e.getMessage());
+            }
         }
     }
 
@@ -924,7 +959,21 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
         txtUsername.setEnabled(!editable);
         btnCreate.setEnabled(!editable);
         btnUpdate.setEnabled(editable);
-        btnDelete.setEnabled(editable);
+        
+        // Kiểm tra có phải đang edit chính bản thân không
+        String currentUsername = poly.billiards.util.XAuth.user.getUsername();
+        String editingUsername = txtUsername.getText();
+        boolean isEditingSelf = editingUsername.equals(currentUsername);
+        
+        // Disable nút xóa nếu đang edit chính bản thân
+        btnDelete.setEnabled(editable && !isEditingSelf);
+        
+        // Hiển thị tooltip cho nút xóa nếu bị disable
+        if (editable && isEditingSelf) {
+            btnDelete.setToolTipText("Không thể xóa chính bản thân");
+        } else {
+            btnDelete.setToolTipText("Xóa tài khoản");
+        }
 
         int rowCount = tblUsers.getRowCount();
         btnMoveFirst.setEnabled(editable && rowCount > 0);
