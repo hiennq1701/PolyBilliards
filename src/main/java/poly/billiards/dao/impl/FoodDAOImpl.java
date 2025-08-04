@@ -77,4 +77,9 @@ public class FoodDAOImpl implements FoodDAO {
     public List<Food> findByName(String name) {
         return XQuery.getBeanList(Food.class, findByNameSql, "%" + name + "%");
     }
+
+    @Override
+    public List<Food> findByKeyword(String keyword) {
+        return XQuery.getBeanList(Food.class, findByNameSql, "%" + keyword + "%");
+    }
 }

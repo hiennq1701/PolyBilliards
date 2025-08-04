@@ -45,6 +45,16 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
             }
         });
         
+        // Thêm sự kiện tìm kiếm tự động khi nhập text
+        txtTkiem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                // Tìm kiếm tự động sau khi người dùng ngừng nhập 500ms
+                if (evt.getKeyCode() != java.awt.event.KeyEvent.VK_ENTER) {
+                    performAutoSearch();
+                }
+            }
+        });
+        
         this.fillToTable();
     }
 
@@ -65,6 +75,10 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
         btnCheckAll = new javax.swing.JButton();
         btnUncheckAll = new javax.swing.JButton();
         btnDeleteCheckedItems = new javax.swing.JButton();
+        jPanel9 = new javax.swing.JPanel();
+        txtTkiem = new javax.swing.JTextField();
+        btnTimKiem = new javax.swing.JButton();
+        btnLamMoi = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
@@ -161,6 +175,51 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
         jPanel3.add(btnDeleteCheckedItems);
 
         jPanel1.add(jPanel3, java.awt.BorderLayout.PAGE_END);
+
+        txtTkiem.setName(""); // NOI18N
+        txtTkiem.setPreferredSize(new java.awt.Dimension(200, 22));
+
+        btnTimKiem.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnTimKiem.setText("Tìm kiếm tên đồ ăn");
+        btnTimKiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimKiemActionPerformed(evt);
+            }
+        });
+
+        btnLamMoi.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnLamMoi.setText("Làm mới");
+        btnLamMoi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLamMoiActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                .addContainerGap(101, Short.MAX_VALUE)
+                .addComponent(txtTkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnTimKiem)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(100, 100, 100))
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtTkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(11, 11, 11))
+        );
+
+        jPanel1.add(jPanel9, java.awt.BorderLayout.PAGE_START);
 
         tabs.addTab("DANH SÁCH", jPanel1);
 
@@ -276,7 +335,7 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addContainerGap(154, Short.MAX_VALUE))
         );
 
         jPanel2.add(jPanel5, java.awt.BorderLayout.CENTER);
@@ -289,14 +348,14 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 689, Short.MAX_VALUE)
+                .addComponent(tabs)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
+                .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -373,6 +432,64 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
     private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIdActionPerformed
+
+        private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
+        String keyword = txtTkiem.getText().trim();
+        
+        if (keyword.isEmpty()) {
+            XDialog.alert(this, "Vui lòng nhập từ khóa tìm kiếm!");
+            return;
+        }
+
+        try {
+            // Tìm kiếm thông minh theo tên loại đồ ăn
+            List<FoodCategory> searchResults = categories.stream()
+                .filter(category -> {
+                    String name = category.getName().toLowerCase();
+                    String id = category.getId().toLowerCase();
+                    String searchTerm = keyword.toLowerCase();
+                    
+                    // Tìm kiếm chính xác hoặc chứa từ khóa
+                    return name.contains(searchTerm) || 
+                           id.contains(searchTerm) ||
+                           name.startsWith(searchTerm) ||
+                           name.endsWith(searchTerm);
+                })
+                .collect(Collectors.toList());
+
+            if (searchResults.isEmpty()) {
+                XDialog.alert(this, "Không tìm thấy loại đồ ăn nào phù hợp với từ khóa: '" + keyword + "'\n\nGợi ý: Hãy thử:\n- Tìm kiếm với từ khóa ngắn hơn\n- Kiểm tra chính tả\n- Tìm kiếm theo mã loại");
+                return;
+            }
+
+            // Hiển thị kết quả tìm kiếm
+            DefaultTableModel model = (DefaultTableModel) tblCategories.getModel();
+            model.setRowCount(0);
+
+            for (FoodCategory category : searchResults) {
+                model.addRow(new Object[]{
+                    category.getId(),
+                    category.getName(),
+                    false
+                });
+            }
+
+            // Hiển thị thông báo thành công với số lượng kết quả
+            String message = searchResults.size() == 1 ? 
+                "Tìm thấy 1 loại đồ ăn phù hợp!" :
+                "Tìm thấy " + searchResults.size() + " loại đồ ăn phù hợp!";
+            XDialog.info(this, message);
+
+        } catch (Exception e) {
+            XDialog.alert(this, "Lỗi tìm kiếm: " + e.getMessage());
+        }
+    }//GEN-LAST:event_btnTimKiemActionPerformed
+
+    private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
+        // Xóa từ khóa tìm kiếm và làm mới bảng
+        txtTkiem.setText("");
+        this.fillToTable();
+    }//GEN-LAST:event_btnLamMoiActionPerformed
 
     private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {
         try {
@@ -457,10 +574,12 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
     private javax.swing.JButton btnCreate;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnDeleteCheckedItems;
+    private javax.swing.JButton btnLamMoi;
     private javax.swing.JButton btnMoveFirst;
     private javax.swing.JButton btnMoveLast;
     private javax.swing.JButton btnMoveNext;
     private javax.swing.JButton btnMovePrevious;
+    private javax.swing.JButton btnTimKiem;
     private javax.swing.JButton btnUncheckAll;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JLabel jLabel1;
@@ -473,12 +592,14 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane tabs;
     private javax.swing.JTable tblCategories;
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtName;
+    private javax.swing.JTextField txtTkiem;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -774,5 +895,50 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
      */
     private boolean isUpdateMode() {
         return btnUpdate.isEnabled();
+    }
+    
+    /**
+     * Thực hiện tìm kiếm tự động khi người dùng nhập text
+     */
+    private void performAutoSearch() {
+        String keyword = txtTkiem.getText().trim();
+        
+        if (keyword.isEmpty()) {
+            // Nếu không có từ khóa, hiển thị tất cả
+            fillToTable();
+            return;
+        }
+        
+        try {
+            // Tìm kiếm thông minh theo tên loại đồ ăn
+            List<FoodCategory> searchResults = categories.stream()
+                .filter(category -> {
+                    String name = category.getName().toLowerCase();
+                    String id = category.getId().toLowerCase();
+                    String searchTerm = keyword.toLowerCase();
+                    
+                    // Tìm kiếm chính xác hoặc chứa từ khóa
+                    return name.contains(searchTerm) || 
+                           id.contains(searchTerm) ||
+                           name.startsWith(searchTerm) ||
+                           name.endsWith(searchTerm);
+                })
+                .collect(Collectors.toList());
+
+            // Hiển thị kết quả tìm kiếm
+            DefaultTableModel model = (DefaultTableModel) tblCategories.getModel();
+            model.setRowCount(0);
+
+            for (FoodCategory category : searchResults) {
+                model.addRow(new Object[]{
+                    category.getId(),
+                    category.getName(),
+                    false
+                });
+            }
+
+        } catch (Exception e) {
+            // Không hiển thị lỗi cho tìm kiếm tự động
+        }
     }
 }
