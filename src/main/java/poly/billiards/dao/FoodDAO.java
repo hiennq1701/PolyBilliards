@@ -12,4 +12,5 @@ public interface FoodDAO extends CrudDAO<Food, String>{
      */
     List<Food> findByCategoryId(String categoryId);
     List<Food> findByName(String name);
+    List<Food> findByKeyword(String keyword);
 }
