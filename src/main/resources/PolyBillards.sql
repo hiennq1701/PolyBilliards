@@ -246,29 +246,6 @@ INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (19, N'Bàn lỗ 4'
 INSERT [dbo].[BilliardTable] ([id], [name], [status]) VALUES (20, N'Bàn lỗ 5', N'Tốt')
 SET IDENTITY_INSERT [dbo].[BilliardTable] OFF
 GO
-INSERT [dbo].[FoodCategory] ([Id], [Name]) VALUES (N'CAT001', N'Drinks')
-INSERT [dbo].[FoodCategory] ([Id], [Name]) VALUES (N'CAT002', N'Snacks')
-INSERT [dbo].[FoodCategory] ([Id], [Name]) VALUES (N'CAT003', N'Coffee')
-INSERT [dbo].[FoodCategory] ([Id], [Name]) VALUES (N'CAT004', N'Beer')
-INSERT [dbo].[FoodCategory] ([Id], [Name]) VALUES (N'CAT005', N'Juice')
-INSERT [dbo].[FoodCategory] ([Id], [Name]) VALUES (N'CAT006', N'Fast Food')
-INSERT [dbo].[FoodCategory] ([Id], [Name]) VALUES (N'CAT007', N'Dessert')
-INSERT [dbo].[FoodCategory] ([Id], [Name]) VALUES (N'CAT008', N'Soft Drinks')
-INSERT [dbo].[FoodCategory] ([Id], [Name]) VALUES (N'CAT009', N'Cocktail')
-INSERT [dbo].[FoodCategory] ([Id], [Name]) VALUES (N'CAT010', N'Specialty')
-GO
-
-INSERT [dbo].[Food] ([Id], [Name], [UnitPrice], [Discount], [Image], [Available], [CategoryId]) VALUES (N'FOOD001', N'Coca Cola', 15000, 0, N'cocacola.png', 1, N'CAT001')
-INSERT [dbo].[Food] ([Id], [Name], [UnitPrice], [Discount], [Image], [Available], [CategoryId]) VALUES (N'FOOD002', N'Pepsi', 15000, 0, N'pepsi.png', 1, N'CAT001')
-INSERT [dbo].[Food] ([Id], [Name], [UnitPrice], [Discount], [Image], [Available], [CategoryId]) VALUES (N'FOOD003', N'Banh Mi', 20000, 0, N'banhmi.png', 1, N'CAT002')
-INSERT [dbo].[Food] ([Id], [Name], [UnitPrice], [Discount], [Image], [Available], [CategoryId]) VALUES (N'FOOD004', N'Cà phê sữa', 25000, 0, N'caphe_sua.png', 1, N'CAT003')
-INSERT [dbo].[Food] ([Id], [Name], [UnitPrice], [Discount], [Image], [Available], [CategoryId]) VALUES (N'FOOD005', N'Bia Tiger', 25000, 0, N'bia_tiger.png', 1, N'CAT004')
-INSERT [dbo].[Food] ([Id], [Name], [UnitPrice], [Discount], [Image], [Available], [CategoryId]) VALUES (N'FOOD006', N'Cam vắt', 30000, 0, N'camvat.png', 1, N'CAT005')
-INSERT [dbo].[Food] ([Id], [Name], [UnitPrice], [Discount], [Image], [Available], [CategoryId]) VALUES (N'FOOD007', N'Hamburger', 35000, 0, N'hamburger.png', 1, N'CAT006')
-INSERT [dbo].[Food] ([Id], [Name], [UnitPrice], [Discount], [Image], [Available], [CategoryId]) VALUES (N'FOOD008', N'Bánh flan', 18000, 0, N'flan.png', 1, N'CAT007')
-INSERT [dbo].[Food] ([Id], [Name], [UnitPrice], [Discount], [Image], [Available], [CategoryId]) VALUES (N'FOOD009', N'Sprite', 15000, 0, N'sprite.png', 1, N'CAT008')
-INSERT [dbo].[Food] ([Id], [Name], [UnitPrice], [Discount], [Image], [Available], [CategoryId]) VALUES (N'FOOD010', N'Mojito', 40000, 0, N'mojito.png', 1, N'CAT009')
-GO
 INSERT [dbo].[Users] ([Username], [Password], [Enabled], [Fullname], [Photo], [Manager], [Email]) VALUES (N'a', N'1234$', 1, N'NgoQuangHien', N'53B963D6.jpg', 1, N'quanghien1701@gmail.com')
 INSERT [dbo].[Users] ([Username], [Password], [Enabled], [Fullname], [Photo], [Manager], [Email]) VALUES (N'b', N'1234$', 1, N'NgoQuangHien2', N'aaa', 0, N'hiennqth06730@gmail.com')
 GO

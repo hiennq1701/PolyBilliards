@@ -55,10 +55,19 @@ public class MenuDAO extends SysDAO<Menu, Integer>{
                 menu.setFoodname(rs.getString("name"));
                 menu.setCount(rs.getInt("count"));
                 menu.setPrice(rs.getFloat("unitprice")); 
-                menu.setTotalPrice(rs.getFloat("totalPrice"));
+                float totalPrice = rs.getFloat("totalPrice");
+                menu.setTotalPrice(totalPrice);
+                
+                // Debug log
+                System.out.println("Menu item: " + menu.getFoodname() + 
+                                 ", Count: " + menu.getCount() + 
+                                 ", Price: " + menu.getPrice() + 
+                                 ", Total: " + totalPrice);
+                
                 list.add(menu);
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
         return list;
     } 

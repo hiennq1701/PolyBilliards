@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import poly.billiards.dao.UserDAO;
@@ -40,6 +41,16 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
         XUI.setHandCursor(this);
         userDAO = new UserDAOImpl() ;
         this.fillToTable();
+        
+        
+        txtTkiem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                // Tìm kiếm tự động sau khi người dùng ngừng nhập 500ms
+                if (evt.getKeyCode() != java.awt.event.KeyEvent.VK_ENTER) {
+                    performAutoSearch();
+                }
+            }
+        });
     }
 
     public UserManagerJDialog(java.awt.Dialog parent, boolean modal) {
@@ -63,7 +74,6 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
         tblUsers = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         txtTkiem = new javax.swing.JTextField();
-        btnTimKiem = new javax.swing.JButton();
         btnLamMoi = new javax.swing.JButton();
         btnDeleteCheckedItems = new javax.swing.JButton();
         btnUncheckAll = new javax.swing.JButton();
@@ -147,14 +157,6 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
         txtTkiem.setName(""); // NOI18N
         txtTkiem.setPreferredSize(new java.awt.Dimension(200, 22));
 
-        btnTimKiem.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnTimKiem.setText("Tìm kiếm tên người dùng");
-        btnTimKiem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTimKiemActionPerformed(evt);
-            }
-        });
-
         btnLamMoi.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnLamMoi.setText("Làm mới");
         btnLamMoi.addActionListener(new java.awt.event.ActionListener() {
@@ -171,20 +173,16 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(txtTkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnTimKiem)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(100, 100, 100))
+                .addGap(199, 199, 199))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(btnLamMoi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtTkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnTimKiem)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(12, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtTkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -546,32 +544,6 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
         
     }//GEN-LAST:event_txtEmailActionPerformed
 
-    private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
-        String keyword = txtTkiem.getText().trim();
-        List<User> result;
-        if (keyword.isEmpty()) {
-            result = userDAO.findAll();
-            XDialog.alert(this, "Bạn chưa nhập từ khóa tìm kiếm!");
-            return;
-        } else {
-            result = userDAO.findByKeyword(keyword);
-        }
-        DefaultTableModel model = (DefaultTableModel) tblUsers.getModel();
-        model.setRowCount(0);
-        for (User user : result) {
-            model.addRow(new Object[]{
-                user.getUsername(),
-                user.getEmail(),
-                user.getFullname(),
-                user.getPassword(),
-                user.getPhoto(),
-                user.isManager() ? "Quản lý" : "Nhân viên",
-                user.isEnabled() ? "Hoạt động" : "Tạm dừng",
-                false
-            });
-        }
-    }//GEN-LAST:event_btnTimKiemActionPerformed
-
     private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
         // TODO add your handling code here:
         this.fillToTable();
@@ -650,7 +622,6 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
     private javax.swing.JButton btnMoveLast;
     private javax.swing.JButton btnMoveNext;
     private javax.swing.JButton btnMovePrevious;
-    private javax.swing.JButton btnTimKiem;
     private javax.swing.JButton btnUncheckAll;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JLabel jLabel1;
@@ -1044,4 +1015,54 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
         }
     }
     
+    
+    private void performAutoSearch() {
+        String keyword = txtTkiem.getText().trim();
+        
+        if (keyword.isEmpty()) {
+            // Nếu không có từ khóa, hiển thị tất cả
+            fillToTable();
+            return;
+        }
+        
+        try {
+            // Tìm kiếm thông minh theo thông tin user
+            List<User> searchResults = items.stream()
+                .filter(user -> {
+                    String username = user.getUsername().toLowerCase();
+                    String fullname = user.getFullname().toLowerCase();
+                    String email = user.getEmail().toLowerCase();
+                    String searchTerm = keyword.toLowerCase();
+                    
+                    // Tìm kiếm chính xác hoặc chứa từ khóa
+                    return username.contains(searchTerm) || 
+                           fullname.contains(searchTerm) ||
+                           email.contains(searchTerm) ||
+                           username.startsWith(searchTerm) ||
+                           fullname.startsWith(searchTerm) ||
+                           email.startsWith(searchTerm);
+                })
+                .collect(Collectors.toList());
+
+            // Hiển thị kết quả tìm kiếm
+            DefaultTableModel model = (DefaultTableModel) tblUsers.getModel();
+            model.setRowCount(0);
+
+            for (User user : searchResults) {
+                model.addRow(new Object[]{
+                    user.getUsername(),
+                    user.getEmail(),
+                    user.getFullname(),
+                    user.getPassword(),
+                    user.getPhoto(),
+                    user.isManager() ? "Quản lý" : "Nhân viên",
+                    user.isEnabled() ? "Hoạt động" : "Tạm dừng",
+                    false
+                });
+            }
+
+        } catch (Exception e) {
+            // Không hiển thị lỗi cho tìm kiếm tự động
+        }
+    }
 }
