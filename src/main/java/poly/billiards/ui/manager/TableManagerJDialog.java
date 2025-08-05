@@ -4,17 +4,49 @@
  */
 package poly.billiards.ui.manager;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
+import poly.billiards.dao.TableDAO;
+import poly.billiards.dao.impl.TableDAOImpl;
+import poly.billiards.entity.Table;
+import poly.billiards.util.XDialog;
+import poly.billiards.util.XUI;
+
 /**
  *
  * @author Admin
  */
-public class TableManagerJDialog extends javax.swing.JFrame  {
+public class TableManagerJDialog extends javax.swing.JDialog  {
+
+    private TableDAO tableDAO;
+    private List<Table> tables;
+    private int index = -1;
 
     /**
      * Creates new form TableManagerJDialog
      */
     public TableManagerJDialog() {
         initComponents();
+        XUI.setupUI(this);
+        XUI.setHandCursor(this);
+        tableDAO = new TableDAOImpl();
+        this.fillToTable();
+        this.setupComboBox();
+    }
+
+    /**
+     * Creates new form TableManagerJDialog with parent frame
+     */
+    public TableManagerJDialog(JFrame parent, boolean modal) {
+        super(parent, modal);
+        initComponents();
+        XUI.setupUI(this);
+        XUI.setHandCursor(this);
+        tableDAO = new TableDAOImpl();
+        this.fillToTable();
+        this.setupComboBox();
     }
 
     /**
@@ -34,13 +66,7 @@ public class TableManagerJDialog extends javax.swing.JFrame  {
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
-        btnUpdate = new javax.swing.JButton();
-        btnDelete = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
-        btnMoveFirst = new javax.swing.JButton();
-        btnMovePrevious = new javax.swing.JButton();
-        btnMoveNext = new javax.swing.JButton();
-        btnMoveLast = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
@@ -50,8 +76,11 @@ public class TableManagerJDialog extends javax.swing.JFrame  {
         jLabel3 = new javax.swing.JLabel();
         cboTrangThai = new javax.swing.JComboBox<>();
         txtGiaTien = new javax.swing.JTextField();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        btnUpdate = new javax.swing.JButton();
+        btnMoveLast = new javax.swing.JButton();
+        btnMoveNext = new javax.swing.JButton();
+        btnMovePrevious = new javax.swing.JButton();
+        btnMoveFirst = new javax.swing.JButton();
 
         jPanel1.setLayout(new java.awt.BorderLayout(0, 5));
 
@@ -60,7 +89,7 @@ public class TableManagerJDialog extends javax.swing.JFrame  {
 
             },
             new String [] {
-                "STT", "Trạng thái", "Tên bàn", "Giá tiền"
+                "STT", "Trạng thái", "Tên bàn", "Giá tiền (giờ)"
             }
         ) {
             Class[] types = new Class [] {
@@ -100,64 +129,29 @@ public class TableManagerJDialog extends javax.swing.JFrame  {
 
         jPanel2.setLayout(new java.awt.BorderLayout());
 
-        jPanel4.setLayout(new java.awt.BorderLayout(0, 5));
-
         jPanel7.setLayout(new java.awt.GridLayout(1, 0, 2, 2));
-
-        btnUpdate.setText("Cập nhật");
-        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdateActionPerformed(evt);
-            }
-        });
-        jPanel7.add(btnUpdate);
-
-        btnDelete.setText("Xóa");
-        btnDelete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteActionPerformed(evt);
-            }
-        });
-        jPanel7.add(btnDelete);
-
-        jPanel4.add(jPanel7, java.awt.BorderLayout.LINE_START);
 
         jPanel8.setLayout(new java.awt.GridLayout(1, 0, 2, 2));
 
-        btnMoveFirst.setText("|<");
-        btnMoveFirst.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMoveFirstActionPerformed(evt);
-            }
-        });
-        jPanel8.add(btnMoveFirst);
-
-        btnMovePrevious.setText("<<");
-        btnMovePrevious.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMovePreviousActionPerformed(evt);
-            }
-        });
-        jPanel8.add(btnMovePrevious);
-
-        btnMoveNext.setText(">>");
-        btnMoveNext.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMoveNextActionPerformed(evt);
-            }
-        });
-        jPanel8.add(btnMoveNext);
-
-        btnMoveLast.setText(">|");
-        btnMoveLast.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMoveLastActionPerformed(evt);
-            }
-        });
-        jPanel8.add(btnMoveLast);
-
-        jPanel4.add(jPanel8, java.awt.BorderLayout.LINE_END);
-        jPanel4.add(jSeparator1, java.awt.BorderLayout.PAGE_START);
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 661, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(209, 209, 209)
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
 
         jPanel2.add(jPanel4, java.awt.BorderLayout.PAGE_END);
 
@@ -182,15 +176,56 @@ public class TableManagerJDialog extends javax.swing.JFrame  {
         jPanel6.add(jLabel2);
         jLabel2.setBounds(0, 82, 280, 40);
 
-        jLabel3.setText("Giá tiền");
+        jLabel3.setText("Giá tiền (giờ)");
         jPanel6.add(jLabel3);
         jLabel3.setBounds(340, 100, 290, 20);
 
         cboTrangThai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboTrangThai.setDoubleBuffered(true);
+        cboTrangThai.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboTrangThaiActionPerformed(evt);
+            }
+        });
 
         txtGiaTien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtGiaTienActionPerformed(evt);
+            }
+        });
+
+        btnUpdate.setText("Cập nhật");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
+
+        btnMoveLast.setText(">|");
+        btnMoveLast.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMoveLastActionPerformed(evt);
+            }
+        });
+
+        btnMoveNext.setText(">>");
+        btnMoveNext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMoveNextActionPerformed(evt);
+            }
+        });
+
+        btnMovePrevious.setText("<<");
+        btnMovePrevious.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMovePreviousActionPerformed(evt);
+            }
+        });
+
+        btnMoveFirst.setText("|<");
+        btnMoveFirst.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMoveFirstActionPerformed(evt);
             }
         });
 
@@ -199,14 +234,29 @@ public class TableManagerJDialog extends javax.swing.JFrame  {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 649, Short.MAX_VALUE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(cboTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtGiaTien, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 649, Short.MAX_VALUE)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(cboTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtGiaTien, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnMoveFirst)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnMovePrevious)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnMoveNext)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnMoveLast)))
                 .addContainerGap())
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(54, 54, 54)
+                .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -217,8 +267,17 @@ public class TableManagerJDialog extends javax.swing.JFrame  {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(cboTrangThai, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
                     .addComponent(txtGiaTien))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 127, Short.MAX_VALUE)
+                .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnMoveFirst, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnMovePrevious, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnMoveNext, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnMoveLast, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
+
+        cboTrangThai.getAccessibleContext().setAccessibleName("");
 
         jPanel2.add(jPanel5, java.awt.BorderLayout.CENTER);
 
@@ -237,7 +296,7 @@ public class TableManagerJDialog extends javax.swing.JFrame  {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
+                .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -252,32 +311,26 @@ public class TableManagerJDialog extends javax.swing.JFrame  {
     }//GEN-LAST:event_tblTableManagerMouseClicked
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        // TODO add your handling code here:
         this.update();
     }//GEN-LAST:event_btnUpdateActionPerformed
 
-    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
-        this.delete();
-    }//GEN-LAST:event_btnDeleteActionPerformed
-
     private void btnMoveFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoveFirstActionPerformed
-        // TODO add your handling code here:
         this.moveFirst();
     }//GEN-LAST:event_btnMoveFirstActionPerformed
 
     private void btnMovePreviousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMovePreviousActionPerformed
-        // TODO add your handling code here:
         this.movePrevious();
     }//GEN-LAST:event_btnMovePreviousActionPerformed
 
     private void btnMoveNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoveNextActionPerformed
-        // TODO add your handling code here:
         this.moveNext();
     }//GEN-LAST:event_btnMoveNextActionPerformed
 
+    // private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+    //     this.clear();
+    // }//GEN-LAST:event_btnClearActionPerformed
+
     private void btnMoveLastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoveLastActionPerformed
-        // TODO add your handling code here:
         this.moveLast();
     }//GEN-LAST:event_btnMoveLastActionPerformed
 
@@ -288,6 +341,197 @@ public class TableManagerJDialog extends javax.swing.JFrame  {
     private void txtGiaTienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtGiaTienActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtGiaTienActionPerformed
+
+    private void cboTrangThaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboTrangThaiActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboTrangThaiActionPerformed
+
+    /**
+     * Thiết lập dữ liệu cho ComboBox trạng thái
+     */
+    private void setupComboBox() {
+        cboTrangThai.removeAllItems();
+        cboTrangThai.addItem("Chơi được");
+        cboTrangThai.addItem("Đang bảo trì");
+    }
+
+    /**
+     * Nạp dữ liệu vào bảng
+     */
+    public void fillToTable() {
+        DefaultTableModel model = (DefaultTableModel) tblTableManager.getModel();
+        model.setRowCount(0);
+        
+        tables = tableDAO.findAll();
+        for (int i = 0; i < tables.size(); i++) {
+            Table table = tables.get(i);
+            model.addRow(new Object[]{
+                i + 1,
+                table.getStatus().equals("Chơi được"),
+                table.getName(),
+                String.format("%,.0f VNĐ", table.getPrice())
+            });
+        }
+    }
+
+    /**
+     * Chỉnh sửa bàn được chọn
+     */
+    public void edit() {
+        if (tblTableManager.getSelectedRow() >= 0) {
+            index = tblTableManager.getSelectedRow();
+            Table table = tables.get(index);
+            this.setForm(table);
+            this.setEditable(true);
+            tabs.setSelectedIndex(1);
+        }
+    }
+
+    /**
+     * Cập nhật giá tiền và tình trạng bàn
+     */
+    public void update() {
+        try {
+            if (index < 0) {
+                XDialog.alert(this, "Vui lòng chọn bàn cần cập nhật!");
+                return;
+            }
+            
+            // Kiểm tra giá tiền
+            String priceText = txtGiaTien.getText().trim();
+            if (priceText.isEmpty()) {
+                XDialog.alert(this, "Vui lòng nhập giá tiền!");
+                return;
+            }
+            
+            try {
+                double price = Double.parseDouble(priceText);
+                if (price < 0) {
+                    XDialog.alert(this, "Giá tiền không được âm!");
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                XDialog.alert(this, "Giá tiền không hợp lệ! Vui lòng nhập số.");
+                return;
+            }
+            
+            Table table = tables.get(index);
+            String status = cboTrangThai.getSelectedItem().toString();
+            
+            // Cập nhật tình trạng và giá tiền bàn
+            table.setStatus(status);
+            table.setPrice(Double.parseDouble(priceText));
+            tableDAO.update(table);
+            
+            this.fillToTable();
+            this.clear();
+            XDialog.info(this, "Cập nhật giá tiền và tình trạng bàn thành công!");
+        } catch (Exception e) {
+            XDialog.alert(this, "Lỗi cập nhật bàn: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Xóa bàn (không sử dụng trong chức năng này)
+     */
+    public void delete() {
+        XDialog.alert(this, "Chức năng xóa bàn không được hỗ trợ!");
+    }
+
+
+
+    /**
+     * Di chuyển đến bàn đầu tiên
+     */
+    public void moveFirst() {
+        this.moveTo(0);
+    }
+
+    /**
+     * Di chuyển đến bàn trước đó
+     */
+    public void movePrevious() {
+        this.moveTo(index - 1);
+    }
+
+    /**
+     * Di chuyển đến bàn tiếp theo
+     */
+    public void moveNext() {
+        this.moveTo(index + 1);
+    }
+
+    /**
+     * Di chuyển đến bàn cuối cùng
+     */
+    public void moveLast() {
+        this.moveTo(tables.size() - 1);
+    }
+
+    /**
+     * Di chuyển đến bàn theo chỉ số
+     */
+    public void moveTo(int index) {
+        if (index < 0) {
+            this.moveLast();
+        } else if (index >= tables.size()) {
+            this.moveFirst();
+        } else {
+            this.index = index;
+            tblTableManager.clearSelection();
+            tblTableManager.setRowSelectionInterval(index, index);
+            this.edit();
+        }
+    }
+
+    /**
+     * Thiết lập dữ liệu vào form
+     */
+    public void setForm(Table table) {
+        txtId.setText(table.getName()); // Hiển thị tên bàn
+        cboTrangThai.setSelectedItem(table.getStatus());
+        txtGiaTien.setText(String.format("%.0f", table.getPrice()));
+    }
+
+    /**
+     * Lấy dữ liệu từ form
+     */
+    public Table getForm() {
+        Table table = new Table();
+        table.setName(txtId.getText());
+        table.setStatus(cboTrangThai.getSelectedItem().toString());
+        table.setPrice(Double.parseDouble(txtGiaTien.getText()));
+        return table;
+    }
+
+    /**
+     * Xóa dữ liệu form
+     */
+    public void clear() {
+        txtId.setText("");
+        cboTrangThai.setSelectedIndex(0);
+        txtGiaTien.setText("");
+        this.setEditable(false);
+        index = -1;
+        tabs.setSelectedIndex(0);
+    }
+
+    /**
+     * Thiết lập trạng thái có thể chỉnh sửa
+     */
+    public void setEditable(boolean editable) {
+        txtId.setEnabled(false); // Tên bàn không được sửa
+        cboTrangThai.setEnabled(editable);
+        txtGiaTien.setEnabled(editable);
+        
+        btnUpdate.setEnabled(editable);
+        
+        int rowCount = tblTableManager.getRowCount();
+        btnMoveFirst.setEnabled(editable && rowCount > 0);
+        btnMovePrevious.setEnabled(editable && rowCount > 0);
+        btnMoveNext.setEnabled(editable && rowCount > 0);
+        btnMoveLast.setEnabled(editable && rowCount > 0);
+    }
 
     /**
      * @param args the command line arguments
@@ -325,7 +569,6 @@ public class TableManagerJDialog extends javax.swing.JFrame  {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnMoveFirst;
     private javax.swing.JButton btnMoveLast;
     private javax.swing.JButton btnMoveNext;

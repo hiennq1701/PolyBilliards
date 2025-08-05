@@ -50,9 +50,9 @@ public interface PolyBilliardsController {
         this.showJDialog(new FoodCategoryManagerJDialog(frame, true));
     }
     
-//    default void showCardManagerJDialog(JFrame frame) {
-//        this.showJDialog(new CardManagerJDialog(frame, true));
-//    }
+    default void showTableManagerJDialog(JFrame frame) {
+        this.showJDialog(new TableManagerJDialog(frame, true));
+    }
     
 //    default void showBillManagerJDialog(JFrame frame) {
 //        this.showJDialog(new BillManagerJDialog(frame, true));

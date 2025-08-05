@@ -38,6 +38,7 @@ import poly.billiards.ui.ChatWindowJDialog;
 import poly.billiards.ui.manager.FoodCategoryManagerJDialog;
 import poly.billiards.ui.manager.FoodManagerJDialog;
 import poly.billiards.ui.manager.UserManagerJDialog;
+import poly.billiards.ui.manager.TableManagerJDialog;
 import poly.billiards.util.XDialog;
 import poly.billiards.util.XActivity;
 import java.util.Map;
@@ -57,6 +58,9 @@ import poly.billiards.dao.FoodDAO;
 import poly.billiards.dao.MenuDAO;
 import poly.billiards.dao.impl.FoodCategoryDAOImpl;
 import poly.billiards.dao.impl.FoodDAOImpl;
+import poly.billiards.dao.TableDAO;
+import poly.billiards.dao.impl.TableDAOImpl;
+import poly.billiards.entity.Table;
 import poly.billiards.util.XDateHelper;
 import poly.billiards.util.XHourlyRateCalculator;
 
@@ -136,7 +140,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         btnHistory = new javax.swing.JButton();
         pnlManager = new javax.swing.JPanel();
         btnCategoryMgr = new javax.swing.JButton();
-        btnCardMgr = new javax.swing.JButton();
+        btnTablebilliard = new javax.swing.JButton();
         btnUserMgr = new javax.swing.JButton();
         btnDrinkMgr = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -270,13 +274,13 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
             }
         });
 
-        btnCardMgr.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        btnCardMgr.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/billiards/icons/menu/manager/pool-table.png"))); // NOI18N
-        btnCardMgr.setText("Bàn");
-        btnCardMgr.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnCardMgr.addActionListener(new java.awt.event.ActionListener() {
+        btnTablebilliard.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnTablebilliard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/billiards/icons/menu/manager/pool-table.png"))); // NOI18N
+        btnTablebilliard.setText("Bàn");
+        btnTablebilliard.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnTablebilliard.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCardMgrActionPerformed(evt);
+                btnTablebilliardActionPerformed(evt);
             }
         });
 
@@ -315,7 +319,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                 .addGroup(pnlManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnUserMgr, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCategoryMgr, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCardMgr, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTablebilliard, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDrinkMgr, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(111, Short.MAX_VALUE))
         );
@@ -331,7 +335,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnUserMgr, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnCardMgr)
+                .addComponent(btnTablebilliard)
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
@@ -346,7 +350,6 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
 
         btnLogout.setBackground(new java.awt.Color(255, 255, 153));
         btnLogout.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        btnLogout.setForeground(new java.awt.Color(0, 0, 0));
         btnLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/billiards/icons/menu/logout.png"))); // NOI18N
         btnLogout.setText("Đăng xuất");
         btnLogout.addActionListener(new java.awt.event.ActionListener() {
@@ -910,7 +913,6 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
 
         btnTamTinh.setBackground(new java.awt.Color(255, 255, 51));
         btnTamTinh.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        btnTamTinh.setForeground(new java.awt.Color(0, 0, 0));
         btnTamTinh.setText("Tạm tính");
         btnTamTinh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -926,7 +928,6 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         txtTimeStart.setEditable(false);
         txtTimeStart.setBackground(new java.awt.Color(255, 255, 255));
         txtTimeStart.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
-        txtTimeStart.setForeground(new java.awt.Color(0, 0, 0));
         txtTimeStart.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtTimeStartFocusGained(evt);
@@ -957,7 +958,6 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         txtTimeStop.setEditable(false);
         txtTimeStop.setBackground(new java.awt.Color(255, 255, 255));
         txtTimeStop.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
-        txtTimeStop.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel24.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel24.setText("Bàn :");
@@ -1150,8 +1150,8 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                                     .addComponent(txtTimeStop, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel13Layout.createSequentialGroup()
+                                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanel13Layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
                                 .addComponent(jLabel23)
                                 .addGap(63, 63, 63))
@@ -1160,56 +1160,56 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                                     .addComponent(jLabel33)
                                     .addComponent(jLabel19))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cboCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cboFood, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel13Layout.createSequentialGroup()
+                                                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                            .addGroup(jPanel13Layout.createSequentialGroup()
                                 .addGap(12, 12, 12)
                                 .addComponent(snpCount)
-                                .addGap(18, 18, 18)
+                                                                .addGap(18, 18, 18)
                                 .addComponent(btnXacNhan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel13Layout.createSequentialGroup()
+                                                            .addGroup(jPanel13Layout.createSequentialGroup()
                                 .addGap(109, 109, 109)
                                 .addComponent(btnXoasp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(17, 17, 17))
-                    .addGroup(jPanel13Layout.createSequentialGroup()
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                                    .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jSeparator7)
                             .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 1, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                            .addGroup(jPanel13Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                    .addGroup(jPanel13Layout.createSequentialGroup()
                                         .addGap(9, 9, 9)
                                         .addComponent(btnTamTinh, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(65, 65, 65)
                                         .addComponent(btnThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                                    .addGroup(jPanel13Layout.createSequentialGroup()
                                         .addGap(102, 102, 102)
                                         .addComponent(jLabel28)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(lbTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                                            .addGroup(jPanel13Layout.createSequentialGroup()
                                             .addComponent(jLabel20)
                                             .addGap(31, 31, 31)
                                             .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                                            .addGroup(jPanel13Layout.createSequentialGroup()
                                             .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                                 .addComponent(jLabel32)
                                                 .addComponent(jLabel29))
                                             .addGap(35, 35, 35)
                                             .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                                                    .addGroup(jPanel13Layout.createSequentialGroup()
                                                     .addComponent(txtPhiDichVu, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                     .addGap(12, 12, 12)
                                                     .addComponent(jLabel34)
                                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                     .addComponent(txtPhiKhac, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                 .addComponent(jLabel21)
-                                                .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                                                    .addGroup(jPanel13Layout.createSequentialGroup()
                                                     .addGap(4, 4, 4)
                                                     .addComponent(lbTienGio, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1217,20 +1217,20 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                     .addComponent(txtGiamGia, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                                 .addGap(50, 50, 50))
-                            .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                                                            .addGroup(jPanel13Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 573, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel13Layout.createSequentialGroup()
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                                                    .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                                                                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel22)
-                            .addGroup(jPanel13Layout.createSequentialGroup()
-                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                                                            .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                                                                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel24)
                                     .addComponent(jLabel35)
                                     .addComponent(jLabel31))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                                                                        .addGap(18, 18, 18)
+                                                                                                                                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lbDateNow)
                                     .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                         .addComponent(lbMaHoaDon, javax.swing.GroupLayout.Alignment.LEADING)
@@ -1238,18 +1238,18 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lbTable, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(145, 145, 145))
-                    .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                                                                                            .addGroup(jPanel13Layout.createSequentialGroup()
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel13Layout.createSequentialGroup()
-                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                                                                                            .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                                                                                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                                                                                    .addGroup(jPanel13Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                                                                                                    .addGroup(jPanel13Layout.createSequentialGroup()
                         .addGap(54, 54, 54)
                         .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtTimeStart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1258,24 +1258,24 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                         .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtTimeStop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel27))
-                        .addGap(18, 18, 18)
+                                                                                                                                                                .addGap(18, 18, 18)
                         .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnStart)
+                                                                                                                                                                        .addComponent(btnStart)
                             .addComponent(btnStopContinue))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                                                                                                                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                                                                                                            .addGroup(jPanel13Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(snpCount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(50, 50, 50))
-                    .addGroup(jPanel13Layout.createSequentialGroup()
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                                                                                                                            .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                                                                                                                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                                                                                                                    .addGroup(jPanel13Layout.createSequentialGroup()
                                 .addGap(1, 1, 1)
                                 .addComponent(jLabel23))
-                            .addGroup(jPanel13Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
+                                                                                                                                                                                    .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                                                                                                                                                .addGap(18, 18, 18)
                                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(cboCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel33))
@@ -1283,7 +1283,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(cboFood, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel19)))
-                            .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                                                                                                                                            .addGroup(jPanel13Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnXacNhan, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1292,15 +1292,15 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                                                                                                                                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                                                                                                                                    .addGroup(jPanel13Layout.createSequentialGroup()
                         .addGap(193, 193, 193)
                         .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                                                                                                                                                    .addGroup(jPanel13Layout.createSequentialGroup()
                         .addGap(4, 4, 4)
                         .addComponent(jLabel21)
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                                                                                                                                                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                                                                                                                                            .addGroup(jPanel13Layout.createSequentialGroup()
                                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel32)
                                     .addComponent(lbTienGio)
@@ -1310,13 +1310,13 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel29)
                                     .addComponent(txtPhiDichVu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                                                                                                                                                            .addGroup(jPanel13Layout.createSequentialGroup()
                                 .addGap(34, 34, 34)
                                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(txtPhiKhac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel34))))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                                                                                                                                                        .addGap(18, 18, 18)
+                                                                                                                                                                                                                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel20)
                             .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(7, 7, 7)
@@ -1338,11 +1338,11 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                     .addComponent(jLabel22)
                     .addComponent(lbMaHoaDon))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                                                                                                                                                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel24)
                     .addComponent(lbTable))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                                                                                                                                                                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel35)
                     .addComponent(lbTime))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1504,10 +1504,10 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         this.showUserManagerJDialog(this);
     }//GEN-LAST:event_btnUserMgrActionPerformed
 
-    private void btnCardMgrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCardMgrActionPerformed
+    private void btnTablebilliardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTablebilliardActionPerformed
         // TODO add your handling code here:
-//        this.showCardManagerJDialog(this);
-    }//GEN-LAST:event_btnCardMgrActionPerformed
+        this.showTableManagerJDialog(this);
+    }//GEN-LAST:event_btnTablebilliardActionPerformed
 
     private void btnCategoryMgrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoryMgrActionPerformed
         // TODO add your handling code here:
@@ -1869,7 +1869,6 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActivityHistory;
-    private javax.swing.JButton btnCardMgr;
     private javax.swing.JButton btnCategoryMgr;
     private javax.swing.JButton btnChangePassword;
     private javax.swing.JButton btnChat;
@@ -1896,6 +1895,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnStart;
     private javax.swing.JButton btnStopContinue;
+    private javax.swing.JButton btnTablebilliard;
     private javax.swing.JButton btnTamTinh;
     private javax.swing.JButton btnThanhToan;
     private javax.swing.JButton btnToggleTheme;
@@ -2176,9 +2176,15 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         ActionListener buttonls = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                clearBill();
                 clickbt = (JButton) e.getSource();
                 idtable = Integer.parseInt(clickbt.getName());
+                
+                // Kiểm tra trạng thái bàn trước khi cho phép sử dụng
+                if (!checkTableStatus()) {
+                    return; // Dừng lại nếu bàn không khả dụng
+                }
+                
+                clearBill();
                 loadDataonTable();
                 calTotalPice();
                 selectTabs();
@@ -2205,6 +2211,41 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         btnLo3.addActionListener(buttonls);
         btnLo4.addActionListener(buttonls);
         btnLo5.addActionListener(buttonls);
+    }
+    
+    /**
+     * Kiểm tra trạng thái bàn trước khi cho phép sử dụng
+     * @return true nếu bàn có thể sử dụng, false nếu không
+     */
+    private boolean checkTableStatus() {
+        try {
+            TableDAO tableDAO = new TableDAOImpl();
+            Table table = tableDAO.findById(idtable);
+            
+            if (table == null) {
+                XDialog.alert(this, "Không tìm thấy thông tin bàn!");
+                return false;
+            }
+            
+            String status = table.getStatus();
+            if (status == null) {
+                status = "";
+            }
+            
+            // Chỉ chặn bàn đang bảo trì
+            if (status.equalsIgnoreCase("Đang bảo trì") || status.equalsIgnoreCase("Dang bao tri")) {
+                String message = table.getName() + " hiện tại đang bảo trì!\n";
+                message += "Bàn đang được bảo trì, vui lòng chọn bàn khác.";
+                
+                XDialog.alert(this, message);
+                return false;
+            }
+            
+            return true;
+        } catch (Exception e) {
+            XDialog.alert(this, "Lỗi kiểm tra trạng thái bàn: " + e.getMessage());
+            return false;
+        }
     }
 
     //set lbDateNow
@@ -2429,7 +2470,24 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
 
     //TienGio
     private void tinhTienGio() {
-        hourlyRateCalculator.startTimer();
+        try {
+            // Lấy giá tiền từ bàn được chọn
+            TableDAO tableDAO = new TableDAOImpl();
+            Table table = tableDAO.findById(idtable);
+            
+            if (table != null) {
+                // Set giá tiền mỗi phút từ database
+                double pricePerMinute = table.getPrice() / 60.0; // Chuyển từ VNĐ/giờ sang VNĐ/phút
+                hourlyRateCalculator.setHourlyRate(pricePerMinute);
+            }
+            
+            hourlyRateCalculator.startTimer();
+        } catch (Exception e) {
+            System.err.println("Lỗi khi lấy giá tiền bàn: " + e.getMessage());
+            // Sử dụng giá mặc định nếu có lỗi
+            hourlyRateCalculator.setHourlyRate(1000.0); // 1k/phút
+            hourlyRateCalculator.startTimer();
+        }
     }
 
     //Check input

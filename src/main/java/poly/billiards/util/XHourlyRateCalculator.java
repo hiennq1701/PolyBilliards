@@ -13,7 +13,7 @@ import java.util.TimerTask;
  * @author MINH DANG
  */
 public class XHourlyRateCalculator {
-    private double hourlyRate = 1000.0; // Giá tiền mỗi phút (1k/phút)
+    private double hourlyRate = 1000.0; // Giá tiền mỗi phút mặc định
     private float totalAmount = 0;
     private Timer timer;
 
@@ -49,5 +49,21 @@ public class XHourlyRateCalculator {
         if (timer != null) {
             timer.cancel();
         }
+    }
+    
+    /**
+     * Set giá tiền mỗi phút từ bàn được chọn
+     * @param pricePerMinute Giá tiền mỗi phút (VNĐ/phút)
+     */
+    public void setHourlyRate(double pricePerMinute) {
+        this.hourlyRate = pricePerMinute;
+    }
+    
+    /**
+     * Lấy giá tiền mỗi phút hiện tại
+     * @return Giá tiền mỗi phút
+     */
+    public double getHourlyRate() {
+        return hourlyRate;
     }
 }
