@@ -49,9 +49,9 @@ public class LoginJDialog extends javax.swing.JDialog implements LoginController
 //        XUI.customizeTitle(jLabel1);
         
 //        // Customize buttons
-        XUI.customizeButton(btnLogin, new Color(0, 204, 0));
-        XUI.customizeButton(btnExit, new Color(255, 51, 51));
-        XUI.customizeButton(btnChangePassword, new Color(51,51,255));
+//        XUI.customizeButton(btnLogin, new Color(0, 204, 0));
+//        XUI.customizeButton(btnExit, new Color(255, 51, 51));
+//        XUI.customizeButton(btnChangePassword, new Color(51,51,255));
         
 //         Customize text fields
          XUI.customizeTextField(txtUsername);
