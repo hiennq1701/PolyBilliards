@@ -142,11 +142,16 @@ CREATE TABLE [dbo].[Billinfo](
 	[FoodName] [nvarchar](50) NULL,
 	[Discount] [float] NULL,
 	[UnitPrice] [float] NULL,
+	[HourlyRate] [float] NULL,
+	[DiscountAmount] [float] NULL,
+	[ServiceFee] [float] NULL,
+	[OtherFee] [float] NULL,
+	[Notes] [nvarchar](max) NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
 /****** Object:  Table [dbo].[ChatMessages]    Script Date: 7/18/2025 9:20:08 AM ******/
 SET ANSI_NULLS ON
@@ -313,6 +318,11 @@ CREATE TABLE [dbo].[BillInfoDeleted](
     [FoodName] [nvarchar](50) NULL,
     [Discount] [float] NULL,
     [UnitPrice] [float] NULL,
+    [HourlyRate] [float] NULL,
+    [DiscountAmount] [float] NULL,
+    [ServiceFee] [float] NULL,
+    [OtherFee] [float] NULL,
+    [Notes] [nvarchar](max) NULL,
     [DeletedAt] [datetime] NOT NULL DEFAULT (getdate())
 );
 GO
@@ -323,15 +333,16 @@ CREATE PROCEDURE dbo.usp_LogAndShowDeletedBills
 AS
 BEGIN
     SET NOCOUNT ON;
+    
     -- Lưu thông tin Bill sắp xóa vào BillDeleted
     INSERT INTO BillDeleted (Id, DateCheckin, DateCheckout, IdTable, Status, TotalPrice, Username, TableName)
     SELECT Id, DateCheckin, DateCheckout, IdTable, Status, TotalPrice, Username, TableName
     FROM Bill
     WHERE Status = 1; -- Chỉ xóa bill đã thanh toán
 
-    -- Lưu thông tin Billinfo sắp xóa vào DeletedBillInfo
-    INSERT INTO BillInfoDeleted (Id, IdBill, IdFood, Count, FoodName, Discount, UnitPrice)
-    SELECT bi.Id, bi.IdBill, bi.IdFood, bi.Count, bi.FoodName, bi.Discount, bi.UnitPrice
+    -- Lưu thông tin Billinfo sắp xóa vào BillInfoDeleted
+    INSERT INTO BillInfoDeleted (Id, IdBill, IdFood, Count, FoodName, Discount, UnitPrice, HourlyRate, DiscountAmount, ServiceFee, OtherFee, Notes, DeletedAt)
+    SELECT bi.Id, bi.IdBill, bi.IdFood, bi.Count, bi.FoodName, bi.Discount, bi.UnitPrice, bi.HourlyRate, bi.DiscountAmount, bi.ServiceFee, bi.OtherFee, bi.Notes, GETDATE()
     FROM Billinfo bi
     INNER JOIN Bill b ON bi.IdBill = b.Id
     WHERE b.Status = 1;

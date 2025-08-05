@@ -555,11 +555,6 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         btnLiber2.setName("2"); // NOI18N
         btnLiber2.setPreferredSize(new java.awt.Dimension(100, 100));
         btnLiber2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnLiber2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLiber2ActionPerformed(evt);
-            }
-        });
 
         btnLiber7.setBackground(new java.awt.Color(204, 204, 204));
         btnLiber7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -835,15 +830,15 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
-            .addGroup(jPanel9Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(44, 44, 44)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
                         .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(17, 17, 17))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1155,8 +1150,8 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                                     .addComponent(txtTimeStop, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel13Layout.createSequentialGroup()
+                                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanel13Layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
                                 .addComponent(jLabel23)
                                 .addGap(63, 63, 63))
@@ -1165,53 +1160,56 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                                     .addComponent(jLabel33)
                                     .addComponent(jLabel19))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cboCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cboFood, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(snpCount, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(24, 24, 24)
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnXacNhan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnXoasp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(23, 23, 23))
-                    .addGroup(jPanel13Layout.createSequentialGroup()
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                            .addGroup(jPanel13Layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(snpCount)
+                                                                .addGap(18, 18, 18)
+                                .addComponent(btnXacNhan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                            .addGroup(jPanel13Layout.createSequentialGroup()
+                                .addGap(109, 109, 109)
+                                .addComponent(btnXoasp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(17, 17, 17))
+                                                                    .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jSeparator7)
                             .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 1, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                            .addGroup(jPanel13Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                    .addGroup(jPanel13Layout.createSequentialGroup()
                                         .addGap(9, 9, 9)
                                         .addComponent(btnTamTinh, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(65, 65, 65)
                                         .addComponent(btnThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                                    .addGroup(jPanel13Layout.createSequentialGroup()
                                         .addGap(102, 102, 102)
                                         .addComponent(jLabel28)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(lbTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                                            .addGroup(jPanel13Layout.createSequentialGroup()
                                             .addComponent(jLabel20)
                                             .addGap(31, 31, 31)
                                             .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                                            .addGroup(jPanel13Layout.createSequentialGroup()
                                             .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                                 .addComponent(jLabel32)
                                                 .addComponent(jLabel29))
                                             .addGap(35, 35, 35)
                                             .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                                                    .addGroup(jPanel13Layout.createSequentialGroup()
                                                     .addComponent(txtPhiDichVu, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                     .addGap(12, 12, 12)
                                                     .addComponent(jLabel34)
                                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                     .addComponent(txtPhiKhac, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                 .addComponent(jLabel21)
-                                                .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                                                    .addGroup(jPanel13Layout.createSequentialGroup()
                                                     .addGap(4, 4, 4)
                                                     .addComponent(lbTienGio, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1219,34 +1217,39 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                     .addComponent(txtGiamGia, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                                 .addGap(50, 50, 50))
-                            .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                                                            .addGroup(jPanel13Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 573, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel22)
-                    .addGroup(jPanel13Layout.createSequentialGroup()
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel24)
-                            .addComponent(jLabel35)
-                            .addComponent(jLabel31))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbDateNow)
-                            .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(lbMaHoaDon, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lbTime, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(lbTable, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                                                                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                                                    .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                                                                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel22)
+                                                                                                                            .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                                                                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel24)
+                                    .addComponent(jLabel35)
+                                    .addComponent(jLabel31))
+                                                                                                                                        .addGap(18, 18, 18)
+                                                                                                                                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbDateNow)
+                                    .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(lbMaHoaDon, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lbTime, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lbTable, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(145, 145, 145))
+                                                                                                                                            .addGroup(jPanel13Layout.createSequentialGroup()
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel13Layout.createSequentialGroup()
-                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                                                                                            .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                                                                                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                                                                                    .addGroup(jPanel13Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                                                                                                    .addGroup(jPanel13Layout.createSequentialGroup()
                         .addGap(54, 54, 54)
                         .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtTimeStart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1255,46 +1258,49 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                         .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtTimeStop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel27))
-                        .addGap(18, 18, 18)
+                                                                                                                                                                .addGap(18, 18, 18)
                         .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnStart)
+                                                                                                                                                                        .addComponent(btnStart)
                             .addComponent(btnStopContinue))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel13Layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(jLabel23))
-                    .addGroup(jPanel13Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cboCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel33))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cboFood, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel19)))
-                    .addGroup(jPanel13Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnXacNhan, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnXoasp, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel13Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(snpCount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                                                                                                                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                                                                                                            .addGroup(jPanel13Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(snpCount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50))
+                                                                                                                                                                            .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                                                                                                                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                                                                                                                    .addGroup(jPanel13Layout.createSequentialGroup()
+                                .addGap(1, 1, 1)
+                                .addComponent(jLabel23))
+                                                                                                                                                                                    .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                                                                                                                                                .addGap(18, 18, 18)
+                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(cboCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel33))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(cboFood, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel19)))
+                                                                                                                                                                                            .addGroup(jPanel13Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnXacNhan, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnXoasp, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(20, 20, 20)))
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                                                                                                                                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                                                                                                                                    .addGroup(jPanel13Layout.createSequentialGroup()
                         .addGap(193, 193, 193)
                         .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                                                                                                                                                    .addGroup(jPanel13Layout.createSequentialGroup()
                         .addGap(4, 4, 4)
                         .addComponent(jLabel21)
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                                                                                                                                                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                                                                                                                                            .addGroup(jPanel13Layout.createSequentialGroup()
                                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel32)
                                     .addComponent(lbTienGio)
@@ -1304,13 +1310,13 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel29)
                                     .addComponent(txtPhiDichVu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel13Layout.createSequentialGroup()
+                                                                                                                                                                                                            .addGroup(jPanel13Layout.createSequentialGroup()
                                 .addGap(34, 34, 34)
                                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(txtPhiKhac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel34))))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                                                                                                                                                        .addGap(18, 18, 18)
+                                                                                                                                                                                                                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel20)
                             .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(7, 7, 7)
@@ -1332,11 +1338,11 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                     .addComponent(jLabel22)
                     .addComponent(lbMaHoaDon))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                                                                                                                                                                                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel24)
                     .addComponent(lbTable))
-                .addGap(13, 13, 13)
-                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                                                                                                                                                                                                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel35)
                     .addComponent(lbTime))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1377,8 +1383,8 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tabs, javax.swing.GroupLayout.PREFERRED_SIZE, 1057, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(700, 700, 700))
+                .addComponent(tabs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(651, 651, 651))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1477,10 +1483,6 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         // TODO add your handling code here:
-        if (checkUnpaidTables()) {
-            // Có bàn chưa thanh toán, không làm gì cả (giữ cửa sổ mở)
-            return;
-        }
         if (XDialog.confirm(this, "Bạn có muốn đăng xuất?")) {
             this.dispose();
             new PolyBilliardsJFrame().setVisible(true);
@@ -1632,12 +1634,19 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
 
     private void btnXacNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacNhanActionPerformed
         // TODO add your handling code here:
+        System.out.println("=== NÚT XÁC NHẬN ĐƯỢC NHẤN ===");
+        System.out.println("txtTimeStart.getText(): '" + txtTimeStart.getText() + "'");
+        
         if (txtTimeStart.getText().equals("")) {
+            System.out.println("Chưa bắt đầu giờ - không thực hiện insertBillinfo()");
             XDialog.alert(this, "Chưa bắt đầu giờ");
             return;
         }
+        
+        System.out.println("Điều kiện OK - gọi insertBillinfo()");
         this.insertBillinfo();
         this.calTotalPice();
+        System.out.println("=== KẾT THÚC NÚT XÁC NHẬN ===");
     }//GEN-LAST:event_btnXacNhanActionPerformed
 
     private void btnTamTinhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTamTinhActionPerformed
@@ -2176,12 +2185,12 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
             public void actionPerformed(ActionEvent e) {
                 clickbt = (JButton) e.getSource();
                 idtable = Integer.parseInt(clickbt.getName());
-
+                
                 // Kiểm tra trạng thái bàn trước khi cho phép sử dụng
                 if (!checkTableStatus()) {
                     return; // Dừng lại nếu bàn không khả dụng
                 }
-
+                
                 clearBill();
                 loadDataonTable();
                 calTotalPice();
@@ -2210,36 +2219,35 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         btnLo4.addActionListener(buttonls);
         btnLo5.addActionListener(buttonls);
     }
-
+    
     /**
      * Kiểm tra trạng thái bàn trước khi cho phép sử dụng
-     *
      * @return true nếu bàn có thể sử dụng, false nếu không
      */
     private boolean checkTableStatus() {
         try {
             TableDAO tableDAO = new TableDAOImpl();
             Table table = tableDAO.findById(idtable);
-
+            
             if (table == null) {
                 XDialog.alert(this, "Không tìm thấy thông tin bàn!");
                 return false;
             }
-
+            
             String status = table.getStatus();
             if (status == null) {
                 status = "";
             }
-
+            
             // Chỉ chặn bàn đang bảo trì
             if (status.equalsIgnoreCase("Đang bảo trì") || status.equalsIgnoreCase("Dang bao tri")) {
                 String message = table.getName() + " hiện tại đang bảo trì!\n";
                 message += "Bàn đang được bảo trì, vui lòng chọn bàn khác.";
-
+                
                 XDialog.alert(this, message);
                 return false;
             }
-
+            
             return true;
         } catch (Exception e) {
             XDialog.alert(this, "Lỗi kiểm tra trạng thái bàn: " + e.getMessage());
@@ -2375,37 +2383,65 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
     private Billinfo getBillIfno() {
         count = (int) snpCount.getValue();
         Billinfo model = new Billinfo();
-        model.setIdbill(showIdBill());
-        model.setIdfood(showIdFood()); // Giữ nguyên String
+        
+        int billId = showIdBill();
+        String foodId = showIdFood();
+        
+        System.out.println("getBillIfno() - Bill ID: " + billId + ", Food ID: " + foodId + ", Count: " + count);
+        
+        model.setIdbill(billId);
+        model.setIdfood(foodId); // Giữ nguyên String
         model.setCount(count);
-
+        
         // Thêm thông tin từ Food được chọn
         Food selectedFood = (Food) cboFood.getSelectedItem();
         if (selectedFood != null) {
             model.setFoodName(selectedFood.getName());
             model.setDiscount(selectedFood.getDiscount());
             model.setUnitPrice(selectedFood.getUnitPrice());
+            System.out.println("Food được chọn: " + selectedFood.getName() + ", Price: " + selectedFood.getUnitPrice());
         }
-
+        
+        // Thêm thông tin từ các trường khác
+        model.setHourlyRate(parseCurrency(lbTienGio.getText()));
+        model.setDiscountAmount(parseCurrency(txtGiamGia.getText()));
+        model.setServiceFee(parseCurrency(txtPhiDichVu.getText()));
+        model.setOtherFee(parseCurrency(txtPhiKhac.getText()));
+        model.setNotes(txtGhiChu.getText());
+        
+        System.out.println("Billinfo được tạo với thông tin:");
+        System.out.println("- Bill ID: " + model.getIdbill());
+        System.out.println("- Food ID: " + model.getIdfood());
+        System.out.println("- Food Name: " + model.getFoodName());
+        System.out.println("- Count: " + model.getCount());
+        System.out.println("- Unit Price: " + model.getUnitPrice());
+        
         return model;
     }
 
     //insert Billinfo
     private void insertBillinfo() {
+        System.out.println("=== BẮT ĐẦU INSERT BILLINFO ===");
         Billinfo billinfo = getBillIfno();
+        System.out.println("Billinfo được tạo với ID Bill: " + billinfo.getIdbill());
+        System.out.println("Food ID: " + billinfo.getIdfood() + ", Food Name: " + billinfo.getFoodName());
+        
         try {
             // Kiểm tra xem đồ ăn đã có trong bảng chưa
             Food selectedFood = (Food) cboFood.getSelectedItem();
             if (selectedFood == null) {
+                System.out.println("Không có đồ ăn được chọn!");
                 XDialog.alert(this, "Vui lòng chọn đồ ăn!");
                 return;
             }
 
             String selectedFoodName = selectedFood.getName();
+            System.out.println("Đồ ăn được chọn: " + selectedFoodName);
             boolean foodExists = false;
             int existingRowIndex = -1;
 
             // Tìm kiếm trong bảng hiện tại
+            System.out.println("Số dòng trong bảng: " + tbInfo.getRowCount());
             for (int i = 0; i < tbInfo.getRowCount(); i++) {
                 Object tableValue = tbInfo.getValueAt(i, 0);
                 String tableFoodName = null;
@@ -2417,14 +2453,17 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                     tableFoodName = (String) tableValue;
                 }
 
+                System.out.println("Dòng " + i + ": " + tableFoodName);
                 if (selectedFoodName.equals(tableFoodName)) {
                     foodExists = true;
                     existingRowIndex = i;
+                    System.out.println("Tìm thấy đồ ăn đã có ở dòng: " + i);
                     break;
                 }
             }
 
             if (foodExists) {
+                System.out.println("Đồ ăn đã có, sẽ tăng số lượng");
                 // Nếu đồ ăn đã có, tăng số lượng
                 int currentCount = (Integer) tbInfo.getValueAt(existingRowIndex, 1);
                 int newCount = currentCount + billinfo.getCount();
@@ -2453,17 +2492,92 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
 
                 XDialog.info(this, "Đã tăng số lượng " + selectedFoodName + " lên " + newCount);
             } else {
+                System.out.println("Đồ ăn chưa có, sẽ thêm mới");
                 // Nếu đồ ăn chưa có, thêm mới
+                System.out.println("Gọi billifdao.insert()...");
                 billifdao.insert(billinfo);
+                System.out.println("Insert thành công, gọi loadDataonTable()...");
                 this.loadDataonTable();
                 XDialog.info(this, "Đã thêm " + selectedFoodName + " vào hóa đơn");
             }
 
             snpCount.setValue(1);
             calTotalPice(); // Tính lại tổng tiền
+            System.out.println("=== KẾT THÚC INSERT BILLINFO ===");
         } catch (Exception e) {
+            System.err.println("Lỗi trong insertBillinfo: " + e.getMessage());
             e.printStackTrace();
             XDialog.alert(this, "Lỗi khi thêm đồ ăn!");
+        }
+    }
+    
+    /**
+     * Cập nhật thông tin chi tiết cho tất cả Billinfo records của bill hiện tại
+     */
+    private void updateBillInfoDetails() {
+        try {
+            int billId = showIdBill();
+            System.out.println("Đang cập nhật thông tin chi tiết cho Bill ID: " + billId);
+            
+            List<Billinfo> billInfos = billifdao.selectByBillId(billId);
+            System.out.println("Tìm thấy " + billInfos.size() + " records để cập nhật");
+            
+            // Lấy thông tin từ các trường
+            double hourlyRate = parseCurrency(lbTienGio.getText());
+            double discountAmount = parseCurrency(txtGiamGia.getText());
+            double serviceFee = parseCurrency(txtPhiDichVu.getText());
+            double otherFee = parseCurrency(txtPhiKhac.getText());
+            String notes = txtGhiChu.getText();
+            
+            System.out.println("Thông tin cập nhật:");
+            System.out.println("- Tiền giờ: " + hourlyRate);
+            System.out.println("- Giảm giá: " + discountAmount);
+            System.out.println("- Phí dịch vụ: " + serviceFee);
+            System.out.println("- Phí khác: " + otherFee);
+            System.out.println("- Ghi chú: " + notes);
+            
+            if (billInfos.isEmpty()) {
+                // Nếu không có Billinfo, tạo một record mới với thông tin cơ bản
+                System.out.println("Không có Billinfo, tạo record mới");
+                
+                // Lấy một Food ID hợp lệ từ database
+                String validFoodId = getValidFoodId();
+                if (validFoodId == null) {
+                    System.err.println("Không tìm thấy Food ID hợp lệ!");
+                    return;
+                }
+                
+                Billinfo newInfo = new Billinfo();
+                newInfo.setIdbill(billId);
+                newInfo.setIdfood(validFoodId); // Sử dụng Food ID hợp lệ
+                newInfo.setCount(0);
+                newInfo.setFoodName("Chỉ tính tiền giờ");
+                newInfo.setUnitPrice(0.0f);
+                newInfo.setHourlyRate(hourlyRate);
+                newInfo.setDiscountAmount(discountAmount);
+                newInfo.setServiceFee(serviceFee);
+                newInfo.setOtherFee(otherFee);
+                newInfo.setNotes(notes);
+                
+                billifdao.insert(newInfo);
+                System.out.println("Đã tạo Billinfo mới cho Bill ID: " + billId);
+            } else {
+                // Cập nhật tất cả records hiện có
+                for (Billinfo info : billInfos) {
+                    info.setHourlyRate(hourlyRate);
+                    info.setDiscountAmount(discountAmount);
+                    info.setServiceFee(serviceFee);
+                    info.setOtherFee(otherFee);
+                    info.setNotes(notes);
+                    billifdao.update(info);
+                }
+                System.out.println("Đã cập nhật " + billInfos.size() + " records Billinfo");
+            }
+            
+            System.out.println("Cập nhật thông tin chi tiết Billinfo thành công!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("Lỗi khi cập nhật thông tin chi tiết Billinfo: " + e.getMessage());
         }
     }
 
@@ -2473,13 +2587,13 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
             // Lấy giá tiền từ bàn được chọn
             TableDAO tableDAO = new TableDAOImpl();
             Table table = tableDAO.findById(idtable);
-
+            
             if (table != null) {
                 // Set giá tiền mỗi phút từ database
                 double pricePerMinute = table.getPrice() / 60.0; // Chuyển từ VNĐ/giờ sang VNĐ/phút
                 hourlyRateCalculator.setHourlyRate(pricePerMinute);
             }
-
+            
             hourlyRateCalculator.startTimer();
         } catch (Exception e) {
             System.err.println("Lỗi khi lấy giá tiền bàn: " + e.getMessage());
@@ -2508,7 +2622,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         this.checkinput();
         float tong = 0;
         this.updatelbTienGio();
-
+        
         // Tính tổng từ bảng với validation
         for (int i = 0; i < tbInfo.getRowCount(); i++) {
             Object value = tbInfo.getValueAt(i, 3);
@@ -2522,13 +2636,13 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                 tong += thanhtien;
             }
         }
-
+        
         // Cộng các khoản khác với validation
         tong += parseCurrency(lbTienGio.getText());
         tong -= parseCurrency(txtGiamGia.getText());
         tong += parseCurrency(txtPhiDichVu.getText());
         tong += parseCurrency(txtPhiKhac.getText());
-
+        
         lbTongTien.setText(formatCurrency(tong));
     }
 
@@ -2567,11 +2681,11 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
             float totalPrice = parseCurrency(lbTongTien.getText());
             model.setTotalPrice(totalPrice);
             model.setId(showIdBill());
-
+            
             // Debug log
-            System.out.println("Updating bill ID: " + model.getId()
-                    + " with TotalPrice: " + totalPrice);
-
+            System.out.println("Updating bill ID: " + model.getId() + 
+                             " with TotalPrice: " + totalPrice);
+            
             // Lưu thông tin user hiện tại đang đăng nhập
             if (currentUser != null) {
                 model.setUsername(currentUser.getUsername());
@@ -2663,13 +2777,16 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         modelTable = (DefaultTableModel) tbInfo.getModel();
         modelTable.setRowCount(0);
         try {
-            // 1. Update bill trước (set status = 1 và username)
+            // 1. Cập nhật thông tin chi tiết cho tất cả Billinfo records
+            this.updateBillInfoDetails();
+            
+            // 2. Update bill trước (set status = 1 và username)
             this.updateBill();
 
-            // 2. Sau đó mới gọi stored procedure để xóa
+            // 3. Sau đó mới gọi stored procedure để xóa
             billifdao.deleteBillInfo();
 
-            // 3. Clear bill sau khi đã lưu thành công
+            // 4. Clear bill sau khi đã lưu thành công
             this.clearBill();
 
             // Reset thời gian chơi sau khi thanh toán
@@ -2745,7 +2862,8 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                 return "Bàn VIP 2";
             case 15:
                 return "Bàn VIP 3";
-
+                
+                
             // Bàn Lỗ - ID 14-18
             case 16:
                 return "Bàn lỗ 1";
@@ -2806,24 +2924,61 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         // Chuyển sang tab chi tiết (index 1)
         tabs.setSelectedIndex(1);
         btnStart.setEnabled(false);
-        btnXacNhan.setEnabled(false);
-        btnXoasp.setEnabled(false);
-        btnThanhToan.setEnabled(false);
-        btnTamTinh.setEnabled(false);
+        
         // Debug log
-        System.out.println("Showing bill detail - ID: " + bill.getId()
-                + ", TotalPrice: " + bill.getTotalPrice());
-
+        System.out.println("Showing bill detail - ID: " + bill.getId() + 
+                         ", TotalPrice: " + bill.getTotalPrice());
+        
         // Hiển thị thông tin bill lên các trường cơ bản
         lbMaHoaDon.setText(String.valueOf(bill.getId()));
         lbTable.setText(bill.getTableName());
         txtTimeStart.setText(bill.getDatecheckin() != null ? XDateHelper.toString(bill.getDatecheckin(), "yyyy-MM-dd HH:mm:ss") : "");
         txtTimeStop.setText(bill.getDatecheckout() != null ? XDateHelper.toString(bill.getDatecheckout(), "yyyy-MM-dd HH:mm:ss") : "");
         lbTongTien.setText(bill.getTotalPrice() > 0 ? formatCurrency(bill.getTotalPrice()) : "");
+        
         // Hiển thị chi tiết bill info (danh sách món)
         DefaultTableModel model = (DefaultTableModel) tbInfo.getModel();
         model.setRowCount(0);
+        
+        // Thử đọc từ Billinfo trước (cho hóa đơn chưa thanh toán)
         List<Billinfo> billInfos = billifdao.selectByBillId(bill.getId());
+        
+        System.out.println("Đang tìm Billinfo cho Bill ID: " + bill.getId());
+        System.out.println("Đang thực hiện query: SELECT * FROM Billinfo WHERE idBill = ?");
+        System.out.println("Đọc được " + billInfos.size() + " records từ Billinfo");
+        
+        // Nếu không có trong Billinfo, thử đọc từ BillInfoDeleted (cho hóa đơn đã thanh toán)
+        if (billInfos.isEmpty()) {
+            System.out.println("Không tìm thấy trong Billinfo, thử đọc từ BillInfoDeleted");
+            billInfos = billifdao.selectByBillIdFromDeleted(bill.getId());
+            System.out.println("Đọc được " + billInfos.size() + " records từ BillInfoDeleted");
+        }
+        
+        if (!billInfos.isEmpty()) {
+            // Lấy thông tin từ record đầu tiên để hiển thị các trường khác
+            Billinfo firstInfo = billInfos.get(0);
+            System.out.println("Thông tin từ record đầu tiên:");
+            System.out.println("- Tiền giờ: " + firstInfo.getHourlyRate());
+            System.out.println("- Giảm giá: " + firstInfo.getDiscountAmount());
+            System.out.println("- Phí dịch vụ: " + firstInfo.getServiceFee());
+            System.out.println("- Phí khác: " + firstInfo.getOtherFee());
+            System.out.println("- Ghi chú: " + firstInfo.getNotes());
+            
+            lbTienGio.setText(formatCurrency((float)firstInfo.getHourlyRate()));
+            txtGiamGia.setText(formatCurrency((float)firstInfo.getDiscountAmount()));
+            txtPhiDichVu.setText(formatCurrency((float)firstInfo.getServiceFee()));
+            txtPhiKhac.setText(formatCurrency((float)firstInfo.getOtherFee()));
+            txtGhiChu.setText(firstInfo.getNotes() != null ? firstInfo.getNotes() : "");
+        } else {
+            // Nếu không có Billinfo, hiển thị thông tin từ Bill
+            System.out.println("Không có Billinfo, sử dụng thông tin từ Bill");
+            lbTienGio.setText("");
+            txtGiamGia.setText("");
+            txtPhiDichVu.setText("");
+            txtPhiKhac.setText("");
+            txtGhiChu.setText("");
+        }
+        
         for (Billinfo info : billInfos) {
             // Sử dụng dữ liệu đã lưu trong Billinfo thay vì query FoodDAO
             Object[] row = {
@@ -2834,20 +2989,47 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
             };
             model.addRow(row);
         }
+        
+        System.out.println("Đã hiển thị " + billInfos.size() + " món ăn trong bảng");
     }
-
+    
     /**
      * Getter cho currentUser
      */
     public User getCurrentUser() {
         return currentUser;
     }
-
+    
+    /**
+     * Lấy một Food ID hợp lệ từ database
+     */
+    private String getValidFoodId() {
+        try {
+            // Thử lấy Food có Available = 1 trước
+            String sql = "SELECT TOP 1 Id FROM Food WHERE Available = 1";
+            try (java.sql.ResultSet rs = poly.billiards.util.XJdbc.exeQuery(sql)) {
+                if (rs.next()) {
+                    return rs.getString("Id");
+                }
+            }
+            
+            // Nếu không có, lấy bất kỳ Food nào
+            sql = "SELECT TOP 1 Id FROM Food";
+            try (java.sql.ResultSet rs = poly.billiards.util.XJdbc.exeQuery(sql)) {
+                if (rs.next()) {
+                    return rs.getString("Id");
+                }
+            }
+            
+            System.err.println("Không tìm thấy Food nào trong database!");
+        } catch (Exception e) {
+            System.err.println("Lỗi khi lấy Food ID: " + e.getMessage());
+        }
+        return null;
+    }
+    
     private void btnLiber3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLiber3ActionPerformed
         // TODO: Thêm code xử lý sự kiện cho btnLiber3
+        clickTable();
     }//GEN-LAST:event_btnLiber3ActionPerformed
-
-    private void btnLiber2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLiber2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnLiber2ActionPerformed
 }
