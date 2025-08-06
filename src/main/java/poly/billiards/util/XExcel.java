@@ -148,7 +148,7 @@ public class XExcel {
         return users;
     }
     
-    public static void exportCards(List<poly.billiards.entity.Table> tables) throws IOException {
+    public static void exportTables(List<poly.billiards.entity.Table> tables) throws IOException {
         File file = chooseFile(true);
         if (file == null) return;
         
@@ -183,7 +183,7 @@ public class XExcel {
         }
     }
     
-    public static List<poly.billiards.entity.Table> importCards() throws IOException {
+    public static List<poly.billiards.entity.Table> importTables() throws IOException {
         File file = chooseFile(false);
         if (file == null) return new ArrayList<>();
         
@@ -198,7 +198,7 @@ public class XExcel {
                 
                 poly.billiards.entity.Table table = new poly.billiards.entity.Table();
                 table.setId(getIntegerCellValue(row.getCell(0)));
-                table.setStatus(getIntegerCellValue(row.getCell(1)));
+                table.setStatus(getStringCellValue(row.getCell(1)));
                 tables.add(table);
             }
         }
@@ -348,7 +348,7 @@ public class XExcel {
                 Row row = sheet.getRow(i);
                 if (row == null) continue;
                 
-                Category category = new Category();
+                FoodCategory category = new FoodCategory();
                 category.setId(getStringCellValue(row.getCell(0)));
                 category.setName(getStringCellValue(row.getCell(1)));
                 
@@ -424,11 +424,11 @@ public class XExcel {
                 Row row = sheet.createRow(rowNum++);
                 row.createCell(0).setCellValue(info.getId());
                 row.createCell(1).setCellValue(info.getIdbill());
-                row.createCell(2).setCellValue(info.getDrinkName());
+                row.createCell(2).setCellValue(info.getFoodName());
                 row.createCell(3).setCellValue(info.getUnitPrice());
                 row.createCell(4).setCellValue(info.getDiscount());
-                row.createCell(5).setCellValue(info.getQuantity());
-                row.createCell(6).setCellValue(info.getQuantity() * info.getUnitPrice() * (1 - detail.getDiscount()));
+                row.createCell(5).setCellValue(info.getCount());
+                row.createCell(6).setCellValue(info.getCount() * info.getUnitPrice() * (1 - info.getDiscount()));
             }
             
             // Auto-size columns

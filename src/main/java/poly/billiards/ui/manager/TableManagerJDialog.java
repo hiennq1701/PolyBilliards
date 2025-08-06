@@ -120,6 +120,10 @@ public class TableManagerJDialog extends javax.swing.JDialog  {
             }
         });
         jScrollPane1.setViewportView(tblTableManager);
+        if (tblTableManager.getColumnModel().getColumnCount() > 0) {
+            tblTableManager.getColumnModel().getColumn(2).setPreferredWidth(200);
+            tblTableManager.getColumnModel().getColumn(3).setPreferredWidth(150);
+        }
 
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 

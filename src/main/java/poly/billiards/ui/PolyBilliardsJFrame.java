@@ -2205,7 +2205,10 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                 if (!checkTableStatus()) {
                     return; // Dừng lại nếu bàn không khả dụng
                 }
-                
+                btnXacNhan.setEnabled(true);
+                btnXoasp.setEnabled(true);
+                btnThanhToan.setEnabled(true);
+                btnTamTinh.setEnabled(true);
                 clearBill();
                 loadDataonTable();
                 calTotalPice();

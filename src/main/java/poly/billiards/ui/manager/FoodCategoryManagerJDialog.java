@@ -79,7 +79,6 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
         btnDeleteCheckedItems = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         txtTkiem = new javax.swing.JTextField();
-        btnTimKiem = new javax.swing.JButton();
         btnLamMoi = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -147,6 +146,11 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
             }
         });
         jScrollPane1.setViewportView(tblCategories);
+        if (tblCategories.getColumnModel().getColumnCount() > 0) {
+            tblCategories.getColumnModel().getColumn(0).setPreferredWidth(10);
+            tblCategories.getColumnModel().getColumn(1).setPreferredWidth(300);
+            tblCategories.getColumnModel().getColumn(2).setPreferredWidth(10);
+        }
 
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
@@ -181,14 +185,6 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
         txtTkiem.setName(""); // NOI18N
         txtTkiem.setPreferredSize(new java.awt.Dimension(200, 22));
 
-        btnTimKiem.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnTimKiem.setText("Tìm kiếm tên đồ ăn");
-        btnTimKiem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTimKiemActionPerformed(evt);
-            }
-        });
-
         btnLamMoi.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnLamMoi.setText("Làm mới");
         btnLamMoi.addActionListener(new java.awt.event.ActionListener() {
@@ -202,23 +198,20 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                .addContainerGap(101, Short.MAX_VALUE)
+                .addContainerGap(198, Short.MAX_VALUE)
                 .addComponent(txtTkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnTimKiem)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(100, 100, 100))
+                .addGap(161, 161, 161))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                .addContainerGap(11, Short.MAX_VALUE)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11))
+                .addContainerGap())
         );
 
         jPanel1.add(jPanel9, java.awt.BorderLayout.PAGE_START);
@@ -435,58 +428,6 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIdActionPerformed
 
-        private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
-        String keyword = txtTkiem.getText().trim();
-        
-        if (keyword.isEmpty()) {
-            XDialog.alert(this, "Vui lòng nhập từ khóa tìm kiếm!");
-            return;
-        }
-
-        try {
-            // Tìm kiếm thông minh theo tên loại đồ ăn
-            List<FoodCategory> searchResults = categories.stream()
-                .filter(category -> {
-                    String name = category.getName().toLowerCase();
-                    String id = category.getId().toLowerCase();
-                    String searchTerm = keyword.toLowerCase();
-                    
-                    // Tìm kiếm chính xác hoặc chứa từ khóa
-                    return name.contains(searchTerm) || 
-                           id.contains(searchTerm) ||
-                           name.startsWith(searchTerm) ||
-                           name.endsWith(searchTerm);
-                })
-                .collect(Collectors.toList());
-
-            if (searchResults.isEmpty()) {
-                XDialog.alert(this, "Không tìm thấy loại đồ ăn nào phù hợp với từ khóa: '" + keyword + "'\n\nGợi ý: Hãy thử:\n- Tìm kiếm với từ khóa ngắn hơn\n- Kiểm tra chính tả\n- Tìm kiếm theo mã loại");
-                return;
-            }
-
-            // Hiển thị kết quả tìm kiếm
-            DefaultTableModel model = (DefaultTableModel) tblCategories.getModel();
-            model.setRowCount(0);
-
-            for (FoodCategory category : searchResults) {
-                model.addRow(new Object[]{
-                    category.getId(),
-                    category.getName(),
-                    false
-                });
-            }
-
-            // Hiển thị thông báo thành công với số lượng kết quả
-            String message = searchResults.size() == 1 ? 
-                "Tìm thấy 1 loại đồ ăn phù hợp!" :
-                "Tìm thấy " + searchResults.size() + " loại đồ ăn phù hợp!";
-            XDialog.info(this, message);
-
-        } catch (Exception e) {
-            XDialog.alert(this, "Lỗi tìm kiếm: " + e.getMessage());
-        }
-    }//GEN-LAST:event_btnTimKiemActionPerformed
-
     private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
         // Xóa từ khóa tìm kiếm và làm mới bảng
         txtTkiem.setText("");
@@ -581,7 +522,6 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
     private javax.swing.JButton btnMoveLast;
     private javax.swing.JButton btnMoveNext;
     private javax.swing.JButton btnMovePrevious;
-    private javax.swing.JButton btnTimKiem;
     private javax.swing.JButton btnUncheckAll;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JLabel jLabel1;
