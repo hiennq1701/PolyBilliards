@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import javax.swing.RowSorter;
 import poly.billiards.dao.UserDAO;
 import poly.billiards.dao.impl.UserDAOImpl;
 import poly.billiards.entity.User;
@@ -41,6 +43,9 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
         XUI.setHandCursor(this);
         userDAO = new UserDAOImpl() ;
         this.fillToTable();
+        
+        // Thiết lập TableRowSorter cho tblUsers
+        setupTableSorter();
         
         
         txtTkiem.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -680,6 +685,11 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
             };
             model.addRow(rowData);
         });
+        
+        // Đảm bảo sorter được áp dụng sau khi load dữ liệu mới
+        if (tblUsers.getRowSorter() != null) {
+            tblUsers.getRowSorter().allRowsChanged();
+        }
     }
 
     @Override
@@ -1010,6 +1020,11 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
                     false
                 });
             }
+            
+            // Đảm bảo sorter được áp dụng sau khi load dữ liệu mới
+            if (tblUsers.getRowSorter() != null) {
+                tblUsers.getRowSorter().allRowsChanged();
+            }
         } catch (Exception ex) {
             XDialog.alert(this, "Lỗi tải dữ liệu: " + ex.getMessage());
         }
@@ -1064,5 +1079,70 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
         } catch (Exception e) {
             // Không hiển thị lỗi cho tìm kiếm tự động
         }
+    }
+    
+    /**
+     * Thiết lập TableRowSorter cho tblUsers
+     */
+    private void setupTableSorter() {
+        DefaultTableModel model = (DefaultTableModel) tblUsers.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        tblUsers.setRowSorter(sorter);
+        
+        // Thiết lập comparator tùy chỉnh cho cột Tên đăng nhập (cột 0)
+        sorter.setComparator(0, new java.util.Comparator<String>() {
+            @Override
+            public int compare(String s1, String s2) {
+                return s1.compareToIgnoreCase(s2); // So sánh không phân biệt hoa thường
+            }
+        });
+        
+        // Thiết lập comparator cho cột Email (cột 1)
+        sorter.setComparator(1, new java.util.Comparator<String>() {
+            @Override
+            public int compare(String s1, String s2) {
+                return s1.compareToIgnoreCase(s2);
+            }
+        });
+        
+        // Thiết lập comparator cho cột Họ và tên (cột 2)
+        sorter.setComparator(2, new java.util.Comparator<String>() {
+            @Override
+            public int compare(String s1, String s2) {
+                return s1.compareToIgnoreCase(s2);
+            }
+        });
+        
+        // Thiết lập comparator cho cột Vai trò (cột 5)
+        sorter.setComparator(5, new java.util.Comparator<String>() {
+            @Override
+            public int compare(String s1, String s2) {
+                // Sắp xếp: Quản lý trước, Nhân viên sau
+                if (s1.equals("Quản lý") && s2.equals("Nhân viên")) {
+                    return -1;
+                } else if (s1.equals("Nhân viên") && s2.equals("Quản lý")) {
+                    return 1;
+                } else {
+                    return s1.compareTo(s2);
+                }
+            }
+        });
+        
+        // Thiết lập comparator cho cột Trạng thái (cột 6)
+        sorter.setComparator(6, new java.util.Comparator<String>() {
+            @Override
+            public int compare(String s1, String s2) {
+                // Sắp xếp: Hoạt động trước, Tạm dừng sau
+                if (s1.equals("Hoạt động") && s2.equals("Tạm dừng")) {
+                    return -1;
+                } else if (s1.equals("Tạm dừng") && s2.equals("Hoạt động")) {
+                    return 1;
+                } else {
+                    return s1.compareTo(s2);
+                }
+            }
+        });
+        
+        System.out.println("TableRowSorter đã được thiết lập cho tblUsers");
     }
 }

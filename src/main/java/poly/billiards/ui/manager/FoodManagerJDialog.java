@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import javax.swing.RowSorter;
 import poly.billiards.dao.FoodCategoryDAO;
 import poly.billiards.dao.FoodDAO;
 import poly.billiards.dao.impl.FoodCategoryDAOImpl;
@@ -52,6 +54,9 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
         });
         
         this.fillToTable();
+        
+        // Thiết lập TableRowSorter cho tblDrinks
+        setupTableSorter();
     }
 
     /**
@@ -77,7 +82,6 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
         tblCategories = new javax.swing.JTable();
         jPanel9 = new javax.swing.JPanel();
         txtTkiem = new javax.swing.JTextField();
-        btnTimKiem = new javax.swing.JButton();
         btnLamMoi = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -125,7 +129,7 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
 
             },
             new String [] {
-                "Mã đồ ăn", "Tên đồ ăn", "Đơn giá", "Giảm giá", "Trạng thái", ""
+                "STT", "Tên đồ ăn", "Đơn giá", "Giảm giá", "Trạng thái", ""
             }
         ) {
             Class[] types = new Class [] {
@@ -226,14 +230,6 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
         txtTkiem.setName(""); // NOI18N
         txtTkiem.setPreferredSize(new java.awt.Dimension(200, 22));
 
-        btnTimKiem.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnTimKiem.setText("Tìm kiếm tên đồ ăn");
-        btnTimKiem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTimKiemActionPerformed(evt);
-            }
-        });
-
         btnLamMoi.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnLamMoi.setText("Làm mới");
         btnLamMoi.addActionListener(new java.awt.event.ActionListener() {
@@ -247,13 +243,11 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                .addContainerGap(131, Short.MAX_VALUE)
+                .addContainerGap(213, Short.MAX_VALUE)
                 .addComponent(txtTkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnTimKiem)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(100, 100, 100))
+                .addGap(176, 176, 176))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -261,7 +255,6 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
                 .addGap(6, 6, 6)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(11, 11, 11))
         );
@@ -351,7 +344,7 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
 
         jPanel6.setLayout(new java.awt.GridLayout(0, 2, 5, 5));
 
-        jLabel1.setText("Mã đồ ăn");
+        jLabel1.setText("STT");
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         jPanel6.add(jLabel1);
 
@@ -512,65 +505,6 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
         }
     }//GEN-LAST:event_tblCategoriesMouseClicked
 
-    private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
-        String keyword = txtTkiem.getText().trim();
-        
-        if (keyword.isEmpty()) {
-            XDialog.alert(this, "Vui lòng nhập từ khóa tìm kiếm!");
-            return;
-        }
-
-        try {
-            // Tìm kiếm thông minh theo tên đồ ăn trong danh sách hiện tại
-            List<Food> searchResults = drinks.stream()
-                .filter(food -> {
-                    String name = food.getName().toLowerCase();
-                    String id = food.getId().toLowerCase();
-                    String searchTerm = keyword.toLowerCase();
-                    
-                    // Tìm kiếm chính xác hoặc chứa từ khóa
-                    return name.contains(searchTerm) || 
-                           id.contains(searchTerm) ||
-                           name.startsWith(searchTerm) ||
-                           name.endsWith(searchTerm);
-                })
-                .collect(Collectors.toList());
-
-            if (searchResults.isEmpty()) {
-                XDialog.alert(this, "Không tìm thấy đồ ăn nào phù hợp với từ khóa: '" + keyword + "'\n\nGợi ý: Hãy thử:\n- Tìm kiếm với từ khóa ngắn hơn\n- Kiểm tra chính tả\n- Tìm kiếm theo mã đồ ăn hoặc tên loại");
-                return;
-            }
-
-            // Hiển thị kết quả tìm kiếm
-            DefaultTableModel model = (DefaultTableModel) tblDrinks.getModel();
-            model.setRowCount(0);
-
-            for (Food food : searchResults) {
-                String unitPriceStr = String.format("%,.0f", food.getUnitPrice());
-                String discountStr = String.format("%.0f%%", food.getDiscount());
-                String available = food.isAvailable() ? "Sẵn có" : "Hết hàng";
-
-                model.addRow(new Object[]{
-                    food.getId(),
-                    food.getName(),
-                    unitPriceStr,
-                    discountStr,
-                    available,
-                    false
-                });
-            }
-
-            // Hiển thị thông báo thành công với số lượng kết quả
-            String message = searchResults.size() == 1 ? 
-                "Tìm thấy 1 đồ ăn phù hợp!" :
-                "Tìm thấy " + searchResults.size() + " đồ ăn phù hợp!";
-            XDialog.info(this, message);
-
-        } catch (Exception e) {
-            XDialog.alert(this, "Lỗi tìm kiếm: " + e.getMessage());
-        }
-    }//GEN-LAST:event_btnTimKiemActionPerformed
-
     private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
         // Xóa từ khóa tìm kiếm và làm mới bảng
         txtTkiem.setText("");
@@ -679,7 +613,6 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
     private javax.swing.JButton btnMoveLast;
     private javax.swing.JButton btnMoveNext;
     private javax.swing.JButton btnMovePrevious;
-    private javax.swing.JButton btnTimKiem;
     private javax.swing.JButton btnUncheckAll;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JComboBox<String> cboCategories;
@@ -799,6 +732,11 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
         }
 
         this.clear();
+        
+        // Đảm bảo sorter được áp dụng sau khi load dữ liệu mới
+        if (tblDrinks.getRowSorter() != null) {
+            tblDrinks.getRowSorter().allRowsChanged();
+        }
     }
 
     @Override
@@ -1163,5 +1101,65 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
             dataChangeListener.onDataChanged();
         }
     }
-
+    
+    /**
+     * Thiết lập TableRowSorter cho tblDrinks
+     */
+    private void setupTableSorter() {
+        DefaultTableModel model = (DefaultTableModel) tblDrinks.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        tblDrinks.setRowSorter(sorter);
+        
+        // Thiết lập comparator tùy chỉnh cho cột STT (cột 0)
+        sorter.setComparator(0, new java.util.Comparator<String>() {
+            @Override
+            public int compare(String s1, String s2) {
+                try {
+                    // So sánh số thay vì chuỗi để sắp xếp đúng
+                    return Integer.parseInt(s1) - Integer.parseInt(s2);
+                } catch (NumberFormatException e) {
+                    // Fallback về so sánh chuỗi nếu không parse được số
+                    return s1.compareTo(s2);
+                }
+            }
+        });
+        
+        // Thiết lập comparator cho cột Đơn giá (cột 2) - loại bỏ dấu phẩy và chuyển thành số
+        sorter.setComparator(2, new java.util.Comparator<String>() {
+            @Override
+            public int compare(String s1, String s2) {
+                try {
+                    // Loại bỏ dấu phẩy và chuyển thành số
+                    double price1 = Double.parseDouble(s1.replace(",", ""));
+                    double price2 = Double.parseDouble(s2.replace(",", ""));
+                    return Double.compare(price1, price2);
+                } catch (NumberFormatException e) {
+                    return s1.compareTo(s2);
+                }
+            }
+        });
+        
+        // Thiết lập comparator cho cột Giảm giá (cột 3) - loại bỏ dấu % và chuyển thành số
+        sorter.setComparator(3, new java.util.Comparator<String>() {
+            @Override
+            public int compare(String s1, String s2) {
+                try {
+                    // Loại bỏ dấu % và chuyển thành số
+                    double discount1 = Double.parseDouble(s1.replace("%", ""));
+                    double discount2 = Double.parseDouble(s2.replace("%", ""));
+                    return Double.compare(discount1, discount2);
+                } catch (NumberFormatException e) {
+                    return s1.compareTo(s2);
+                }
+            }
+        });
+        
+        // Bỏ qua sắp xếp mặc định để tránh lỗi import
+        // User có thể tự click vào header để sắp xếp
+        // java.util.List<RowSorter.SortKey> sortKeys = new java.util.ArrayList<>();
+        // sortKeys.add(new RowSorter.SortKey(0, javax.swing.RowSorter.SortOrder.ASCENDING));
+        // sorter.setSortKeys(sortKeys);
+        
+        System.out.println("TableRowSorter đã được thiết lập cho tblDrinks");
+    }
 }

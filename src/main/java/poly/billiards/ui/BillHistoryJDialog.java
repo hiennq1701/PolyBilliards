@@ -21,6 +21,8 @@ import java.util.Objects;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import javax.swing.RowSorter;
 import poly.billiards.dao.BillDAO;
 import poly.billiards.entity.Bill;
 import poly.billiards.util.TimeRange;
@@ -254,6 +256,9 @@ public class BillHistoryJDialog extends javax.swing.JDialog implements BillHisto
         
         // Thiết lập auto-search
         setupAutoSearch();
+        
+        // Thiết lập TableRowSorter cho tblBills
+        setupTableSorter();
 
         javax.swing.GroupLayout pnlFilterTimeLayout = new javax.swing.GroupLayout(pnlFilterTime);
         pnlFilterTime.setLayout(pnlFilterTimeLayout);
@@ -524,6 +529,11 @@ public class BillHistoryJDialog extends javax.swing.JDialog implements BillHisto
 
         // Tính tổng doanh thu sau khi load dữ liệu
         calculateTotalRevenue();
+        
+        // Đảm bảo sorter được áp dụng sau khi load dữ liệu mới
+        if (tblBills.getRowSorter() != null) {
+            tblBills.getRowSorter().allRowsChanged();
+        }
     }
 
     @Override
@@ -878,5 +888,84 @@ public class BillHistoryJDialog extends javax.swing.JDialog implements BillHisto
                 cboFilter.setSelectedIndex(0);
             }
         }
+    }
+    
+    /**
+     * Thiết lập TableRowSorter cho tblBills
+     */
+    private void setupTableSorter() {
+        DefaultTableModel model = (DefaultTableModel) tblBills.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        tblBills.setRowSorter(sorter);
+        
+        // Thiết lập comparator tùy chỉnh cho cột Mã hoá đơn (cột 0)
+        sorter.setComparator(0, new java.util.Comparator<Object>() {
+            @Override
+            public int compare(Object o1, Object o2) {
+                if (o1 instanceof Long && o2 instanceof Long) {
+                    return Long.compare((Long) o1, (Long) o2);
+                }
+                return o1.toString().compareTo(o2.toString());
+            }
+        });
+        
+        // Thiết lập comparator cho cột Tên bàn (cột 1)
+        sorter.setComparator(1, new java.util.Comparator<Object>() {
+            @Override
+            public int compare(Object o1, Object o2) {
+                String s1 = o1.toString();
+                String s2 = o2.toString();
+                return s1.compareToIgnoreCase(s2); // So sánh không phân biệt hoa thường
+            }
+        });
+        
+        // Thiết lập comparator cho cột Thời điểm tạo (cột 2)
+        sorter.setComparator(2, new java.util.Comparator<Object>() {
+            @Override
+            public int compare(Object o1, Object o2) {
+                String s1 = o1.toString();
+                String s2 = o2.toString();
+                return s1.compareTo(s2); // So sánh theo thứ tự thời gian
+            }
+        });
+        
+        // Thiết lập comparator cho cột Thời điểm thanh toán (cột 3)
+        sorter.setComparator(3, new java.util.Comparator<Object>() {
+            @Override
+            public int compare(Object o1, Object o2) {
+                String s1 = o1.toString();
+                String s2 = o2.toString();
+                return s1.compareTo(s2); // So sánh theo thứ tự thời gian
+            }
+        });
+        
+        // Thiết lập comparator cho cột Tổng tiền (cột 4)
+        sorter.setComparator(4, new java.util.Comparator<Object>() {
+            @Override
+            public int compare(Object o1, Object o2) {
+                if (o1 instanceof Long && o2 instanceof Long) {
+                    return Long.compare((Long) o1, (Long) o2);
+                } else if (o1 instanceof Integer && o2 instanceof Integer) {
+                    return Integer.compare((Integer) o1, (Integer) o2);
+                } else if (o1 instanceof Double && o2 instanceof Double) {
+                    return Double.compare((Double) o1, (Double) o2);
+                } else if (o1 instanceof Float && o2 instanceof Float) {
+                    return Float.compare((Float) o1, (Float) o2);
+                }
+                return o1.toString().compareTo(o2.toString());
+            }
+        });
+        
+        // Thiết lập comparator cho cột Người dùng (cột 5)
+        sorter.setComparator(5, new java.util.Comparator<Object>() {
+            @Override
+            public int compare(Object o1, Object o2) {
+                String s1 = o1.toString();
+                String s2 = o2.toString();
+                return s1.compareToIgnoreCase(s2); // So sánh không phân biệt hoa thường
+            }
+        });
+        
+        System.out.println("TableRowSorter đã được thiết lập cho tblBills");
     }
 }

@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import javax.swing.RowSorter;
 import poly.billiards.dao.TableDAO;
 import poly.billiards.dao.impl.TableDAOImpl;
 import poly.billiards.entity.Table;
@@ -47,6 +49,9 @@ public class TableManagerJDialog extends javax.swing.JDialog  {
         tableDAO = new TableDAOImpl();
         this.fillToTable();
         this.setupComboBox();
+        
+        // Thiết lập TableRowSorter cho tblTableManager
+        setupTableSorter();
     }
 
     /**
@@ -404,6 +409,11 @@ public class TableManagerJDialog extends javax.swing.JDialog  {
                 String.format("%,.0f VNĐ", table.getPrice())
             });
         }
+        
+        // Đảm bảo sorter được áp dụng sau khi load dữ liệu mới
+        if (tblTableManager.getRowSorter() != null) {
+            tblTableManager.getRowSorter().allRowsChanged();
+        }
     }
 
     /**
@@ -546,6 +556,71 @@ public class TableManagerJDialog extends javax.swing.JDialog  {
         this.setEditable(false);
         index = -1;
         tabs.setSelectedIndex(0);
+    }
+    
+    /**
+     * Thiết lập TableRowSorter cho tblTableManager
+     */
+    private void setupTableSorter() {
+        DefaultTableModel model = (DefaultTableModel) tblTableManager.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        tblTableManager.setRowSorter(sorter);
+        
+        // Thiết lập comparator tùy chỉnh cho cột STT (cột 0)
+        sorter.setComparator(0, new java.util.Comparator<Object>() {
+            @Override
+            public int compare(Object o1, Object o2) {
+                if (o1 instanceof Integer && o2 instanceof Integer) {
+                    return Integer.compare((Integer) o1, (Integer) o2);
+                }
+                return o1.toString().compareTo(o2.toString());
+            }
+        });
+        
+        // Thiết lập comparator cho cột Trạng thái (cột 1) - Boolean
+        sorter.setComparator(1, new java.util.Comparator<Object>() {
+            @Override
+            public int compare(Object o1, Object o2) {
+                if (o1 instanceof Boolean && o2 instanceof Boolean) {
+                    Boolean b1 = (Boolean) o1;
+                    Boolean b2 = (Boolean) o2;
+                    // Sắp xếp: true (Chơi được) trước, false (Đang bảo trì) sau
+                    return b1.compareTo(b2);
+                }
+                return o1.toString().compareTo(o2.toString());
+            }
+        });
+        
+        // Thiết lập comparator cho cột Tên bàn (cột 2)
+        sorter.setComparator(2, new java.util.Comparator<Object>() {
+            @Override
+            public int compare(Object o1, Object o2) {
+                String s1 = o1.toString();
+                String s2 = o2.toString();
+                return s1.compareToIgnoreCase(s2); // So sánh không phân biệt hoa thường
+            }
+        });
+        
+        // Thiết lập comparator cho cột Giá tiền (cột 3)
+        sorter.setComparator(3, new java.util.Comparator<Object>() {
+            @Override
+            public int compare(Object o1, Object o2) {
+                try {
+                    String s1 = o1.toString();
+                    String s2 = o2.toString();
+                    // Loại bỏ "VNĐ" và dấu phẩy, chuyển thành số
+                    String clean1 = s1.replaceAll("[^0-9]", "");
+                    String clean2 = s2.replaceAll("[^0-9]", "");
+                    double price1 = Double.parseDouble(clean1);
+                    double price2 = Double.parseDouble(clean2);
+                    return Double.compare(price1, price2);
+                } catch (NumberFormatException e) {
+                    return o1.toString().compareTo(o2.toString());
+                }
+            }
+        });
+        
+        System.out.println("TableRowSorter đã được thiết lập cho tblTableManager");
     }
 
     /**
