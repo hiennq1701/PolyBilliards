@@ -501,7 +501,15 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
 
     private void tblCategoriesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCategoriesMouseClicked
         // TODO add your handling code here:
-        this.fillToTable();
+        int selectedRow = tblCategories.getSelectedRow();
+        if (selectedRow >= 0) {
+            FoodCategory selectedCategory = categories.get(selectedRow);
+            fillToTableByCategory(selectedCategory.getId());
+            
+            // Debug log để kiểm tra
+            System.out.println("Selected category: " + selectedCategory.getName() + " (ID: " + selectedCategory.getId() + ")");
+            System.out.println("Number of foods loaded: " + drinks.size());
+        }
     }//GEN-LAST:event_tblCategoriesMouseClicked
 
     private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
@@ -567,6 +575,11 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
         // Xóa từ khóa tìm kiếm và làm mới bảng
         txtTkiem.setText("");
         this.fillToTable();
+        
+        // Reset selection về category đầu tiên (nếu có)
+        if (tblCategories.getRowCount() > 0) {
+            tblCategories.setRowSelectionInterval(0, 0);
+        }
     }//GEN-LAST:event_btnLamMoiActionPerformed
 
     private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {
@@ -743,11 +756,22 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
 
     @Override
     public void fillToTable() {
+        fillToTableByCategory(null); // Load tất cả đồ ăn
+    }
+    
+    /**
+     * Fill table với đồ ăn theo category
+     */
+    private void fillToTableByCategory(String categoryId) {
         DefaultTableModel model = (DefaultTableModel) tblDrinks.getModel();
         model.setRowCount(0);
         
-        // Cập nhật danh sách đồ ăn từ database
-        drinks = dao.findAll();
+        // Cập nhật danh sách đồ ăn từ database theo category
+        if (categoryId != null) {
+            drinks = dao.findByCategoryId(categoryId);
+        } else {
+            drinks = dao.findAll();
+        }
 
         for (int i = 0; i < drinks.size(); i++) {
             Food food = drinks.get(i);
