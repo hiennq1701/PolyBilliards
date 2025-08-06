@@ -68,7 +68,7 @@ import poly.billiards.util.XHourlyRateCalculator;
  *
  * @author DELL
  */
-public final class PolyBilliardsJFrame extends javax.swing.JFrame implements PolyBilliardsController {
+public final class PolyBilliardsJFrame extends javax.swing.JFrame implements PolyBilliardsController, DataChangeListener {
 
 //    private JButton btnChat;
 //    private JButton btnActivityHistory;
@@ -1491,7 +1491,9 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
 
     private void btnDrinkMgrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDrinkMgrActionPerformed
         // TODO add your handling code here:
-        this.showDrinkManagerJDialog(this);
+        FoodManagerJDialog dialog = new FoodManagerJDialog(this, true);
+        dialog.setDataChangeListener(this);
+        dialog.setVisible(true);
     }//GEN-LAST:event_btnDrinkMgrActionPerformed
 
     private void btnUserMgrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserMgrActionPerformed
@@ -1506,7 +1508,9 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
 
     private void btnCategoryMgrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoryMgrActionPerformed
         // TODO add your handling code here:
-        this.showCategoryManagerJDialog(this);
+        FoodCategoryManagerJDialog dialog = new FoodCategoryManagerJDialog(this, true);
+        dialog.setDataChangeListener(this);
+        dialog.setVisible(true);
     }//GEN-LAST:event_btnCategoryMgrActionPerformed
 
     private void btnHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistoryActionPerformed
@@ -2172,6 +2176,22 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Refresh dữ liệu combo box khi có thay đổi
+     */
+    public void refreshComboData() {
+        dataCboCategory();
+    }
+
+    /**
+     * Implement phương thức từ DataChangeListener
+     * Được gọi khi dữ liệu thay đổi từ các dialog quản lý
+     */
+    @Override
+    public void onDataChanged() {
+        refreshComboData();
     }
 
     private void clickTable() {

@@ -15,6 +15,7 @@ import poly.billiards.entity.FoodCategory;
 import poly.billiards.util.XDialog;
 import poly.billiards.util.XExcel;
 import poly.billiards.util.XUI;
+import poly.billiards.ui.DataChangeListener;
 import poly.billiards.util.AutoCodeGenerator;
 
 /**
@@ -25,6 +26,7 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
 
     private FoodCategoryDAO dao;
     private List<FoodCategory> categories;
+    private DataChangeListener dataChangeListener;
 
     /**
      * Creates new form CategoryJDialog
@@ -678,6 +680,9 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
             this.fillToTable();
             if (deletedCount > 0) {
                 XDialog.info(this, "Đã xóa " + deletedCount + " mục được chọn!");
+                
+                // Thông báo dữ liệu đã thay đổi
+                notifyDataChanged();
             } else {
                 XDialog.alert(this, "Không có mục nào được chọn để xóa!");
             }
@@ -712,6 +717,9 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
         
         // Thông báo thành công
         XDialog.info(this, "Tạo loại đồ uống mới thành công!");
+        
+        // Thông báo dữ liệu đã thay đổi
+        notifyDataChanged();
     }
 
     @Override
@@ -727,6 +735,9 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
         
         // Thông báo thành công
         XDialog.info(this, "Cập nhật loại đồ uống thành công!");
+        
+        // Thông báo dữ liệu đã thay đổi
+        notifyDataChanged();
     }
 
     @Override
@@ -739,6 +750,9 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
             
             // Thông báo xóa thành công
             XDialog.info(this, "Xóa loại đồ uống thành công!");
+            
+            // Thông báo dữ liệu đã thay đổi
+            notifyDataChanged();
         }
     }
 
@@ -941,4 +955,21 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
             // Không hiển thị lỗi cho tìm kiếm tự động
         }
     }
+
+    /**
+     * Set listener để thông báo khi dữ liệu thay đổi
+     */
+    public void setDataChangeListener(DataChangeListener listener) {
+        this.dataChangeListener = listener;
+    }
+
+    /**
+     * Thông báo khi dữ liệu thay đổi
+     */
+    private void notifyDataChanged() {
+        if (dataChangeListener != null) {
+            dataChangeListener.onDataChanged();
+        }
+    }
+
 }

@@ -23,6 +23,7 @@ import poly.billiards.util.XExcel;
 import poly.billiards.util.XUI;
 import poly.billiards.util.AutoCodeGenerator;
 import poly.billiards.util.XValidation;
+import poly.billiards.ui.DataChangeListener;
 
 /**
  *
@@ -703,6 +704,7 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
 
     private FoodDAO dao;
     private List<Food> drinks;
+    private DataChangeListener dataChangeListener;
 
     List<FoodCategory> categories = List.of();
 
@@ -808,6 +810,9 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
                 }
             }
             this.fillToTable();
+            
+            // Thông báo dữ liệu đã thay đổi
+            notifyDataChanged();
         }
     }
 
@@ -877,6 +882,9 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
         this.fillToTable();
         this.clear();
         XDialog.alert(this, "Tạo đồ ăn thành công!");
+        
+        // Thông báo dữ liệu đã thay đổi
+        notifyDataChanged();
     }
 
     @Override
@@ -890,6 +898,9 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
         dao.update(entity);
         this.fillToTable();
         XDialog.alert(this, "Cập nhật đồ ăn thành công!");
+        
+        // Thông báo dữ liệu đã thay đổi
+        notifyDataChanged();
     }
 
     @Override
@@ -899,6 +910,9 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
             dao.deleteById(id);
             this.fillToTable();
             this.clear();
+            
+            // Thông báo dữ liệu đã thay đổi
+            notifyDataChanged();
         }
     }
 
@@ -1107,6 +1121,22 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
 
         } catch (Exception e) {
             // Không hiển thị lỗi cho tìm kiếm tự động
+        }
+    }
+
+    /**
+     * Set listener để thông báo khi dữ liệu thay đổi
+     */
+    public void setDataChangeListener(DataChangeListener listener) {
+        this.dataChangeListener = listener;
+    }
+
+    /**
+     * Thông báo khi dữ liệu thay đổi
+     */
+    private void notifyDataChanged() {
+        if (dataChangeListener != null) {
+            dataChangeListener.onDataChanged();
         }
     }
 
