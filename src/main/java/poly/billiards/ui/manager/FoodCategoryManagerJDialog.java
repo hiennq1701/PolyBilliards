@@ -16,7 +16,6 @@ import poly.billiards.util.XDialog;
 import poly.billiards.util.XExcel;
 import poly.billiards.util.XUI;
 import poly.billiards.ui.DataChangeListener;
-import poly.billiards.util.AutoCodeGenerator;
 
 /**
  *
@@ -432,6 +431,10 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
         // Xóa từ khóa tìm kiếm và làm mới bảng
         txtTkiem.setText("");
         this.fillToTable();
+        
+        // Cập nhật mã tự sinh sau khi làm mới
+        String newCode = generateNewCategoryCode();
+        txtId.setText(newCode);
     }//GEN-LAST:event_btnLamMoiActionPerformed
 
     private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {
@@ -549,6 +552,10 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
         this.setLocationRelativeTo(null);
         this.fillToTable();
         this.clear();
+        
+        // Đảm bảo mã được sinh chính xác dựa vào vị trí khi mở form
+        String newCode = generateNewCategoryCode();
+        txtId.setText(newCode);
     }
 
     @Override
@@ -556,13 +563,21 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
         DefaultTableModel model = (DefaultTableModel) tblCategories.getModel();
         model.setRowCount(0);
         categories = dao.findAll();
-        for (FoodCategory category : categories) {
+        
+        for (int i = 0; i < categories.size(); i++) {
+            FoodCategory category = categories.get(i);
+            
+            // Cập nhật mã theo vị trí trong bảng
+            String positionCode = String.format("%03d", i + 1);
+            category.setId(positionCode);
+            
             model.addRow(new Object[]{
-                category.getId(),
+                positionCode, // Hiển thị mã theo vị trí
                 category.getName(),
                 false  // Giá trị mặc định cho checkbox
             });
         }
+        
         // Cập nhật mã tự động sau khi load dữ liệu
         if (txtId.getText().trim().isEmpty()) {
             generateAutoCode();
@@ -618,6 +633,11 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
             
             System.out.println("Total deleted: " + deletedCount);
             this.fillToTable();
+            
+            // Cập nhật mã tự sinh sau khi xóa
+            String newCode = generateNewCategoryCode();
+            txtId.setText(newCode);
+            
             if (deletedCount > 0) {
                 XDialog.info(this, "Đã xóa " + deletedCount + " mục được chọn!");
                 
@@ -650,13 +670,19 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
             return;
         }
         
+        // Tự động sinh mã cho loại đồ ăn mới dựa vào vị trí
+        String newCode = generateNewCategoryCode();
+        
         FoodCategory entity = this.getForm();
+        entity.setId(newCode);
+        
+        // Tạo loại đồ ăn với mã đã sinh
         dao.create(entity);
         this.fillToTable();
         this.clear();
         
         // Thông báo thành công
-        XDialog.info(this, "Tạo loại đồ uống mới thành công!");
+        XDialog.info(this, "Tạo loại đồ ăn mới thành công!");
         
         // Thông báo dữ liệu đã thay đổi
         notifyDataChanged();
@@ -674,7 +700,7 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
         this.fillToTable();
         
         // Thông báo thành công
-        XDialog.info(this, "Cập nhật loại đồ uống thành công!");
+        XDialog.info(this, "Cập nhật loại đồ ăn thành công!");
         
         // Thông báo dữ liệu đã thay đổi
         notifyDataChanged();
@@ -688,8 +714,12 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
             this.fillToTable();
             this.clear();
             
+            // Cập nhật mã tự sinh sau khi xóa
+            String newCode = generateNewCategoryCode();
+            txtId.setText(newCode);
+            
             // Thông báo xóa thành công
-            XDialog.info(this, "Xóa loại đồ uống thành công!");
+            XDialog.info(this, "Xóa loại đồ ăn thành công!");
             
             // Thông báo dữ liệu đã thay đổi
             notifyDataChanged();
@@ -698,10 +728,21 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
 
     @Override
     public void clear() {
-        this.setForm(new FoodCategory());
+        // Tạo entity mới với mã tự sinh dựa vào vị trí
+        FoodCategory newCategory = new FoodCategory();
+        String newCode = generateNewCategoryCode();
+        newCategory.setId(newCode);
+        
+        this.setForm(newCategory);
         this.setEditable(false);
-        // Tự động sinh mã mới khi clear form
-        generateAutoCode();
+        
+        // Đảm bảo mã được hiển thị đúng (chỉ khi không phải sau khi xóa)
+        if (txtId.getText().trim().isEmpty()) {
+            txtId.setText(newCode);
+        }
+        
+        // Focus vào trường tên loại
+        txtName.requestFocus();
     }
 
     @Override
@@ -751,41 +792,60 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
     }
     
     /**
-     * Sinh mã tự động cho đồ uống mới
+     * Sinh mã tự động cho loại đồ ăn mới dựa vào mã lớn nhất hiện có
      */
     private void generateAutoCode() {
-        if (categories == null) {
+        // Cập nhật danh sách categories từ database trước khi sinh mã
+        categories = dao.findAll();
+        
+        if (categories.isEmpty()) {
             txtId.setText("001");
             return;
         }
         
-        // Lấy danh sách mã hiện tại
-        List<String> existingCodes = categories.stream()
-            .map(FoodCategory::getId)
-            .collect(Collectors.toList());
+        // Tìm mã lớn nhất hiện có
+        int maxCode = categories.stream()
+            .mapToInt(category -> {
+                try {
+                    return Integer.parseInt(category.getId());
+                } catch (NumberFormatException e) {
+                    return 0;
+                }
+            })
+            .max()
+            .orElse(0);
         
-        // Sinh mã mới
-        String newCode = AutoCodeGenerator.generateNextCode(existingCodes);
+        // Mã mới = mã lớn nhất + 1
+        String newCode = String.format("%03d", maxCode + 1);
         txtId.setText(newCode);
     }
     
     /**
-     * Sinh mã với khoảng trống (tìm mã bị thiếu)
+     * Sinh mã mới cho loại đồ ăn dựa vào mã lớn nhất hiện có
+     * @return Mã mới
      */
-    private void generateCodeWithGap() {
-        if (categories == null) {
-            txtId.setText("001");
-            return;
+    private String generateNewCategoryCode() {
+        // Cập nhật danh sách categories từ database trước khi sinh mã
+        categories = dao.findAll();
+        
+        if (categories.isEmpty()) {
+            return "001";
         }
         
-        // Lấy danh sách mã hiện tại
-        List<String> existingCodes = categories.stream()
-            .map(FoodCategory::getId)
-            .collect(Collectors.toList());
+        // Tìm mã lớn nhất hiện có
+        int maxCode = categories.stream()
+            .mapToInt(category -> {
+                try {
+                    return Integer.parseInt(category.getId());
+                } catch (NumberFormatException e) {
+                    return 0;
+                }
+            })
+            .max()
+            .orElse(0);
         
-        // Sinh mã mới với khoảng trống
-        String newCode = AutoCodeGenerator.generateCodeWithGap(existingCodes);
-        txtId.setText(newCode);
+        // Mã mới = mã lớn nhất + 1
+        return String.format("%03d", maxCode + 1);
     }
     
     /**
@@ -795,7 +855,7 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
         // Kiểm tra mã
         String id = txtId.getText().trim();
         if (id.isEmpty()) {
-            XDialog.alert(this, "Mã loại đồ uống không được để trống!");
+            XDialog.alert(this, "Mã loại đồ ăn không được để trống!");
             txtId.requestFocus();
             return false;
         }
@@ -803,53 +863,35 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
         // Kiểm tra tên
         String name = txtName.getText().trim();
         if (name.isEmpty()) {
-            XDialog.alert(this, "Tên loại đồ uống không được để trống!");
+            XDialog.alert(this, "Tên loại đồ ăn không được để trống!");
             txtName.requestFocus();
             return false;
         }
         
         // Kiểm tra độ dài tên
         if (name.length() < 2) {
-            XDialog.alert(this, "Tên loại đồ uống phải có ít nhất 2 ký tự!");
+            XDialog.alert(this, "Tên loại đồ ăn phải có ít nhất 2 ký tự!");
             txtName.requestFocus();
             return false;
         }
         
         if (name.length() > 100) {
-            XDialog.alert(this, "Tên loại đồ uống không được quá 100 ký tự!");
+            XDialog.alert(this, "Tên loại đồ ăn không được quá 100 ký tự!");
             txtName.requestFocus();
             return false;
         }
         
-        // Kiểm tra mã có hợp lệ không
-        if (!AutoCodeGenerator.isValidCode(id)) {
-            XDialog.alert(this, "Mã loại đồ uống không đúng định dạng!");
+        // Kiểm tra mã có hợp lệ không (chỉ chấp nhận số)
+        if (!id.matches("\\d+")) {
+            XDialog.alert(this, "Mã loại đồ ăn chỉ được chứa số!");
             txtId.requestFocus();
             return false;
-        }
-        
-        // Kiểm tra mã đã tồn tại chưa (chỉ khi tạo mới)
-        if (categories != null && !isUpdateMode()) {
-            List<String> existingCodes = categories.stream()
-                .map(FoodCategory::getId)
-                .collect(Collectors.toList());
-                
-            if (AutoCodeGenerator.isCodeExists(id, existingCodes)) {
-                XDialog.alert(this, "Mã loại đồ uống đã tồn tại!");
-                txtId.requestFocus();
-                return false;
-            }
         }
         
         return true;
     }
     
-    /**
-     * Kiểm tra xem có đang ở chế độ cập nhật không
-     */
-    private boolean isUpdateMode() {
-        return btnUpdate.isEnabled();
-    }
+
     
     /**
      * Thực hiện tìm kiếm tự động khi người dùng nhập text
@@ -860,6 +902,10 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
         if (keyword.isEmpty()) {
             // Nếu không có từ khóa, hiển thị tất cả
             fillToTable();
+            
+            // Cập nhật mã tự sinh sau khi làm mới
+            String newCode = generateNewCategoryCode();
+            txtId.setText(newCode);
             return;
         }
         
@@ -883,13 +929,23 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
             DefaultTableModel model = (DefaultTableModel) tblCategories.getModel();
             model.setRowCount(0);
 
-            for (FoodCategory category : searchResults) {
+            for (int i = 0; i < searchResults.size(); i++) {
+                FoodCategory category = searchResults.get(i);
+                
+                // Cập nhật mã theo vị trí trong kết quả tìm kiếm
+                String positionCode = String.format("%03d", i + 1);
+                category.setId(positionCode);
+                
                 model.addRow(new Object[]{
-                    category.getId(),
+                    positionCode,
                     category.getName(),
                     false
                 });
             }
+            
+            // Cập nhật mã tự sinh dựa trên kết quả tìm kiếm
+            String newCode = String.format("%03d", searchResults.size() + 1);
+            txtId.setText(newCode);
 
         } catch (Exception e) {
             // Không hiển thị lỗi cho tìm kiếm tự động

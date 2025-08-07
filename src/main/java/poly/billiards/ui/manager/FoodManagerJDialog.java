@@ -949,18 +949,31 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
     }
     
     /**
-     * Sinh mã mới cho đồ ăn dựa vào vị trí trong bảng
+     * Sinh mã mới cho đồ ăn dựa vào mã lớn nhất hiện có
      * @return Mã mới
      */
     private String generateNewFoodCode() {
         // Cập nhật danh sách đồ ăn từ database trước khi sinh mã
         drinks = dao.findAll();
         
-        // Mã mới = vị trí hiện tại + 1 (bắt đầu từ 001)
-        int newPosition = drinks.size() + 1;
+        if (drinks.isEmpty()) {
+            return "001";
+        }
         
-        // Format thành 3 chữ số với số 0 ở đầu
-        return String.format("%03d", newPosition);
+        // Tìm mã lớn nhất hiện có
+        int maxCode = drinks.stream()
+            .mapToInt(food -> {
+                try {
+                    return Integer.parseInt(food.getId());
+                } catch (NumberFormatException e) {
+                    return 0;
+                }
+            })
+            .max()
+            .orElse(0);
+        
+        // Mã mới = mã lớn nhất + 1
+        return String.format("%03d", maxCode + 1);
     }
 
     @Override
