@@ -682,7 +682,7 @@ public class BillHistoryJDialog extends javax.swing.JDialog implements BillHisto
     }
     
     /**
-     * Load bill theo khoảng thời gian và quyền của user
+     * Load bill theo khoảng thời gian checkout và quyền của user
      */
     private void loadBillsByDateCheckout(String dateFrom, String toDate) {
         if (parentFrame != null && parentFrame.getCurrentUser() != null) {
