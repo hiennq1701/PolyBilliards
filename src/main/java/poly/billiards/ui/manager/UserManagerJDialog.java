@@ -804,28 +804,73 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
             String password = new String(txtPassword.getPassword());
             String emailRegex = "^(?!.*\\s)(?!.*\\.\\.)([A-Za-z0-9]+[A-Za-z0-9._%+-]*)@([A-Za-z0-9.-]+\\.[A-Za-z]{2,})$";
             String usernameRegex = "^[a-zA-Z0-9]{1,20}$";
-            if (username.isEmpty() || !username.matches(usernameRegex)) {
+            
+            // Kiểm tra username
+            if (username.isEmpty()) {
+                XDialog.alert(this, "Tên đăng nhập không được để trống!");
+                txtUsername.requestFocus();
+                return;
+            }
+            if (!username.matches(usernameRegex)) {
                 XDialog.alert(this, "Tên đăng nhập không hợp lệ!\n" +
                     "Yêu cầu:\n" +
-                    "- Không được để trống\n" +
                     "- Chỉ được sử dụng chữ cái (a-z, A-Z) và số (0-9)\n" +
                     "- Không được chứa dấu, khoảng cách hoặc ký tự đặc biệt\n" +
                     "- Độ dài từ 1-20 ký tự");
+                txtUsername.requestFocus();
                 return;
             }
-            if (!email.isEmpty() && !email.matches(emailRegex)) {
+            
+            // Kiểm tra email
+            if (email.isEmpty()) {
+                XDialog.alert(this, "Email không được để trống!");
+                txtEmail.requestFocus();
+                return;
+            }
+            if (!email.matches(emailRegex)) {
                 XDialog.alert(this, "Email không hợp lệ!\n" +
                     "Yêu cầu:\n" +
                     "- Phải đúng định dạng email\n" +
                     "Mẫu email hợp lệ: abc@gmail.com");
+                txtEmail.requestFocus();
                 return;
             }
+            
+            // Kiểm tra họ tên
             if (fullname.isEmpty()) {
-                XDialog.alert(this, "Vui lòng nhập họ tên!");
+                XDialog.alert(this, "Họ tên không được để trống!");
+                txtFullname.requestFocus();
                 return;
             }
+            if (!fullname.matches("^[\\p{L}\\s]+$")) {
+                XDialog.alert(this, "Họ tên không hợp lệ!\n" +
+                    "Yêu cầu:\n" +
+                    "- Chỉ được nhập chữ cái và khoảng trắng\n" +
+                    "- Không được chứa số hoặc ký tự đặc biệt");
+                txtFullname.requestFocus();
+                return;
+            }
+            
+            // Kiểm tra mật khẩu
             if (password.isEmpty()) {
-                XDialog.alert(this, "Vui lòng nhập mật khẩu!");
+                XDialog.alert(this, "Mật khẩu không được để trống!");
+                txtPassword.requestFocus();
+                return;
+            }
+            
+            // Kiểm tra xác nhận mật khẩu
+            String confirmPassword = new String(txtConfirm.getPassword());
+            if (confirmPassword.isEmpty()) {
+                XDialog.alert(this, "Xác nhận mật khẩu không được để trống!");
+                txtConfirm.requestFocus();
+                return;
+            }
+            
+            // Kiểm tra mật khẩu và xác nhận mật khẩu phải giống nhau
+            if (!password.equals(confirmPassword)) {
+                XDialog.alert(this, "Mật khẩu và xác nhận mật khẩu không khớp!\n" +
+                    "Vui lòng nhập lại cho đúng.");
+                txtConfirm.requestFocus();
                 return;
             }
             
@@ -834,6 +879,7 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
             if (existingUser != null) {
                 XDialog.alert(this, "Tên đăng nhập đã tồn tại!\n" +
                     "Vui lòng chọn tên đăng nhập khác.");
+                txtUsername.requestFocus();
                 return;
             }
             
@@ -862,25 +908,65 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
                 XDialog.alert(this, "Vui lòng chọn tài khoản cần cập nhật!");
                 return;
             }
+            
             String email = txtEmail.getText();
             String fullname = txtFullname.getText();
             String password = new String(txtPassword.getPassword());
+            String confirmPassword = new String(txtConfirm.getPassword());
             String emailRegex = "^(?!.*\\s)(?!.*\\.\\.)([A-Za-z0-9]+[A-Za-z0-9._%+-]*)@([A-Za-z0-9.-]+\\.[A-Za-z]{2,})$";
-            if (!email.isEmpty() && !email.matches(emailRegex)) {
+            
+            // Kiểm tra email
+            if (email.isEmpty()) {
+                XDialog.alert(this, "Email không được để trống!");
+                txtEmail.requestFocus();
+                return;
+            }
+            if (!email.matches(emailRegex)) {
                 XDialog.alert(this, "Email không hợp lệ!\n" +
                     "Yêu cầu:\n" +
                     "- Phải đúng định dạng email\n" +
                     "Mẫu email hợp lệ: abc@gmail.com");
+                txtEmail.requestFocus();
                 return;
             }
+            
+            // Kiểm tra họ tên
             if (fullname.isEmpty()) {
-                XDialog.alert(this, "Vui lòng nhập họ tên!");
+                XDialog.alert(this, "Họ tên không được để trống!");
+                txtFullname.requestFocus();
                 return;
             }
+            if (!fullname.matches("^[\\p{L}\\s]+$")) {
+                XDialog.alert(this, "Họ tên không hợp lệ!\n" +
+                    "Yêu cầu:\n" +
+                    "- Chỉ được nhập chữ cái và khoảng trắng\n" +
+                    "- Không được chứa số hoặc ký tự đặc biệt");
+                txtFullname.requestFocus();
+                return;
+            }
+            
+            // Kiểm tra mật khẩu
             if (password.isEmpty()) {
-                XDialog.alert(this, "Vui lòng nhập mật khẩu!");
+                XDialog.alert(this, "Mật khẩu không được để trống!");
+                txtPassword.requestFocus();
                 return;
             }
+            
+            // Kiểm tra xác nhận mật khẩu
+            if (confirmPassword.isEmpty()) {
+                XDialog.alert(this, "Xác nhận mật khẩu không được để trống!");
+                txtConfirm.requestFocus();
+                return;
+            }
+            
+            // Kiểm tra mật khẩu và xác nhận mật khẩu phải giống nhau
+            if (!password.equals(confirmPassword)) {
+                XDialog.alert(this, "Mật khẩu và xác nhận mật khẩu không khớp!\n" +
+                    "Vui lòng nhập lại cho đúng.");
+                txtConfirm.requestFocus();
+                return;
+            }
+            
             user.setEmail(email);
             user.setFullname(fullname);
             user.setPassword(password);

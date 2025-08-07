@@ -22,10 +22,7 @@ public class FoodDAOImpl implements FoodDAO {
 
     @Override
     public Food create(Food entity) {
-        // Chỉ sinh mã nếu chưa có mã
-        if (entity.getId() == null || entity.getId().trim().isEmpty()) {
-            entity.setId(XStr.getKey());
-        }
+        // Sử dụng ID đã được sinh từ UI
         Object[] values = {
             entity.getId(),
             entity.getName(),
@@ -55,7 +52,7 @@ public class FoodDAOImpl implements FoodDAO {
 
     @Override
     public void deleteById(String id) {
-        XJdbc.exeUpdate(deleteByIdSql, id);
+        XJdbc.exeUpdate(deleteByIdSql, new Object[]{id});
     }
 
     @Override

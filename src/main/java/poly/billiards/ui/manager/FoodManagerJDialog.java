@@ -508,7 +508,15 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
     private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
         // Xóa từ khóa tìm kiếm và làm mới bảng
         txtTkiem.setText("");
+        
+        // Cập nhật lại ID trong database để liên tục
+        reorderDatabaseIds();
+        
         this.fillToTable();
+        
+        // Cập nhật mã tự sinh sau khi làm mới
+        String newCode = generateNewFoodCode();
+        txtId.setText(newCode);
         
         // Reset selection về category đầu tiên (nếu có)
         if (tblCategories.getRowCount() > 0) {
@@ -709,9 +717,8 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
         for (int i = 0; i < drinks.size(); i++) {
             Food food = drinks.get(i);
             
-            // Cập nhật mã theo vị trí trong bảng
+            // Hiển thị mã theo vị trí trong bảng (không thay đổi ID thực tế)
             String positionCode = String.format("%03d", i + 1);
-            food.setId(positionCode);
             
             String unitPriceStr = (food.getUnitPrice() % 1 == 0)
                     ? String.valueOf((int) food.getUnitPrice())
@@ -731,8 +738,6 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
             });
         }
 
-        this.clear();
-        
         // Đảm bảo sorter được áp dụng sau khi load dữ liệu mới
         if (tblDrinks.getRowSorter() != null) {
             tblDrinks.getRowSorter().allRowsChanged();
@@ -766,12 +771,36 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
     @Override
     public void deleteCheckedItems() {
         if (XDialog.confirm(this, "Bạn thực sự muốn xóa các mục chọn?")) {
+            // Tạo danh sách các ID cần xóa
+            java.util.List<String> idsToDelete = new java.util.ArrayList<>();
+            
             for (int i = 0; i < tblDrinks.getRowCount(); i++) {
                 if ((Boolean) tblDrinks.getValueAt(i, 5)) {
-                    dao.deleteById(drinks.get(i).getId());
+                    // Lấy ID thực tế từ database thay vì mã hiển thị
+                    // Sử dụng index thực tế từ bảng
+                    int actualIndex = tblDrinks.convertRowIndexToModel(i);
+                    if (actualIndex >= 0 && actualIndex < drinks.size()) {
+                        String realId = drinks.get(actualIndex).getId();
+                        idsToDelete.add(realId);
+                        System.out.println("Sẽ xóa ID: " + realId); // Debug
+                    }
                 }
             }
+            
+            // Xóa từng ID
+            for (String id : idsToDelete) {
+                System.out.println("Đang xóa ID: " + id); // Debug
+                dao.deleteById(id);
+            }
+            
+            // Cập nhật lại ID trong database để liên tục
+            reorderDatabaseIds();
+            
             this.fillToTable();
+            
+            // Cập nhật mã tự sinh sau khi xóa
+            String newCode = generateNewFoodCode();
+            txtId.setText(newCode);
             
             // Thông báo dữ liệu đã thay đổi
             notifyDataChanged();
@@ -836,11 +865,22 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
         // Tự động sinh mã cho đồ ăn mới dựa vào vị trí
         String newCode = generateNewFoodCode();
         
+        // Kiểm tra xem mã đã tồn tại chưa
+        Food existingFood = dao.findById(newCode);
+        if (existingFood != null) {
+            XDialog.alert(this, "Mã " + newCode + " đã tồn tại! Vui lòng thử lại.");
+            return;
+        }
+        
         Food entity = this.getForm();
         entity.setId(newCode);
         
         // Tạo đồ ăn với mã đã sinh
         dao.create(entity);
+        
+        // Cập nhật lại ID trong database để liên tục
+        reorderDatabaseIds();
+        
         this.fillToTable();
         this.clear();
         XDialog.alert(this, "Tạo đồ ăn thành công!");
@@ -868,13 +908,29 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
     @Override
     public void delete() {
         if (XDialog.confirm(this, "Bạn thực sự muốn xóa?")) {
-            String id = txtId.getText();
-            dao.deleteById(id);
-            this.fillToTable();
-            this.clear();
-            
-            // Thông báo dữ liệu đã thay đổi
-            notifyDataChanged();
+            // Lấy ID thực tế từ entity được chọn
+            int selectedRow = tblDrinks.getSelectedRow();
+            if (selectedRow >= 0) {
+                // Sử dụng index thực tế từ bảng
+                int actualIndex = tblDrinks.convertRowIndexToModel(selectedRow);
+                if (actualIndex >= 0 && actualIndex < drinks.size()) {
+                    String realId = drinks.get(actualIndex).getId();
+                    System.out.println("Đang xóa ID: " + realId); // Debug
+                    dao.deleteById(realId);
+                    
+                    // Cập nhật lại ID trong database để liên tục
+                    reorderDatabaseIds();
+                    
+                    this.fillToTable();
+                    
+                    // Cập nhật mã tự sinh sau khi xóa
+                    String newCode = generateNewFoodCode();
+                    txtId.setText(newCode);
+                    
+                    // Thông báo dữ liệu đã thay đổi
+                    notifyDataChanged();
+                }
+            }
         }
     }
 
@@ -960,7 +1016,7 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
             return "001";
         }
         
-        // Tìm mã lớn nhất hiện có
+        // Tìm mã lớn nhất hiện có trong database
         int maxCode = drinks.stream()
             .mapToInt(food -> {
                 try {
@@ -974,6 +1030,45 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
         
         // Mã mới = mã lớn nhất + 1
         return String.format("%03d", maxCode + 1);
+    }
+    
+    /**
+     * Cập nhật lại tất cả ID trong database để liên tục
+     */
+    private void reorderDatabaseIds() {
+        // Lấy tất cả đồ ăn từ database
+        List<Food> allFoods = dao.findAll();
+        
+        if (allFoods.isEmpty()) {
+            return;
+        }
+        
+        // Cập nhật ID theo thứ tự mới
+        for (int i = 0; i < allFoods.size(); i++) {
+            Food food = allFoods.get(i);
+            String oldId = food.getId();
+            String newId = String.format("%03d", i + 1);
+            
+            // Chỉ cập nhật nếu ID khác nhau
+            if (!oldId.equals(newId)) {
+                // Tạo bản sao với ID mới
+                Food updatedFood = new Food();
+                updatedFood.setId(newId);
+                updatedFood.setName(food.getName());
+                updatedFood.setImage(food.getImage());
+                updatedFood.setUnitPrice(food.getUnitPrice());
+                updatedFood.setDiscount(food.getDiscount());
+                updatedFood.setAvailable(food.isAvailable());
+                updatedFood.setCategoryId(food.getCategoryId());
+                
+                // Xóa bản cũ và tạo bản mới
+                dao.deleteById(oldId);
+                dao.create(updatedFood);
+            }
+        }
+        
+        // Cập nhật lại danh sách
+        drinks = dao.findAll();
     }
 
     @Override
@@ -1056,6 +1151,10 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
         if (keyword.isEmpty()) {
             // Nếu không có từ khóa, hiển thị tất cả
             fillToTable();
+            
+            // Cập nhật mã tự sinh sau khi làm mới
+            String newCode = generateNewFoodCode();
+            txtId.setText(newCode);
             return;
         }
         
@@ -1093,6 +1192,10 @@ public class FoodManagerJDialog extends javax.swing.JDialog implements FoodContr
                     false
                 });
             }
+            
+            // Cập nhật mã tự sinh dựa trên kết quả tìm kiếm
+            String newCode = String.format("%03d", searchResults.size() + 1);
+            txtId.setText(newCode);
 
         } catch (Exception e) {
             // Không hiển thị lỗi cho tìm kiếm tự động

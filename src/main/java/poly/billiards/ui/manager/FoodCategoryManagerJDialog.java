@@ -792,60 +792,33 @@ public class FoodCategoryManagerJDialog extends javax.swing.JDialog implements F
     }
     
     /**
-     * Sinh mã tự động cho loại đồ ăn mới dựa vào mã lớn nhất hiện có
+     * Sinh mã tự động cho loại đồ ăn mới dựa vào số lượng hiện có
      */
     private void generateAutoCode() {
         // Cập nhật danh sách categories từ database trước khi sinh mã
         categories = dao.findAll();
         
-        if (categories.isEmpty()) {
-            txtId.setText("001");
-            return;
-        }
+        // Mã mới = số lượng hiện có + 1 (bắt đầu từ 001)
+        int newPosition = categories.size() + 1;
         
-        // Tìm mã lớn nhất hiện có
-        int maxCode = categories.stream()
-            .mapToInt(category -> {
-                try {
-                    return Integer.parseInt(category.getId());
-                } catch (NumberFormatException e) {
-                    return 0;
-                }
-            })
-            .max()
-            .orElse(0);
-        
-        // Mã mới = mã lớn nhất + 1
-        String newCode = String.format("%03d", maxCode + 1);
+        // Format thành 3 chữ số với số 0 ở đầu
+        String newCode = String.format("%03d", newPosition);
         txtId.setText(newCode);
     }
     
     /**
-     * Sinh mã mới cho loại đồ ăn dựa vào mã lớn nhất hiện có
+     * Sinh mã mới cho loại đồ ăn dựa vào số lượng hiện có
      * @return Mã mới
      */
     private String generateNewCategoryCode() {
         // Cập nhật danh sách categories từ database trước khi sinh mã
         categories = dao.findAll();
         
-        if (categories.isEmpty()) {
-            return "001";
-        }
+        // Mã mới = số lượng hiện có + 1 (bắt đầu từ 001)
+        int newPosition = categories.size() + 1;
         
-        // Tìm mã lớn nhất hiện có
-        int maxCode = categories.stream()
-            .mapToInt(category -> {
-                try {
-                    return Integer.parseInt(category.getId());
-                } catch (NumberFormatException e) {
-                    return 0;
-                }
-            })
-            .max()
-            .orElse(0);
-        
-        // Mã mới = mã lớn nhất + 1
-        return String.format("%03d", maxCode + 1);
+        // Format thành 3 chữ số với số 0 ở đầu
+        return String.format("%03d", newPosition);
     }
     
     /**
