@@ -6,6 +6,7 @@ package poly.billiards.ui.manager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.table.DefaultTableModel;
 import poly.billiards.dao.TableTypeDAO;
 import poly.billiards.dao.impl.TableTypeDAOImpl;
@@ -17,7 +18,7 @@ import poly.billiards.util.XUI;
  *
  * @author Admin
  */
-public class typeTableManagerJDialog extends javax.swing.JFrame {
+public class typeTableManagerJDialog extends javax.swing.JDialog {
 
     private TableTypeDAO dao;
     private List<TableType> tableTypes;
@@ -31,6 +32,58 @@ public class typeTableManagerJDialog extends javax.swing.JFrame {
         XUI.setupUI(this);
         XUI.setHandCursor(this);
         dao = new TableTypeDAOImpl();
+        
+        // Thêm sự kiện focus để tự động sinh mã
+        txtId.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                if (txtId.getText().trim().isEmpty()) {
+                    generateAutoCode();
+                }
+            }
+        });
+        
+        // Thêm sự kiện tìm kiếm tự động khi nhập text
+        txtTkiem1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                // Tìm kiếm tự động sau khi người dùng ngừng nhập
+                if (evt.getKeyCode() != java.awt.event.KeyEvent.VK_ENTER) {
+                    performAutoSearch();
+                }
+            }
+        });
+        
+        this.fillToTable();
+    }
+
+    /**
+     * Creates new form typeTableManagerJDialog with parent frame
+     */
+    public typeTableManagerJDialog(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
+        initComponents();
+        XUI.setupUI(this);
+        XUI.setHandCursor(this);
+        dao = new TableTypeDAOImpl();
+        
+        // Thêm sự kiện focus để tự động sinh mã
+        txtId.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                if (txtId.getText().trim().isEmpty()) {
+                    generateAutoCode();
+                }
+            }
+        });
+        
+        // Thêm sự kiện tìm kiếm tự động khi nhập text
+        txtTkiem1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                // Tìm kiếm tự động sau khi người dùng ngừng nhập
+                if (evt.getKeyCode() != java.awt.event.KeyEvent.VK_ENTER) {
+                    performAutoSearch();
+                }
+            }
+        });
+        
         this.fillToTable();
     }
 
@@ -67,7 +120,8 @@ public class typeTableManagerJDialog extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txtName = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Quản lý loại bàn");
 
         txtTkiem1.setName(""); // NOI18N
         txtTkiem1.setPreferredSize(new java.awt.Dimension(200, 22));
@@ -106,11 +160,11 @@ public class typeTableManagerJDialog extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Tên loại bàn", "Mã loại", ""
+                "Mã loại", "Tên loại", ""
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, true
@@ -130,15 +184,56 @@ public class typeTableManagerJDialog extends javax.swing.JFrame {
         tblLoaiBan1.setSelectionForeground(new java.awt.Color(255, 0, 0));
         tblLoaiBan1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tblLoaiBan1.setShowGrid(true);
+        
+        // Thiết lập renderer cho cột mã loại (căn trái)
+        tblLoaiBan1.getColumnModel().getColumn(0).setCellRenderer(new javax.swing.table.DefaultTableCellRenderer() {
+            @Override
+            public java.awt.Component getTableCellRendererComponent(javax.swing.JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                javax.swing.JLabel label = (javax.swing.JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                label.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+                return label;
+            }
+        });
+        
+        // Thiết lập renderer cho cột tên loại (căn trái)
+        tblLoaiBan1.getColumnModel().getColumn(1).setCellRenderer(new javax.swing.table.DefaultTableCellRenderer() {
+            @Override
+            public java.awt.Component getTableCellRendererComponent(javax.swing.JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                javax.swing.JLabel label = (javax.swing.JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                label.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+                return label;
+            }
+        });
+        
+        // Thiết lập renderer cho cột checkbox
+        tblLoaiBan1.getColumnModel().getColumn(2).setCellRenderer(new javax.swing.table.DefaultTableCellRenderer() {
+            @Override
+            public java.awt.Component getTableCellRendererComponent(javax.swing.JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                if (value instanceof Boolean) {
+                    javax.swing.JCheckBox checkBox = new javax.swing.JCheckBox();
+                    checkBox.setSelected((Boolean) value);
+                    checkBox.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                    return checkBox;
+                }
+                return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            }
+        });
+        
+        // Thiết lập renderer cho cột mã loại (cột 0) - căn lề trái
+        tblLoaiBan1.getColumnModel().getColumn(0).setCellRenderer(new javax.swing.table.DefaultTableCellRenderer() {
+            @Override
+            public java.awt.Component getTableCellRendererComponent(javax.swing.JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                javax.swing.JLabel label = (javax.swing.JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                label.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+                return label;
+            }
+        });
         tblLoaiBan1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblLoaiBan1MouseClicked(evt);
             }
         });
         jScrollPane2.setViewportView(tblLoaiBan1);
-        if (tblLoaiBan1.getColumnModel().getColumnCount() > 0) {
-            tblLoaiBan1.getColumnModel().getColumn(0).setResizable(false);
-        }
 
         btnCheckAll.setText("Chọn tất cả");
         btnCheckAll.addActionListener(new java.awt.event.ActionListener() {
@@ -380,9 +475,14 @@ public class typeTableManagerJDialog extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMoveLastActionPerformed
 
     private void btnLamMoi1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoi1ActionPerformed
+        // Xóa từ khóa tìm kiếm và làm mới bảng
         txtTkiem1.setText("");
         this.fillToTable();
         this.clear();
+        
+        // Tự động sinh mã mới sau khi làm mới
+        String newCode = generateNewTableTypeCode();
+        txtId.setText(newCode);
     }//GEN-LAST:event_btnLamMoi1ActionPerformed
 
     private void tblLoaiBan1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblLoaiBan1MouseClicked
@@ -426,7 +526,11 @@ public class typeTableManagerJDialog extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new typeTableManagerJDialog().setVisible(true);
+                // Tạo JFrame tạm thời làm parent cho JDialog
+                javax.swing.JFrame tempFrame = new javax.swing.JFrame();
+                tempFrame.setVisible(false);
+                typeTableManagerJDialog dialog = new typeTableManagerJDialog(tempFrame, true);
+                dialog.setVisible(true);
             }
         });
     }
@@ -467,10 +571,12 @@ public class typeTableManagerJDialog extends javax.swing.JFrame {
         
         for (int i = 0; i < tableTypes.size(); i++) {
             TableType tableType = tableTypes.get(i);
+            // Hiển thị mã tự sinh thay vì ID thực
+            String displayCode = String.format("%03d", i + 1);
             model.addRow(new Object[]{
+                displayCode,
                 tableType.getName(),
-                tableType.getId(),
-                false
+                Boolean.FALSE
             });
         }
     }
@@ -508,7 +614,7 @@ public class typeTableManagerJDialog extends javax.swing.JFrame {
     private void setCheckedAll(boolean checked) {
         DefaultTableModel model = (DefaultTableModel) tblLoaiBan1.getModel();
         for (int i = 0; i < model.getRowCount(); i++) {
-            model.setValueAt(checked, i, 2);
+            model.setValueAt(checked ? Boolean.TRUE : Boolean.FALSE, i, 2);
         }
     }
 
@@ -533,12 +639,21 @@ public class typeTableManagerJDialog extends javax.swing.JFrame {
         
         boolean result = XDialog.confirm(this, "Bạn có chắc chắn muốn xóa " + rowsToDelete.size() + " loại bàn đã chọn?");
         if (result) {
-            for (int i = rowsToDelete.size() - 1; i >= 0; i--) {
-                int rowIndex = rowsToDelete.get(i);
+                    for (int i = rowsToDelete.size() - 1; i >= 0; i--) {
+            int rowIndex = rowsToDelete.get(i);
+            // Lấy TableType từ danh sách gốc theo vị trí
+            if (rowIndex < tableTypes.size()) {
                 TableType tableType = tableTypes.get(rowIndex);
                 dao.deleteById(tableType.getId());
             }
+        }
             this.fillToTable();
+            this.clear();
+            
+            // Cập nhật mã tự sinh sau khi xóa thành công
+            String newCode = generateNewTableTypeCode();
+            txtId.setText(newCode);
+            
             XDialog.info(this, "Xóa thành công " + rowsToDelete.size() + " loại bàn!");
         }
     }
@@ -553,6 +668,11 @@ public class typeTableManagerJDialog extends javax.swing.JFrame {
                 dao.create(tableType);
                 this.fillToTable();
                 this.clear();
+                
+                // Cập nhật mã tự sinh sau khi tạo thành công
+                String newCode = generateNewTableTypeCode();
+                txtId.setText(newCode);
+                
                 XDialog.info(this, "Tạo mới loại bàn thành công!");
             }
         } catch (Exception e) {
@@ -602,6 +722,11 @@ public class typeTableManagerJDialog extends javax.swing.JFrame {
                 dao.deleteById(tableType.getId());
                 this.fillToTable();
                 this.clear();
+                
+                // Cập nhật mã tự sinh sau khi xóa thành công
+                String newCode = generateNewTableTypeCode();
+                txtId.setText(newCode);
+                
                 XDialog.info(this, "Xóa loại bàn thành công!");
             } catch (Exception e) {
                 XDialog.alert(this, "Lỗi xóa loại bàn: " + e.getMessage());
@@ -657,7 +782,25 @@ public class typeTableManagerJDialog extends javax.swing.JFrame {
      * Thiết lập dữ liệu vào form
      */
     public void setForm(TableType tableType) {
-        txtId.setText(String.valueOf(tableType.getId()));
+        // Hiển thị mã tự sinh thay vì ID thực từ database
+        // Tìm vị trí của tableType trong danh sách để sinh mã
+        int position = -1;
+        for (int i = 0; i < tableTypes.size(); i++) {
+            if (tableTypes.get(i).getId() == tableType.getId()) {
+                position = i;
+                break;
+            }
+        }
+        
+        if (position >= 0) {
+            // Sinh mã dựa trên vị trí (bắt đầu từ 001)
+            String displayCode = String.format("%03d", position + 1);
+            txtId.setText(displayCode);
+        } else {
+            // Fallback: hiển thị ID thực nếu không tìm thấy
+            txtId.setText(String.valueOf(tableType.getId()));
+        }
+        
         txtName.setText(tableType.getName());
     }
 
@@ -666,9 +809,8 @@ public class typeTableManagerJDialog extends javax.swing.JFrame {
      */
     public TableType getForm() {
         TableType tableType = new TableType();
-        if (!txtId.getText().trim().isEmpty()) {
-            tableType.setId(Integer.parseInt(txtId.getText()));
-        }
+        // Không set ID từ form, để database tự động tăng
+        // ID sẽ được database tự động gán
         tableType.setName(txtName.getText());
         return tableType;
     }
@@ -679,9 +821,15 @@ public class typeTableManagerJDialog extends javax.swing.JFrame {
     public void clear() {
         txtId.setText("");
         txtName.setText("");
-        this.setEditable(false);
         index = -1;
         jTabbedPane1.setSelectedIndex(0);
+        
+        // Tự động sinh mã mới khi xóa form
+        String newCode = generateNewTableTypeCode();
+        txtId.setText(newCode);
+        
+        // Enable chế độ tạo mới
+        enableCreateMode();
     }
 
     /**
@@ -695,6 +843,64 @@ public class typeTableManagerJDialog extends javax.swing.JFrame {
         }
         
         return true;
+    }
+
+    /**
+     * Thực hiện tìm kiếm tự động khi người dùng nhập text
+     */
+    private void performAutoSearch() {
+        String keyword = txtTkiem1.getText().trim();
+        
+        if (keyword.isEmpty()) {
+            // Nếu không có từ khóa, hiển thị tất cả
+            fillToTable();
+            
+            // Cập nhật mã tự sinh sau khi làm mới
+            String newCode = generateNewTableTypeCode();
+            txtId.setText(newCode);
+            return;
+        }
+        
+        try {
+            // Tìm kiếm thông minh theo tên loại bàn và mã loại
+            List<TableType> searchResults = tableTypes.stream()
+                .filter(tableType -> {
+                    String name = tableType.getName().toLowerCase();
+                    String id = String.valueOf(tableType.getId()).toLowerCase();
+                    String searchTerm = keyword.toLowerCase();
+                    
+                    // Tìm kiếm theo tên loại bàn
+                    boolean nameMatch = name.contains(searchTerm) || 
+                                      name.startsWith(searchTerm) ||
+                                      name.endsWith(searchTerm);
+                    
+                    // Tìm kiếm theo mã loại
+                    boolean idMatch = id.contains(searchTerm);
+                    
+                    return nameMatch || idMatch;
+                })
+                .collect(Collectors.toList());
+
+            // Hiển thị kết quả tìm kiếm
+            DefaultTableModel model = (DefaultTableModel) tblLoaiBan1.getModel();
+            model.setRowCount(0);
+            
+            for (int i = 0; i < searchResults.size(); i++) {
+                TableType tableType = searchResults.get(i);
+                // Tìm vị trí của tableType trong danh sách gốc để sinh mã
+                int position = tableTypes.indexOf(tableType);
+                String displayCode = position >= 0 ? String.format("%03d", position + 1) : String.valueOf(tableType.getId());
+                
+                model.addRow(new Object[]{
+                    displayCode,
+                    tableType.getName(),
+                    Boolean.FALSE
+                });
+            }
+
+        } catch (Exception e) {
+            // Không hiển thị lỗi cho tìm kiếm tự động
+        }
     }
 
     /**
@@ -713,5 +919,52 @@ public class typeTableManagerJDialog extends javax.swing.JFrame {
         btnMovePrevious.setEnabled(editable && rowCount > 0);
         btnMoveNext.setEnabled(editable && rowCount > 0);
         btnMoveLast.setEnabled(editable && rowCount > 0);
+    }
+    
+    /**
+     * Enable chế độ tạo mới
+     */
+    private void enableCreateMode() {
+        txtId.setEnabled(false); // ID không được sửa
+        txtName.setEnabled(true);
+        
+        btnCreate.setEnabled(true);
+        btnUpdate.setEnabled(false);
+        btnDelete.setEnabled(false);
+        
+        btnMoveFirst.setEnabled(false);
+        btnMovePrevious.setEnabled(false);
+        btnMoveNext.setEnabled(false);
+        btnMoveLast.setEnabled(false);
+    }
+    
+    /**
+     * Sinh mã tự động cho loại bàn mới
+     */
+    private void generateAutoCode() {
+        // Cập nhật danh sách tableTypes từ database trước khi sinh mã
+        tableTypes = dao.findAll();
+        
+        // Mã mới = số lượng hiện có + 1 (bắt đầu từ 001)
+        int newPosition = tableTypes.size() + 1;
+        
+        // Format thành 3 chữ số với số 0 ở đầu
+        String newCode = String.format("%03d", newPosition);
+        txtId.setText(newCode);
+    }
+    
+    /**
+     * Sinh mã mới cho loại bàn dựa vào số lượng hiện có
+     * @return Mã mới
+     */
+    private String generateNewTableTypeCode() {
+        // Cập nhật danh sách tableTypes từ database trước khi sinh mã
+        tableTypes = dao.findAll();
+        
+        // Mã mới = số lượng hiện có + 1 (bắt đầu từ 001)
+        int newPosition = tableTypes.size() + 1;
+        
+        // Format thành 3 chữ số với số 0 ở đầu
+        return String.format("%03d", newPosition);
     }
 }

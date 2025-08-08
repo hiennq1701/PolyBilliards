@@ -6,6 +6,7 @@ package poly.billiards.ui.manager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -40,6 +41,17 @@ public class TableManagerJDialog extends javax.swing.JDialog {
         XUI.setHandCursor(this);
         tableDAO = new TableDAOImpl();
         tableTypeDAO = new TableTypeDAOImpl();
+        
+        // Thêm sự kiện tìm kiếm tự động khi nhập text
+        txtTkiem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                // Tìm kiếm tự động sau khi người dùng ngừng nhập
+                if (evt.getKeyCode() != java.awt.event.KeyEvent.VK_ENTER) {
+                    performAutoSearch();
+                }
+            }
+        });
+        
         this.fillToTable();
         this.setupComboBox();
     }
@@ -54,6 +66,17 @@ public class TableManagerJDialog extends javax.swing.JDialog {
         XUI.setHandCursor(this);
         tableDAO = new TableDAOImpl();
         tableTypeDAO = new TableTypeDAOImpl();
+        
+        // Thêm sự kiện tìm kiếm tự động khi nhập text
+        txtTkiem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                // Tìm kiếm tự động sau khi người dùng ngừng nhập
+                if (evt.getKeyCode() != java.awt.event.KeyEvent.VK_ENTER) {
+                    performAutoSearch();
+                }
+            }
+        });
+        
         this.fillToTable();
         this.setupComboBox();
         
@@ -99,7 +122,7 @@ public class TableManagerJDialog extends javax.swing.JDialog {
         jPanel5 = new javax.swing.JPanel();
         txtId = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        txtGiaTien = new javax.swing.JTextField();
+        txtUnitPrice = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         txtTableName = new javax.swing.JTextField();
@@ -108,6 +131,8 @@ public class TableManagerJDialog extends javax.swing.JDialog {
         jLabel4 = new javax.swing.JLabel();
         cboTrangThai = new javax.swing.JComboBox<>();
 
+        setTitle("Quản lý bàn");
+
         jPanel1.setLayout(new java.awt.BorderLayout(0, 5));
 
         tblBan.setModel(new javax.swing.table.DefaultTableModel(
@@ -115,23 +140,22 @@ public class TableManagerJDialog extends javax.swing.JDialog {
 
             },
             new String [] {
-                "STT", "Tên bàn", "Giá tiền ( giờ )", "Trạng thái", "Chọn"
+                "STT", "Tên bàn", "Giá tiền ( giờ )", "Trạng thái", ""
             }
         ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
+            };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, true
             };
 
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
-            }
-            
-            @Override
-            public Class<?> getColumnClass(int columnIndex) {
-                if (columnIndex == 4) {
-                    return Boolean.class;
-                }
-                return super.getColumnClass(columnIndex);
             }
         });
         tblBan.setRowHeight(25);
@@ -140,6 +164,21 @@ public class TableManagerJDialog extends javax.swing.JDialog {
         tblBan.setSelectionForeground(new java.awt.Color(255, 0, 0));
         tblBan.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tblBan.setShowGrid(true);
+        
+        // Thiết lập renderer cho cột checkbox
+        tblBan.getColumnModel().getColumn(4).setCellRenderer(new javax.swing.table.DefaultTableCellRenderer() {
+            @Override
+            public java.awt.Component getTableCellRendererComponent(javax.swing.JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                if (value instanceof Boolean) {
+                    javax.swing.JCheckBox checkBox = new javax.swing.JCheckBox();
+                    checkBox.setSelected((Boolean) value);
+                    checkBox.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                    return checkBox;
+                }
+                return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            }
+        });
+        
         tblBan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblBanMouseClicked(evt);
@@ -221,6 +260,11 @@ public class TableManagerJDialog extends javax.swing.JDialog {
 
         txtTkiem.setName(""); // NOI18N
         txtTkiem.setPreferredSize(new java.awt.Dimension(200, 22));
+        txtTkiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTkiemActionPerformed(evt);
+            }
+        });
 
         btnLamMoi.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnLamMoi.setText("Làm mới");
@@ -372,7 +416,7 @@ public class TableManagerJDialog extends javax.swing.JDialog {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtId, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtGiaTien)
+                    .addComponent(txtUnitPrice)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(125, 125, 125)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -414,7 +458,7 @@ public class TableManagerJDialog extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cboLoaiBan, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtGiaTien, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtUnitPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(62, 62, 62))
         );
 
@@ -468,15 +512,22 @@ public class TableManagerJDialog extends javax.swing.JDialog {
         int selectedRow = tblLoaiBan.getSelectedRow();
         if (selectedRow >= 0) {
             TableType selectedTableType = tableTypes.get(selectedRow);
-            // Có thể thêm logic lọc bàn theo loại ở đây
+            fillToTableByTableType(selectedTableType.getId());
+            
+            // Debug log để kiểm tra
             System.out.println("Selected table type: " + selectedTableType.getName() + " (ID: " + selectedTableType.getId() + ")");
+            System.out.println("Number of tables loaded: " + tables.size());
         }
     }//GEN-LAST:event_tblLoaiBanMouseClicked
 
     private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
+        // Xóa từ khóa tìm kiếm và làm mới bảng
         txtTkiem.setText("");
         this.fillToTable();
         this.clear();
+        
+        // Bỏ chọn loại bàn
+        tblLoaiBan.clearSelection();
     }//GEN-LAST:event_btnLamMoiActionPerformed
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
@@ -513,6 +564,10 @@ public class TableManagerJDialog extends javax.swing.JDialog {
     private void txtTableNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTableNameActionPerformed
     }//GEN-LAST:event_txtTableNameActionPerformed
 
+    private void txtTkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTkiemActionPerformed
+        performAutoSearch();
+    }//GEN-LAST:event_txtTkiemActionPerformed
+
     /**
      * Thiết lập dữ liệu cho ComboBox trạng thái
      */
@@ -548,7 +603,7 @@ public class TableManagerJDialog extends javax.swing.JDialog {
                 table.getName(),
                 String.format("%,.0f VNĐ", table.getPrice()),
                 table.getStatus(),
-                false
+                Boolean.FALSE
             });
         }
         
@@ -556,6 +611,9 @@ public class TableManagerJDialog extends javax.swing.JDialog {
         if (tblBan.getRowSorter() != null) {
             tblBan.getRowSorter().allRowsChanged();
         }
+        
+        // Debug log
+        System.out.println("All tables loaded: " + tables.size());
     }
     
     /**
@@ -570,6 +628,35 @@ public class TableManagerJDialog extends javax.swing.JDialog {
             model.addRow(new Object[]{
                 tableType.getName()
             });
+        }
+    }
+    
+    /**
+     * Nạp dữ liệu vào bảng theo loại bàn được chọn
+     */
+    public void fillToTableByTableType(int tableTypeId) {
+        DefaultTableModel model = (DefaultTableModel) tblBan.getModel();
+        model.setRowCount(0);
+        
+        // Lọc bàn theo loại bàn được chọn
+        tables = tableDAO.findAll().stream()
+            .filter(table -> table.getTableTypeId() == tableTypeId)
+            .collect(Collectors.toList());
+        
+        for (int i = 0; i < tables.size(); i++) {
+            Table table = tables.get(i);
+            model.addRow(new Object[]{
+                i + 1,
+                table.getName(),
+                String.format("%,.0f VNĐ", table.getPrice()),
+                table.getStatus(),
+                Boolean.FALSE
+            });
+        }
+        
+        // Đảm bảo sorter được áp dụng sau khi load dữ liệu mới
+        if (tblBan.getRowSorter() != null) {
+            tblBan.getRowSorter().allRowsChanged();
         }
     }
 
@@ -606,7 +693,7 @@ public class TableManagerJDialog extends javax.swing.JDialog {
     private void setCheckedAll(boolean checked) {
         DefaultTableModel model = (DefaultTableModel) tblBan.getModel();
         for (int i = 0; i < model.getRowCount(); i++) {
-            model.setValueAt(checked, i, 4);
+            model.setValueAt(checked ? Boolean.TRUE : Boolean.FALSE, i, 4);
         }
     }
 
@@ -762,9 +849,11 @@ public class TableManagerJDialog extends javax.swing.JDialog {
         txtId.setText(String.valueOf(table.getId()));
         txtTableName.setText(table.getName());
         cboTrangThai.setSelectedItem(table.getStatus());
-        txtGiaTien.setText(String.format("%.0f", table.getPrice()));
+        txtUnitPrice.setText(String.format("%.0f", table.getPrice()));
         if (table.getTableType() != null) {
             cboLoaiBan.setSelectedItem(table.getTableType().getName());
+        } else {
+            cboLoaiBan.setSelectedIndex(0); // Chọn item đầu tiên nếu không có loại bàn
         }
     }
 
@@ -775,8 +864,10 @@ public class TableManagerJDialog extends javax.swing.JDialog {
         Table table = new Table();
         table.setName(txtTableName.getText());
         table.setStatus(cboTrangThai.getSelectedItem().toString());
-        table.setPrice(Double.parseDouble(txtGiaTien.getText()));
-        if (cboLoaiBan.getSelectedItem() != null) {
+        table.setPrice(Double.parseDouble(txtUnitPrice.getText()));
+        
+        // Xử lý loại bàn
+        if (cboLoaiBan.getSelectedItem() != null && !cboLoaiBan.getSelectedItem().toString().isEmpty()) {
             String selectedTypeName = cboLoaiBan.getSelectedItem().toString();
             // Tìm TableType tương ứng
             for (TableType tableType : tableTypes) {
@@ -786,7 +877,12 @@ public class TableManagerJDialog extends javax.swing.JDialog {
                     break;
                 }
             }
+        } else {
+            // Nếu không có loại bàn được chọn
+            table.setTableTypeId(0);
+            table.setTableType(null);
         }
+        
         return table;
     }
 
@@ -797,11 +893,13 @@ public class TableManagerJDialog extends javax.swing.JDialog {
         txtId.setText("");
         txtTableName.setText("");
         cboTrangThai.setSelectedIndex(0);
-        txtGiaTien.setText("");
+        txtUnitPrice.setText("");
         cboLoaiBan.setSelectedIndex(0);
-        this.setEditable(false);
         index = -1;
         tabs.setSelectedIndex(0);
+        
+        // Enable chế độ tạo mới
+        enableCreateMode();
     }
 
     /**
@@ -814,22 +912,29 @@ public class TableManagerJDialog extends javax.swing.JDialog {
             return false;
         }
         
-        if (txtGiaTien.getText().trim().isEmpty()) {
+        if (txtUnitPrice.getText().trim().isEmpty()) {
             XDialog.alert(this, "Vui lòng nhập giá tiền!");
-            txtGiaTien.requestFocus();
+            txtUnitPrice.requestFocus();
             return false;
         }
         
         try {
-            double price = Double.parseDouble(txtGiaTien.getText().trim());
+            double price = Double.parseDouble(txtUnitPrice.getText().trim());
             if (price < 0) {
                 XDialog.alert(this, "Giá tiền không được âm!");
-                txtGiaTien.requestFocus();
+                txtUnitPrice.requestFocus();
                 return false;
             }
         } catch (NumberFormatException e) {
             XDialog.alert(this, "Giá tiền không hợp lệ! Vui lòng nhập số.");
-            txtGiaTien.requestFocus();
+            txtUnitPrice.requestFocus();
+            return false;
+        }
+        
+        // Kiểm tra loại bàn
+        if (cboLoaiBan.getSelectedItem() == null || cboLoaiBan.getSelectedItem().toString().trim().isEmpty()) {
+            XDialog.alert(this, "Vui lòng chọn loại bàn!");
+            cboLoaiBan.requestFocus();
             return false;
         }
         
@@ -888,13 +993,78 @@ public class TableManagerJDialog extends javax.swing.JDialog {
     }
 
     /**
+     * Thực hiện tìm kiếm tự động khi người dùng nhập text
+     */
+    private void performAutoSearch() {
+        String keyword = txtTkiem.getText().trim();
+        
+        if (keyword.isEmpty()) {
+            // Nếu không có từ khóa, hiển thị tất cả
+            fillToTable();
+            return;
+        }
+        
+        try {
+            // Đảm bảo tables đã được khởi tạo
+            if (tables == null) {
+                tables = tableDAO.findAll();
+            }
+            
+            // Tìm kiếm thông minh theo tên bàn và loại bàn
+            List<Table> searchResults = tables.stream()
+                .filter(table -> {
+                    String name = table.getName().toLowerCase();
+                    String status = table.getStatus().toLowerCase();
+                    String searchTerm = keyword.toLowerCase();
+                    
+                    // Tìm kiếm theo tên bàn
+                    boolean nameMatch = name.contains(searchTerm) || 
+                                      name.startsWith(searchTerm) ||
+                                      name.endsWith(searchTerm);
+                    
+                    // Tìm kiếm theo trạng thái
+                    boolean statusMatch = status.contains(searchTerm);
+                    
+                    // Tìm kiếm theo loại bàn
+                    boolean typeMatch = false;
+                    if (table.getTableType() != null) {
+                        String typeName = table.getTableType().getName().toLowerCase();
+                        typeMatch = typeName.contains(searchTerm);
+                    }
+                    
+                    return nameMatch || statusMatch || typeMatch;
+                })
+                .collect(Collectors.toList());
+
+            // Hiển thị kết quả tìm kiếm
+            DefaultTableModel model = (DefaultTableModel) tblBan.getModel();
+            model.setRowCount(0);
+            
+            for (int i = 0; i < searchResults.size(); i++) {
+                Table table = searchResults.get(i);
+                model.addRow(new Object[]{
+                    i + 1,
+                    table.getName(),
+                    String.format("%,.0f VNĐ", table.getPrice()),
+                    table.getStatus(),
+                    Boolean.FALSE
+                });
+            }
+
+        } catch (Exception e) {
+            // Không hiển thị lỗi cho tìm kiếm tự động
+            System.err.println("Lỗi tìm kiếm: " + e.getMessage());
+        }
+    }
+
+    /**
      * Thiết lập trạng thái có thể chỉnh sửa
      */
     public void setEditable(boolean editable) {
         txtId.setEnabled(false); // ID không được sửa
         txtTableName.setEnabled(editable);
         cboTrangThai.setEnabled(editable);
-        txtGiaTien.setEnabled(editable);
+        txtUnitPrice.setEnabled(editable);
         cboLoaiBan.setEnabled(editable);
         
         btnCreate.setEnabled(!editable);
@@ -906,6 +1076,26 @@ public class TableManagerJDialog extends javax.swing.JDialog {
         btnMovePrevious.setEnabled(editable && rowCount > 0);
         btnMoveNext.setEnabled(editable && rowCount > 0);
         btnMoveLast.setEnabled(editable && rowCount > 0);
+    }
+    
+    /**
+     * Enable chế độ tạo mới
+     */
+    private void enableCreateMode() {
+        txtId.setEnabled(false); // ID không được sửa
+        txtTableName.setEnabled(true);
+        cboTrangThai.setEnabled(true);
+        txtUnitPrice.setEnabled(true);
+        cboLoaiBan.setEnabled(true);
+        
+        btnCreate.setEnabled(true);
+        btnUpdate.setEnabled(false);
+        btnDelete.setEnabled(false);
+        
+        btnMoveFirst.setEnabled(false);
+        btnMovePrevious.setEnabled(false);
+        btnMoveNext.setEnabled(false);
+        btnMoveLast.setEnabled(false);
     }
 
     /**
@@ -980,6 +1170,6 @@ public class TableManagerJDialog extends javax.swing.JDialog {
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtTableName;
     private javax.swing.JTextField txtTkiem;
-    private javax.swing.JTextField txtGiaTien;
+    private javax.swing.JTextField txtUnitPrice;
     // End of variables declaration//GEN-END:variables
 }
