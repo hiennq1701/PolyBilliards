@@ -13,11 +13,13 @@ public class HeaderDrawer extends javax.swing.JPanel {
 
     public HeaderDrawer(User currentUser) {
         this.currentUser = currentUser;
+        System.out.println("HeaderDrawer constructor called with user: " + (currentUser != null ? currentUser.getFullname() : "null"));
         initComponents();
         updateUserInfo();
     }
 
     private void updateUserInfo() {
+        System.out.println("updateUserInfo() called - currentUser: " + (currentUser != null ? currentUser.getFullname() : "null"));
         if (currentUser != null) {
             lblFullname.setText(currentUser.getFullname());
             
@@ -64,6 +66,8 @@ public class HeaderDrawer extends javax.swing.JPanel {
                     System.err.println("Error loading default avatar: " + e.getMessage());
                 }
             }
+        } else {
+            System.out.println("currentUser is null in updateUserInfo()");
         }
     }
 
@@ -81,7 +85,7 @@ public class HeaderDrawer extends javax.swing.JPanel {
         imageAvatar1.setBorderSpace(2);
         imageAvatar1.setGradientColor1(new java.awt.Color(255, 0, 0));
         imageAvatar1.setGradientColor2(new java.awt.Color(27, 0, 255));
-        imageAvatar1.setImage(new javax.swing.ImageIcon(getClass().getResource("/icon/logo.jpg"))); // NOI18N
+        imageAvatar1.setImage(new javax.swing.ImageIcon(getClass().getResource("/poly/billiards/icons/Logo2.png"))); // NOI18N
 
         lblFullname.setFont(new java.awt.Font("Segoe UI Black", 1, 15)); // NOI18N
         lblFullname.setForeground(new java.awt.Color(255, 255, 255));

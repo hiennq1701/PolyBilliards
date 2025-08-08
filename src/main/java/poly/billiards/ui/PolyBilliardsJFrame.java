@@ -120,6 +120,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
 
     public PolyBilliardsJFrame(User currentUser) {
         this.currentUser = currentUser;
+        System.out.println("PolyBilliardsJFrame constructor - currentUser: " + (currentUser != null ? currentUser.getFullname() : "null"));
         initComponents();
         this.init();
         this.setLocationRelativeTo(null);
@@ -222,6 +223,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Poly Billiards");
         setBackground(new java.awt.Color(255, 51, 51));
+        setPreferredSize(new java.awt.Dimension(1119, 700));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
@@ -1212,14 +1214,14 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         pnlLeftCenterLayout.setHorizontalGroup(
             pnlLeftCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlLeftCenterLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(pnlLeftCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnToggleTheme, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnDrawerUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnDrawerManager, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(pnlLeftCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(btnDrawerUser, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnToggleTheme, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDrawerManager, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tabs, javax.swing.GroupLayout.PREFERRED_SIZE, 1057, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         pnlLeftCenterLayout.setVerticalGroup(
             pnlLeftCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2811,7 +2813,9 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
     }//GEN-LAST:event_btnToggleThemeActionPerformed
 
     private void initializeDrawerForUser() {
+        System.out.println("initializeDrawerForUser() called - currentUser: " + (currentUser != null ? currentUser.getFullname() : "null"));
         if (currentUser == null) {
+            System.out.println("currentUser is null, returning early");
             return;
         }
 
@@ -2842,7 +2846,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                 .enableScroll(true)
                 .enableScrollUI(false)
                 .headerHeight(160)
-                .header(new HeaderDrawer(currentUser)).space(5)
+                .header(new HeaderDrawer(currentUser))
                 .addChild(new DrawerItem("Đổi mật khẩu").icon(new ImageIcon(getClass().getResource("/poly/billiards/icons/menu/padlock.png"))).build())
                 .addChild(new DrawerItem("Lịch sử hoá đơn").icon(new ImageIcon(getClass().getResource("/poly/billiards/icons/menu/order-history.png"))).build())
                 .space(10)
@@ -2927,7 +2931,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                 .enableScroll(true)
                 .enableScrollUI(false)
                 .headerHeight(160)
-                .header(new HeaderDrawer(currentUser)).space(5)
+                .header(new HeaderDrawer(currentUser))
                 .addChild(new DrawerItem("Đổi mật khẩu").icon(new ImageIcon(getClass().getResource("/poly/billiards/icons/menu/padlock.png"))).build())
                 .addChild(new DrawerItem("Lịch sử hoá đơn").icon(new ImageIcon(getClass().getResource("/poly/billiards/icons/menu/order-history.png"))).build())
                 .space(10)
