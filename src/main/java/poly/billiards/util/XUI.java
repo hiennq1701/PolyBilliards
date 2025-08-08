@@ -8,7 +8,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 public class XUI {
-    private static boolean isDarkMode = false;
+    private static boolean isDarkMode = true;
     
     public static void setupUI(JDialog dialog) {
         // Set FlatLaf look and feel

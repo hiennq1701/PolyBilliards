@@ -1739,6 +1739,11 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
 
         // Khởi tạo timer cho thời gian chơi
         initPlayTimeTimer();
+        
+        // Set fixed colors for specific components
+        txtTimeStart.setForeground(Color.BLACK);
+        txtTimeStop.setForeground(Color.BLACK);
+        btnTamTinh.setForeground(Color.BLACK);
     }
 
     private void updateThemeButtonText() {
@@ -2806,6 +2811,12 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         // Update panel colors after theme change
         XUI.setPanelPadding(pnlLeft, 0, 0, 0, 0);
         XUI.setPanelPadding(pnlLeftCenter, 0, 0, 0, 0);
+        
+        // Set fixed colors for specific components
+        txtTimeStart.setForeground(Color.BLACK);
+        txtTimeStop.setForeground(Color.BLACK);
+        btnTamTinh.setForeground(Color.BLACK);
+        
         SwingUtilities.updateComponentTreeUI(this);
 
         // Reinitialize drawer with new theme
