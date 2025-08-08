@@ -50,8 +50,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.awt.BasicStroke;
 import java.awt.event.ItemEvent;
+import static java.awt.image.ImageObserver.HEIGHT;
 import java.sql.Timestamp;
 import java.util.Date;
+import javaswingdev.drawer.Drawer;
+import javaswingdev.drawer.DrawerController;
+import javaswingdev.drawer.DrawerItem;
+import javaswingdev.drawer.EventDrawer;
 import javax.swing.BorderFactory;
 import poly.billiards.dao.BillInfoDAO;
 import poly.billiards.dao.FoodCategoryDAO;
@@ -64,6 +69,7 @@ import poly.billiards.dao.impl.TableDAOImpl;
 import poly.billiards.entity.Table;
 import poly.billiards.util.XDateHelper;
 import poly.billiards.util.XHourlyRateCalculator;
+import poly.billiards.ui.component.HeaderDrawer;
 
 /**
  *
@@ -135,25 +141,9 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
 
         pnlLeft = new javax.swing.JPanel();
         pnlLeftCenter = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        lblPhoto = new javax.swing.JLabel();
-        lblFullname = new javax.swing.JLabel();
-        btnHistory = new javax.swing.JButton();
-        pnlManager = new javax.swing.JPanel();
-        btnCategoryMgr = new javax.swing.JButton();
-        btnTablebilliard = new javax.swing.JButton();
-        btnUserMgr = new javax.swing.JButton();
-        btnDrinkMgr = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        btnTablebilliard1 = new javax.swing.JButton();
-        btnChangePassword = new javax.swing.JButton();
-        btnLogout = new javax.swing.JButton();
-        btnChat = new javax.swing.JButton();
-        btnActivityHistory = new javax.swing.JButton();
-        btnExit = new javax.swing.JButton();
+        btnDrawerManager = new javax.swing.JButton();
+        btnDrawerUser = new javax.swing.JButton();
         btnToggleTheme = new javax.swing.JButton();
-        lblTime = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
         tabs = new javax.swing.JTabbedPane();
         jPanel9 = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
@@ -227,6 +217,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         lbTime = new javax.swing.JLabel();
         btnXoasp = new javax.swing.JButton();
         jLabel21 = new javax.swing.JLabel();
+        lblTime = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Poly Billiards");
@@ -242,179 +233,26 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
 
         pnlLeftCenter.setBackground(new java.awt.Color(255, 255, 255));
 
-        jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jPanel1.setOpaque(false);
-
-        lblPhoto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblPhoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/billiards/icons/trump.png"))); // NOI18N
-        lblPhoto.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(243, 112, 33), 1, true));
-
-        lblFullname.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        lblFullname.setForeground(new java.awt.Color(243, 112, 33));
-        lblFullname.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblFullname.setText("Nguyễn Văn Tèo");
-
-        btnHistory.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        btnHistory.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/billiards/icons/menu/order-history.png"))); // NOI18N
-        btnHistory.setText("Lịch sử hoá đơn");
-        btnHistory.addActionListener(new java.awt.event.ActionListener() {
+        btnDrawerManager.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/billiards/icons/menu/list.png"))); // NOI18N
+        btnDrawerManager.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnHistoryActionPerformed(evt);
+                btnDrawerManagerActionPerformed(evt);
             }
         });
 
-        pnlManager.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 204, 0), 3, true));
-        pnlManager.setOpaque(false);
-
-        btnCategoryMgr.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        btnCategoryMgr.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/billiards/icons/menu/manager/wine.png"))); // NOI18N
-        btnCategoryMgr.setText("Loại đồ ăn");
-        btnCategoryMgr.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnCategoryMgr.addActionListener(new java.awt.event.ActionListener() {
+        btnDrawerUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/billiards/icons/menu/list.png"))); // NOI18N
+        btnDrawerUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCategoryMgrActionPerformed(evt);
-            }
-        });
-
-        btnTablebilliard.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        btnTablebilliard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/billiards/icons/menu/manager/pool-table.png"))); // NOI18N
-        btnTablebilliard.setText("Bàn");
-        btnTablebilliard.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnTablebilliard.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTablebilliardActionPerformed(evt);
-            }
-        });
-
-        btnUserMgr.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        btnUserMgr.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/billiards/icons/menu/manager/user.png"))); // NOI18N
-        btnUserMgr.setText("Tài khoản");
-        btnUserMgr.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnUserMgr.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUserMgrActionPerformed(evt);
-            }
-        });
-
-        btnDrinkMgr.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        btnDrinkMgr.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/billiards/icons/menu/manager/champagne.png"))); // NOI18N
-        btnDrinkMgr.setText("Đồ ăn");
-        btnDrinkMgr.setPreferredSize(new java.awt.Dimension(200, 60));
-        btnDrinkMgr.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnDrinkMgr.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDrinkMgrActionPerformed(evt);
-            }
-        });
-
-        jLabel2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("QUẢN LÝ");
-
-        btnTablebilliard1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        btnTablebilliard1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/billiards/icons/menu/manager/pool-table.png"))); // NOI18N
-        btnTablebilliard1.setText("Loại bàn");
-        btnTablebilliard1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnTablebilliard1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTablebilliard1ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout pnlManagerLayout = new javax.swing.GroupLayout(pnlManager);
-        pnlManager.setLayout(pnlManagerLayout);
-        pnlManagerLayout.setHorizontalGroup(
-            pnlManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(pnlManagerLayout.createSequentialGroup()
-                .addGap(106, 106, 106)
-                .addGroup(pnlManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnTablebilliard1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnUserMgr, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCategoryMgr, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTablebilliard, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDrinkMgr, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(111, Short.MAX_VALUE))
-        );
-        pnlManagerLayout.setVerticalGroup(
-            pnlManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlManagerLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnCategoryMgr, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnDrinkMgr, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnUserMgr, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnTablebilliard)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnTablebilliard1)
-                .addContainerGap(9, Short.MAX_VALUE))
-        );
-
-        btnChangePassword.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        btnChangePassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/billiards/icons/menu/padlock.png"))); // NOI18N
-        btnChangePassword.setText("Đổi mật khẩu");
-        btnChangePassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnChangePasswordActionPerformed(evt);
-            }
-        });
-
-        btnLogout.setBackground(new java.awt.Color(255, 255, 153));
-        btnLogout.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        btnLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/billiards/icons/menu/logout.png"))); // NOI18N
-        btnLogout.setText("Đăng xuất");
-        btnLogout.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLogoutActionPerformed(evt);
-            }
-        });
-
-        btnChat.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        btnChat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/billiards/icons/menu/chat (2).png"))); // NOI18N
-        btnChat.setText("Chat nội bộ");
-        btnChat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnChatActionPerformed(evt);
-            }
-        });
-
-        btnActivityHistory.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        btnActivityHistory.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/billiards/icons/menu/history.png"))); // NOI18N
-        btnActivityHistory.setText("Lịch sử thao tác");
-        btnActivityHistory.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnActivityHistoryActionPerformed(evt);
-            }
-        });
-
-        btnExit.setBackground(new java.awt.Color(255, 102, 102));
-        btnExit.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        btnExit.setForeground(new java.awt.Color(255, 255, 255));
-        btnExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/billiards/icons/menu/switch.png"))); // NOI18N
-        btnExit.setText("Kết thúc");
-        btnExit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExitActionPerformed(evt);
+                btnDrawerUserActionPerformed(evt);
             }
         });
 
         btnToggleTheme.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        btnToggleTheme.setText("Chế độ: Tối");
         btnToggleTheme.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnToggleThemeActionPerformed(evt);
             }
         });
-
-        lblTime.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        lblTime.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTime.setText("Giờ là:");
-
-        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
         jLabel17.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1145,6 +983,10 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         jLabel21.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jLabel21.setText("Đơn vị: VNĐ");
 
+        lblTime.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        lblTime.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTime.setText("Giờ là:");
+
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
         jPanel13Layout.setHorizontalGroup(
@@ -1154,21 +996,23 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                     .addGroup(jPanel13Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel13Layout.createSequentialGroup()
-                                .addGap(62, 62, 62)
-                                .addComponent(btnStart)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnStopContinue))
-                            .addGroup(jPanel13Layout.createSequentialGroup()
-                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(27, 27, 27)
-                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtTimeStart, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtTimeStop, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel13Layout.createSequentialGroup()
+                                    .addGap(62, 62, 62)
+                                    .addComponent(btnStart)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(btnStopContinue))
+                                .addGroup(jPanel13Layout.createSequentialGroup()
+                                    .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(27, 27, 27)
+                                    .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txtTimeStart, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtTimeStop, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(lblTime, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
                         .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1339,10 +1183,11 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                             .addComponent(btnTamTinh, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(287, 287, 287))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addGap(11, 11, 11)
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbDateNow)
-                    .addComponent(jLabel31))
+                    .addComponent(jLabel31)
+                    .addComponent(lblTime, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel22)
@@ -1362,87 +1207,32 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
 
         tabs.addTab("Thực đơn", jPanel13);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(lblFullname, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lblPhoto, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(btnToggleTheme, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnActivityHistory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnChangePassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnHistory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnChat, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(lblTime, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(pnlManager, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(115, 115, 115)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnLogout, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tabs, javax.swing.GroupLayout.PREFERRED_SIZE, 1057, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(700, 700, 700))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblTime, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblFullname, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnToggleTheme, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnChat)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnActivityHistory)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnChangePassword)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnHistory)))
-                        .addGap(48, 48, 48)
-                        .addComponent(pnlManager, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnLogout)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnExit)
-                        .addGap(13, 13, 13))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(tabs, javax.swing.GroupLayout.PREFERRED_SIZE, 694, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jSeparator1)))
-                .addGap(0, 8, Short.MAX_VALUE))
-        );
-
         javax.swing.GroupLayout pnlLeftCenterLayout = new javax.swing.GroupLayout(pnlLeftCenter);
         pnlLeftCenter.setLayout(pnlLeftCenterLayout);
         pnlLeftCenterLayout.setHorizontalGroup(
             pnlLeftCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlLeftCenterLayout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1492, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 6, Short.MAX_VALUE))
+                .addGap(14, 14, 14)
+                .addGroup(pnlLeftCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnToggleTheme, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnDrawerUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnDrawerManager, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tabs, javax.swing.GroupLayout.PREFERRED_SIZE, 1057, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         pnlLeftCenterLayout.setVerticalGroup(
             pnlLeftCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlLeftCenterLayout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(btnDrawerManager)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnDrawerUser)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnToggleTheme, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(pnlLeftCenterLayout.createSequentialGroup()
+                .addComponent(tabs, javax.swing.GroupLayout.PREFERRED_SIZE, 694, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 6, Short.MAX_VALUE))
         );
 
@@ -1455,83 +1245,9 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
-        this.exit();
+        // Bỏ this.exit() để không hiển thị dialog confirm
+        // this.exit();
     }//GEN-LAST:event_formWindowClosed
-
-    private void btnToggleThemeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnToggleThemeActionPerformed
-        // TODO add your handling code here:
-        XUI.toggleTheme(this);
-        updateThemeButtonText();
-        // Update panel colors after theme change
-        XUI.setPanelPadding(pnlLeft, 0, 0, 0, 0);
-        XUI.setPanelPadding(pnlLeftCenter, 0, 0, 0, 0);
-        XUI.setPanelPadding(jPanel1, 0, 0, 0, 0);
-        SwingUtilities.updateComponentTreeUI(this);
-    }//GEN-LAST:event_btnToggleThemeActionPerformed
-
-    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
-        // TODO add your handling code here:
-        // Kiểm tra bàn chưa thanh toán trước khi thoát
-        if (checkUnpaidTables()) {
-            // Có bàn chưa thanh toán, không làm gì cả (giữ cửa sổ mở)
-            return;
-        }
-        // Không có bàn chưa thanh toán, thoát bình thường
-        System.exit(0);
-    }//GEN-LAST:event_btnExitActionPerformed
-
-    private void btnActivityHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActivityHistoryActionPerformed
-        // TODO add your handling code here:
-        this.showActivityHistoryJDialog(new javax.swing.JDialog(this, true));
-    }//GEN-LAST:event_btnActivityHistoryActionPerformed
-
-    private void btnChatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChatActionPerformed
-        // TODO add your handling code here:
-        ChatWindowJDialog chatDialog = new ChatWindowJDialog(this, false, currentUser);
-        chatDialog.setVisible(true);
-    }//GEN-LAST:event_btnChatActionPerformed
-
-    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
-        // TODO add your handling code here:
-        if (XDialog.confirm(this, "Bạn có muốn đăng xuất?")) {
-            this.dispose();
-            new PolyBilliardsJFrame().setVisible(true);
-        }
-    }//GEN-LAST:event_btnLogoutActionPerformed
-
-    private void btnChangePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangePasswordActionPerformed
-        // TODO add your handling code here:
-        this.showChangePasswordJDialog(this);
-    }//GEN-LAST:event_btnChangePasswordActionPerformed
-
-    private void btnDrinkMgrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDrinkMgrActionPerformed
-        // TODO add your handling code here:
-        FoodManagerJDialog dialog = new FoodManagerJDialog(this, true);
-        dialog.setDataChangeListener(this);
-        dialog.setVisible(true);
-    }//GEN-LAST:event_btnDrinkMgrActionPerformed
-
-    private void btnUserMgrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserMgrActionPerformed
-        // TODO add your handling code here:
-        this.showUserManagerJDialog(this);
-    }//GEN-LAST:event_btnUserMgrActionPerformed
-
-    private void btnTablebilliardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTablebilliardActionPerformed
-        // TODO add your handling code here:
-        this.showTableManagerJDialog(this);
-    }//GEN-LAST:event_btnTablebilliardActionPerformed
-
-    private void btnCategoryMgrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoryMgrActionPerformed
-        // TODO add your handling code here:
-        FoodCategoryManagerJDialog dialog = new FoodCategoryManagerJDialog(this, true);
-        dialog.setDataChangeListener(this);
-        dialog.setVisible(true);
-    }//GEN-LAST:event_btnCategoryMgrActionPerformed
-
-    private void btnHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistoryActionPerformed
-        // TODO add your handling code here:
-        this.showHistoryJDialog(this);
-    }//GEN-LAST:event_btnHistoryActionPerformed
 
     private void jLabel17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel17MouseClicked
         // TODO add your handling code here:
@@ -1650,13 +1366,13 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         // TODO add your handling code here:
         System.out.println("=== NÚT XÁC NHẬN ĐƯỢC NHẤN ===");
         System.out.println("txtTimeStart.getText(): '" + txtTimeStart.getText() + "'");
-        
+
         if (txtTimeStart.getText().equals("")) {
             System.out.println("Chưa bắt đầu giờ - không thực hiện insertBillinfo()");
             XDialog.alert(this, "Chưa bắt đầu giờ");
             return;
         }
-        
+
         System.out.println("Điều kiện OK - gọi insertBillinfo()");
         this.insertBillinfo();
         this.calTotalPice();
@@ -1889,13 +1605,8 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnActivityHistory;
-    private javax.swing.JButton btnCategoryMgr;
-    private javax.swing.JButton btnChangePassword;
-    private javax.swing.JButton btnChat;
-    private javax.swing.JButton btnDrinkMgr;
-    private javax.swing.JButton btnExit;
-    private javax.swing.JButton btnHistory;
+    private javax.swing.JButton btnDrawerManager;
+    private javax.swing.JButton btnDrawerUser;
     private javax.swing.JButton btnLiber1;
     private javax.swing.JButton btnLiber10;
     private javax.swing.JButton btnLiber11;
@@ -1913,15 +1624,11 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
     private javax.swing.JButton btnLo3;
     private javax.swing.JButton btnLo4;
     private javax.swing.JButton btnLo5;
-    private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnStart;
     private javax.swing.JButton btnStopContinue;
-    private javax.swing.JButton btnTablebilliard;
-    private javax.swing.JButton btnTablebilliard1;
     private javax.swing.JButton btnTamTinh;
     private javax.swing.JButton btnThanhToan;
     private javax.swing.JButton btnToggleTheme;
-    private javax.swing.JButton btnUserMgr;
     private javax.swing.JButton btnVip1;
     private javax.swing.JButton btnVip2;
     private javax.swing.JButton btnVip3;
@@ -1931,7 +1638,6 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
     private javax.swing.JComboBox<String> cboFood;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
@@ -1948,7 +1654,6 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
@@ -1957,7 +1662,6 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
@@ -1968,12 +1672,9 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
     private javax.swing.JLabel lbTienGio;
     private javax.swing.JLabel lbTime;
     private javax.swing.JLabel lbTongTien;
-    private javax.swing.JLabel lblFullname;
-    private javax.swing.JLabel lblPhoto;
     private javax.swing.JLabel lblTime;
     private javax.swing.JPanel pnlLeft;
     private javax.swing.JPanel pnlLeftCenter;
-    private javax.swing.JPanel pnlManager;
     private javax.swing.JSpinner snpCount;
     private javax.swing.JTabbedPane tabs;
     private javax.swing.JTable tbInfo;
@@ -2005,19 +1706,20 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
             LoginJDialog loginDialog = new LoginJDialog(new javax.swing.JDialog(), true);
             loginDialog.setVisible(true);
         } else {
-            // Set user info for logged in user
-            XIcon.setIcon(lblPhoto, "photos/" + currentUser.getPhoto());
-            lblFullname.setText(currentUser.getFullname());
-
             if (!currentUser.isManager()) {
-                jPanel1.remove(pnlManager);
+                btnDrawerManager.setVisible(false);
+                btnDrawerUser.setVisible(true);
+            } else {
+                btnDrawerManager.setVisible(true);
+                btnDrawerUser.setVisible(false);
             }
+            // Initialize drawer for current user
+            initializeDrawerForUser();
         }
 
         // Set panel colors based on theme
         XUI.setPanelPadding(pnlLeft, 0, 0, 0, 0);
         XUI.setPanelPadding(pnlLeftCenter, 0, 0, 0, 0);
-        XUI.setPanelPadding(jPanel1, 0, 0, 0, 0);
 //        XUI.setPanelPadding(pnlManager, 0, 0, 0, 0);
 
         // Customize theme toggle button
@@ -2039,10 +1741,8 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
 
     private void updateThemeButtonText() {
         if (XUI.isDarkMode()) {
-            btnToggleTheme.setText("Chế độ: Tối");
             btnToggleTheme.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/billiards/icons/menu/crescent-moon.png")));
         } else {
-            btnToggleTheme.setText("Chế độ: Sáng");
             btnToggleTheme.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/billiards/icons/menu/sun.png")));
         }
     }
@@ -2202,8 +1902,8 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
     }
 
     /**
-     * Implement phương thức từ DataChangeListener
-     * Được gọi khi dữ liệu thay đổi từ các dialog quản lý
+     * Implement phương thức từ DataChangeListener Được gọi khi dữ liệu thay đổi
+     * từ các dialog quản lý
      */
     @Override
     public void onDataChanged() {
@@ -2216,7 +1916,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
             public void actionPerformed(ActionEvent e) {
                 clickbt = (JButton) e.getSource();
                 idtable = Integer.parseInt(clickbt.getName());
-                
+
                 // Kiểm tra trạng thái bàn trước khi cho phép sử dụng
                 if (!checkTableStatus()) {
                     return; // Dừng lại nếu bàn không khả dụng
@@ -2253,35 +1953,36 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         btnLo4.addActionListener(buttonls);
         btnLo5.addActionListener(buttonls);
     }
-    
+
     /**
      * Kiểm tra trạng thái bàn trước khi cho phép sử dụng
+     *
      * @return true nếu bàn có thể sử dụng, false nếu không
      */
     private boolean checkTableStatus() {
         try {
             TableDAO tableDAO = new TableDAOImpl();
             Table table = tableDAO.findById(idtable);
-            
+
             if (table == null) {
                 XDialog.alert(this, "Không tìm thấy thông tin bàn!");
                 return false;
             }
-            
+
             String status = table.getStatus();
             if (status == null) {
                 status = "";
             }
-            
+
             // Chỉ chặn bàn đang bảo trì
             if (status.equalsIgnoreCase("Đang bảo trì") || status.equalsIgnoreCase("Dang bao tri")) {
                 String message = table.getName() + " hiện tại đang bảo trì!\n";
                 message += "Bàn đang được bảo trì, vui lòng chọn bàn khác.";
-                
+
                 XDialog.alert(this, message);
                 return false;
             }
-            
+
             return true;
         } catch (Exception e) {
             XDialog.alert(this, "Lỗi kiểm tra trạng thái bàn: " + e.getMessage());
@@ -2417,16 +2118,16 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
     private Billinfo getBillIfno() {
         count = (int) snpCount.getValue();
         Billinfo model = new Billinfo();
-        
+
         int billId = showIdBill();
         String foodId = showIdFood();
-        
+
         System.out.println("getBillIfno() - Bill ID: " + billId + ", Food ID: " + foodId + ", Count: " + count);
-        
+
         model.setIdbill(billId);
         model.setIdfood(foodId); // Giữ nguyên String
         model.setCount(count);
-        
+
         // Thêm thông tin từ Food được chọn
         Food selectedFood = (Food) cboFood.getSelectedItem();
         if (selectedFood != null) {
@@ -2435,21 +2136,21 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
             model.setUnitPrice(selectedFood.getUnitPrice());
             System.out.println("Food được chọn: " + selectedFood.getName() + ", Price: " + selectedFood.getUnitPrice());
         }
-        
+
         // Thêm thông tin từ các trường khác
         model.setHourlyRate(parseCurrency(lbTienGio.getText()));
         model.setDiscountAmount(parseCurrency(txtGiamGia.getText()));
         model.setServiceFee(parseCurrency(txtPhiDichVu.getText()));
         model.setOtherFee(parseCurrency(txtPhiKhac.getText()));
         model.setNotes(txtGhiChu.getText());
-        
+
         System.out.println("Billinfo được tạo với thông tin:");
         System.out.println("- Bill ID: " + model.getIdbill());
         System.out.println("- Food ID: " + model.getIdfood());
         System.out.println("- Food Name: " + model.getFoodName());
         System.out.println("- Count: " + model.getCount());
         System.out.println("- Unit Price: " + model.getUnitPrice());
-        
+
         return model;
     }
 
@@ -2459,7 +2160,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         Billinfo billinfo = getBillIfno();
         System.out.println("Billinfo được tạo với ID Bill: " + billinfo.getIdbill());
         System.out.println("Food ID: " + billinfo.getIdfood() + ", Food Name: " + billinfo.getFoodName());
-        
+
         try {
             // Kiểm tra xem đồ ăn đã có trong bảng chưa
             Food selectedFood = (Food) cboFood.getSelectedItem();
@@ -2544,7 +2245,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
             XDialog.alert(this, "Lỗi khi thêm đồ ăn!");
         }
     }
-    
+
     /**
      * Cập nhật thông tin chi tiết cho tất cả Billinfo records của bill hiện tại
      */
@@ -2552,35 +2253,35 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         try {
             int billId = showIdBill();
             System.out.println("Đang cập nhật thông tin chi tiết cho Bill ID: " + billId);
-            
+
             List<Billinfo> billInfos = billifdao.selectByBillId(billId);
             System.out.println("Tìm thấy " + billInfos.size() + " records để cập nhật");
-            
+
             // Lấy thông tin từ các trường
             double hourlyRate = parseCurrency(lbTienGio.getText());
             double discountAmount = parseCurrency(txtGiamGia.getText());
             double serviceFee = parseCurrency(txtPhiDichVu.getText());
             double otherFee = parseCurrency(txtPhiKhac.getText());
             String notes = txtGhiChu.getText();
-            
+
             System.out.println("Thông tin cập nhật:");
             System.out.println("- Tiền giờ: " + hourlyRate);
             System.out.println("- Giảm giá: " + discountAmount);
             System.out.println("- Phí dịch vụ: " + serviceFee);
             System.out.println("- Phí khác: " + otherFee);
             System.out.println("- Ghi chú: " + notes);
-            
+
             if (billInfos.isEmpty()) {
                 // Nếu không có Billinfo, tạo một record mới với thông tin cơ bản
                 System.out.println("Không có Billinfo, tạo record mới");
-                
+
                 // Lấy một Food ID hợp lệ từ database
                 String validFoodId = getValidFoodId();
                 if (validFoodId == null) {
                     System.err.println("Không tìm thấy Food ID hợp lệ!");
                     return;
                 }
-                
+
                 Billinfo newInfo = new Billinfo();
                 newInfo.setIdbill(billId);
                 newInfo.setIdfood(validFoodId); // Sử dụng Food ID hợp lệ
@@ -2592,7 +2293,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                 newInfo.setServiceFee(serviceFee);
                 newInfo.setOtherFee(otherFee);
                 newInfo.setNotes(notes);
-                
+
                 billifdao.insert(newInfo);
                 System.out.println("Đã tạo Billinfo mới cho Bill ID: " + billId);
             } else {
@@ -2607,7 +2308,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                 }
                 System.out.println("Đã cập nhật " + billInfos.size() + " records Billinfo");
             }
-            
+
             System.out.println("Cập nhật thông tin chi tiết Billinfo thành công!");
         } catch (Exception e) {
             e.printStackTrace();
@@ -2621,13 +2322,13 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
             // Lấy giá tiền từ bàn được chọn
             TableDAO tableDAO = new TableDAOImpl();
             Table table = tableDAO.findById(idtable);
-            
+
             if (table != null) {
                 // Set giá tiền mỗi phút từ database
                 double pricePerMinute = table.getPrice() / 60.0; // Chuyển từ VNĐ/giờ sang VNĐ/phút
                 hourlyRateCalculator.setHourlyRate(pricePerMinute);
             }
-            
+
             hourlyRateCalculator.startTimer();
         } catch (Exception e) {
             System.err.println("Lỗi khi lấy giá tiền bàn: " + e.getMessage());
@@ -2656,7 +2357,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         this.checkinput();
         float tong = 0;
         this.updatelbTienGio();
-        
+
         // Tính tổng từ bảng với validation
         for (int i = 0; i < tbInfo.getRowCount(); i++) {
             Object value = tbInfo.getValueAt(i, 3);
@@ -2670,13 +2371,13 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                 tong += thanhtien;
             }
         }
-        
+
         // Cộng các khoản khác với validation
         tong += parseCurrency(lbTienGio.getText());
         tong -= parseCurrency(txtGiamGia.getText());
         tong += parseCurrency(txtPhiDichVu.getText());
         tong += parseCurrency(txtPhiKhac.getText());
-        
+
         lbTongTien.setText(formatCurrency(tong));
     }
 
@@ -2715,11 +2416,11 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
             float totalPrice = parseCurrency(lbTongTien.getText());
             model.setTotalPrice(totalPrice);
             model.setId(showIdBill());
-            
+
             // Debug log
-            System.out.println("Updating bill ID: " + model.getId() + 
-                             " with TotalPrice: " + totalPrice);
-            
+            System.out.println("Updating bill ID: " + model.getId()
+                    + " with TotalPrice: " + totalPrice);
+
             // Lưu thông tin user hiện tại đang đăng nhập
             if (currentUser != null) {
                 model.setUsername(currentUser.getUsername());
@@ -2813,7 +2514,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         try {
             // 1. Cập nhật thông tin chi tiết cho tất cả Billinfo records
             this.updateBillInfoDetails();
-            
+
             // 2. Update bill trước (set status = 1 và username)
             this.updateBill();
 
@@ -2896,8 +2597,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                 return "Bàn VIP 2";
             case 15:
                 return "Bàn VIP 3";
-                
-                
+
             // Bàn Lỗ - ID 14-18
             case 16:
                 return "Bàn lỗ 1";
@@ -2962,37 +2662,36 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         btnXoasp.setEnabled(false);
         btnThanhToan.setEnabled(false);
         btnTamTinh.setEnabled(false);
-        
-        
+
         // Debug log
-        System.out.println("Showing bill detail - ID: " + bill.getId() + 
-                         ", TotalPrice: " + bill.getTotalPrice());
-        
+        System.out.println("Showing bill detail - ID: " + bill.getId()
+                + ", TotalPrice: " + bill.getTotalPrice());
+
         // Hiển thị thông tin bill lên các trường cơ bản
         lbMaHoaDon.setText(String.valueOf(bill.getId()));
         lbTable.setText(bill.getTableName());
         txtTimeStart.setText(bill.getDatecheckin() != null ? XDateHelper.toString(bill.getDatecheckin(), "yyyy-MM-dd HH:mm:ss") : "");
         txtTimeStop.setText(bill.getDatecheckout() != null ? XDateHelper.toString(bill.getDatecheckout(), "yyyy-MM-dd HH:mm:ss") : "");
         lbTongTien.setText(bill.getTotalPrice() > 0 ? formatCurrency(bill.getTotalPrice()) : "");
-        
+
         // Hiển thị chi tiết bill info (danh sách món)
         DefaultTableModel model = (DefaultTableModel) tbInfo.getModel();
         model.setRowCount(0);
-        
+
         // Thử đọc từ Billinfo trước (cho hóa đơn chưa thanh toán)
         List<Billinfo> billInfos = billifdao.selectByBillId(bill.getId());
-        
+
         System.out.println("Đang tìm Billinfo cho Bill ID: " + bill.getId());
         System.out.println("Đang thực hiện query: SELECT * FROM Billinfo WHERE idBill = ?");
         System.out.println("Đọc được " + billInfos.size() + " records từ Billinfo");
-        
+
         // Nếu không có trong Billinfo, thử đọc từ BillInfoDeleted (cho hóa đơn đã thanh toán)
         if (billInfos.isEmpty()) {
             System.out.println("Không tìm thấy trong Billinfo, thử đọc từ BillInfoDeleted");
             billInfos = billifdao.selectByBillIdFromDeleted(bill.getId());
             System.out.println("Đọc được " + billInfos.size() + " records từ BillInfoDeleted");
         }
-        
+
         if (!billInfos.isEmpty()) {
             // Lấy thông tin từ record đầu tiên để hiển thị các trường khác
             Billinfo firstInfo = billInfos.get(0);
@@ -3002,11 +2701,11 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
             System.out.println("- Phí dịch vụ: " + firstInfo.getServiceFee());
             System.out.println("- Phí khác: " + firstInfo.getOtherFee());
             System.out.println("- Ghi chú: " + firstInfo.getNotes());
-            
-            lbTienGio.setText(formatCurrency((float)firstInfo.getHourlyRate()));
-            txtGiamGia.setText(formatCurrency((float)firstInfo.getDiscountAmount()));
-            txtPhiDichVu.setText(formatCurrency((float)firstInfo.getServiceFee()));
-            txtPhiKhac.setText(formatCurrency((float)firstInfo.getOtherFee()));
+
+            lbTienGio.setText(formatCurrency((float) firstInfo.getHourlyRate()));
+            txtGiamGia.setText(formatCurrency((float) firstInfo.getDiscountAmount()));
+            txtPhiDichVu.setText(formatCurrency((float) firstInfo.getServiceFee()));
+            txtPhiKhac.setText(formatCurrency((float) firstInfo.getOtherFee()));
             txtGhiChu.setText(firstInfo.getNotes() != null ? firstInfo.getNotes() : "");
         } else {
             // Nếu không có Billinfo, hiển thị thông tin từ Bill
@@ -3017,7 +2716,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
             txtPhiKhac.setText("");
             txtGhiChu.setText("");
         }
-        
+
         for (Billinfo info : billInfos) {
             // Sử dụng dữ liệu đã lưu trong Billinfo thay vì query FoodDAO
             Object[] row = {
@@ -3028,17 +2727,17 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
             };
             model.addRow(row);
         }
-        
+
         System.out.println("Đã hiển thị " + billInfos.size() + " món ăn trong bảng");
     }
-    
+
     /**
      * Getter cho currentUser
      */
     public User getCurrentUser() {
         return currentUser;
     }
-    
+
     /**
      * Lấy một Food ID hợp lệ từ database
      */
@@ -3051,7 +2750,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                     return rs.getString("Id");
                 }
             }
-            
+
             // Nếu không có, lấy bất kỳ Food nào
             sql = "SELECT TOP 1 Id FROM Food";
             try (java.sql.ResultSet rs = poly.billiards.util.XJdbc.exeQuery(sql)) {
@@ -3059,14 +2758,14 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                     return rs.getString("Id");
                 }
             }
-            
+
             System.err.println("Không tìm thấy Food nào trong database!");
         } catch (Exception e) {
             System.err.println("Lỗi khi lấy Food ID: " + e.getMessage());
         }
         return null;
     }
-    
+
     private void btnLiber3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLiber3ActionPerformed
         // TODO: Thêm code xử lý sự kiện cho btnLiber3
     }//GEN-LAST:event_btnLiber3ActionPerformed
@@ -3074,9 +2773,340 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         // TODO add your handling code here:
     }//GEN-LAST:event_btnLiber2ActionPerformed
 
-    private void btnTablebilliard1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTablebilliard1ActionPerformed
-        typeTableManagerJDialog dialog = new typeTableManagerJDialog();
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
-    }//GEN-LAST:event_btnTablebilliard1ActionPerformed
+    private DrawerController currentDrawer = null;
+
+    private void btnDrawerManagerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDrawerManagerActionPerformed
+        // TODO add your handling code here:
+        if (currentDrawer != null) {
+            if (currentDrawer.isShow()) {
+                currentDrawer.hide();
+            } else {
+                currentDrawer.show();
+            }
+        }
+    }//GEN-LAST:event_btnDrawerManagerActionPerformed
+
+    private void btnDrawerUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDrawerUserActionPerformed
+        // TODO add your handling code here:
+        if (currentDrawer != null) {
+            if (currentDrawer.isShow()) {
+                currentDrawer.hide();
+            } else {
+                currentDrawer.show();
+            }
+        }
+    }//GEN-LAST:event_btnDrawerUserActionPerformed
+
+    private void btnToggleThemeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnToggleThemeActionPerformed
+        // TODO add your handling code here:
+        XUI.toggleTheme(this);
+        updateThemeButtonText();
+        // Update panel colors after theme change
+        XUI.setPanelPadding(pnlLeft, 0, 0, 0, 0);
+        XUI.setPanelPadding(pnlLeftCenter, 0, 0, 0, 0);
+        SwingUtilities.updateComponentTreeUI(this);
+
+        // Reinitialize drawer with new theme
+        initializeDrawerForUser();
+    }//GEN-LAST:event_btnToggleThemeActionPerformed
+
+    private void initializeDrawerForUser() {
+        if (currentUser == null) {
+            return;
+        }
+
+        // Determine current theme
+        boolean isDarkMode = XUI.isDarkMode();
+
+        if (currentUser.isManager()) {
+            if (isDarkMode) {
+                currentDrawer = createManagerDarkDrawer();
+            } else {
+                currentDrawer = createManagerLightDrawer();
+            }
+        } else {
+            if (isDarkMode) {
+                currentDrawer = createUserDarkDrawer();
+            } else {
+                currentDrawer = createUserLightDrawer();
+            }
+        }
+    }
+
+    private DrawerController createManagerLightDrawer() {
+        return Drawer.newDrawer(this)
+                .background(new Color(90, 90, 90))
+                .closeOnPress(true)
+                .backgroundTransparent(0.3f)
+                .leftDrawer(true)
+                .enableScroll(true)
+                .enableScrollUI(false)
+                .headerHeight(160)
+                .header(new HeaderDrawer(currentUser)).space(5)
+                .addChild(new DrawerItem("Đổi mật khẩu").icon(new ImageIcon(getClass().getResource("/poly/billiards/icons/menu/padlock.png"))).build())
+                .addChild(new DrawerItem("Lịch sử hoá đơn").icon(new ImageIcon(getClass().getResource("/poly/billiards/icons/menu/order-history.png"))).build())
+                .space(10)
+                .separator(HEIGHT, Color.GRAY)
+                .space(10)
+                .addChild(new DrawerItem("Lịch sử hoạt động").icon(new ImageIcon(getClass().getResource("/poly/billiards/icons/menu/manager/history.png"))).build())
+                .addChild(new DrawerItem("Quản lý loại đồ ăn").icon(new ImageIcon(getClass().getResource("/poly/billiards/icons/menu/manager/snacks.png"))).build())
+                .addChild(new DrawerItem("Quản lý đồ ăn").icon(new ImageIcon(getClass().getResource("/poly/billiards/icons/menu/manager/snacks.png"))).build())
+                .addChild(new DrawerItem("Quản lý loại bàn").icon(new ImageIcon(getClass().getResource("/poly/billiards/icons/menu/manager/pool-table.png"))).build())
+                .addChild(new DrawerItem("Quản lý bàn").icon(new ImageIcon(getClass().getResource("/poly/billiards/icons/menu/manager/pool-table.png"))).build())
+                .addChild(new DrawerItem("Quản lý tài khoản").icon(new ImageIcon(getClass().getResource("/poly/billiards/icons/menu/manager/user.png"))).build())
+                .addFooter(new DrawerItem("Đăng xuất").icon(new ImageIcon(getClass().getResource("/poly/billiards/icons/menu/logout.png"))).build())
+                .addFooter(new DrawerItem("Thoát").icon(new ImageIcon(getClass().getResource("/poly/billiards/icons/menu/switch.png"))).build())
+                .event(new EventDrawer() {
+                    @Override
+                    public void selected(int index, DrawerItem item) {
+                        switch (index) {
+                            case 0:
+                                PolyBilliardsJFrame.this.showChangePasswordJDialog(PolyBilliardsJFrame.this);
+                                break;
+                            case 1:
+                                PolyBilliardsJFrame.this.showHistoryJDialog(PolyBilliardsJFrame.this);
+                                break;
+                            case 2:
+                                PolyBilliardsJFrame.this.showActivityHistoryJDialog(new javax.swing.JDialog(PolyBilliardsJFrame.this, true));
+                                break;
+                            case 3:
+                                FoodCategoryManagerJDialog dialog = new FoodCategoryManagerJDialog(PolyBilliardsJFrame.this, true);
+                                dialog.setDataChangeListener(PolyBilliardsJFrame.this);
+                                dialog.setVisible(true);
+                                break;
+                            case 4:
+                                FoodManagerJDialog dialog2 = new FoodManagerJDialog(PolyBilliardsJFrame.this, true);
+                                dialog2.setDataChangeListener(PolyBilliardsJFrame.this);
+                                dialog2.setVisible(true);
+                                break;
+                            case 5:
+                                typeTableManagerJDialog dialog3 = new typeTableManagerJDialog();
+                                dialog3.setLocationRelativeTo(PolyBilliardsJFrame.this);
+                                dialog3.setVisible(true);
+                                break;
+                            case 6:
+                                PolyBilliardsJFrame.this.showTableManagerJDialog(PolyBilliardsJFrame.this);
+                                break;
+                            case 7:
+                                PolyBilliardsJFrame.this.showUserManagerJDialog(PolyBilliardsJFrame.this);
+                                break;
+                            case 8:
+                                if (XDialog.confirm(PolyBilliardsJFrame.this, "Bạn có muốn đăng xuất?")) {
+                                    PolyBilliardsJFrame.this.dispose();
+                                    // Restart by calling main method directly
+                                    SwingUtilities.invokeLater(() -> {
+                                        main(new String[0]);
+                                    });
+                                }
+                                break;
+                            case 9:
+                                // Kiểm tra bàn chưa thanh toán trước khi thoát
+                                if (checkUnpaidTables()) {
+                                    // Có bàn chưa thanh toán, không làm gì cả (giữ cửa sổ mở)
+                                    return;
+                                }
+                                // Không có bàn chưa thanh toán, thoát bình thường
+                                if (XDialog.confirm(PolyBilliardsJFrame.this, "Bạn có muốn thoát?")) {
+                                    System.exit(0);
+                                }
+                                break;
+                            default:
+                                currentDrawer.hide();
+                        }
+                    }
+                })
+                .build();
+    }
+
+    private DrawerController createManagerDarkDrawer() {
+        return Drawer.newDrawer(this)
+                .drawerBackground(new Color(43, 43, 43))
+                .closeOnPress(true)
+                .backgroundTransparent(0.3f)
+                .leftDrawer(true)
+                .enableScroll(true)
+                .enableScrollUI(false)
+                .headerHeight(160)
+                .header(new HeaderDrawer(currentUser)).space(5)
+                .addChild(new DrawerItem("Đổi mật khẩu").icon(new ImageIcon(getClass().getResource("/poly/billiards/icons/menu/padlock.png"))).build())
+                .addChild(new DrawerItem("Lịch sử hoá đơn").icon(new ImageIcon(getClass().getResource("/poly/billiards/icons/menu/order-history.png"))).build())
+                .space(10)
+                .separator(HEIGHT, Color.GRAY)
+                .space(10)
+                .addChild(new DrawerItem("Lịch sử hoạt động").icon(new ImageIcon(getClass().getResource("/poly/billiards/icons/menu/manager/history.png"))).build())
+                .addChild(new DrawerItem("Quản lý loại đồ ăn").icon(new ImageIcon(getClass().getResource("/poly/billiards/icons/menu/manager/snacks.png"))).build())
+                .addChild(new DrawerItem("Quản lý đồ ăn").icon(new ImageIcon(getClass().getResource("/poly/billiards/icons/menu/manager/snacks.png"))).build())
+                .addChild(new DrawerItem("Quản lý loại bàn").icon(new ImageIcon(getClass().getResource("/poly/billiards/icons/menu/manager/pool-table.png"))).build())
+                .addChild(new DrawerItem("Quản lý bàn").icon(new ImageIcon(getClass().getResource("/poly/billiards/icons/menu/manager/pool-table.png"))).build())
+                .addChild(new DrawerItem("Quản lý tài khoản").icon(new ImageIcon(getClass().getResource("/poly/billiards/icons/menu/manager/user.png"))).build())
+                .addFooter(new DrawerItem("Đăng xuất").icon(new ImageIcon(getClass().getResource("/poly/billiards/icons/menu/logout.png"))).build())
+                .addFooter(new DrawerItem("Thoát").icon(new ImageIcon(getClass().getResource("/poly/billiards/icons/menu/switch.png"))).build())
+                .event(new EventDrawer() {
+                    @Override
+                    public void selected(int index, DrawerItem item) {
+                        switch (index) {
+                            case 0:
+                                PolyBilliardsJFrame.this.showChangePasswordJDialog(PolyBilliardsJFrame.this);
+                                break;
+                            case 1:
+                                PolyBilliardsJFrame.this.showHistoryJDialog(PolyBilliardsJFrame.this);
+                                break;
+                            case 2:
+                                PolyBilliardsJFrame.this.showActivityHistoryJDialog(new javax.swing.JDialog(PolyBilliardsJFrame.this, true));
+                                break;
+                            case 3:
+                                FoodCategoryManagerJDialog dialog = new FoodCategoryManagerJDialog(PolyBilliardsJFrame.this, true);
+                                dialog.setDataChangeListener(PolyBilliardsJFrame.this);
+                                dialog.setVisible(true);
+                                break;
+                            case 4:
+                                FoodManagerJDialog dialog2 = new FoodManagerJDialog(PolyBilliardsJFrame.this, true);
+                                dialog2.setDataChangeListener(PolyBilliardsJFrame.this);
+                                dialog2.setVisible(true);
+                                break;
+                            case 5:
+                                typeTableManagerJDialog dialog3 = new typeTableManagerJDialog();
+                                dialog3.setLocationRelativeTo(PolyBilliardsJFrame.this);
+                                dialog3.setVisible(true);
+                                break;
+                            case 6:
+                                PolyBilliardsJFrame.this.showTableManagerJDialog(PolyBilliardsJFrame.this);
+                                break;
+                            case 7:
+                                PolyBilliardsJFrame.this.showUserManagerJDialog(PolyBilliardsJFrame.this);
+                                break;
+                            case 8:
+                                if (XDialog.confirm(PolyBilliardsJFrame.this, "Bạn có muốn đăng xuất?")) {
+                                    PolyBilliardsJFrame.this.dispose();
+                                    // Restart by calling main method directly
+                                    SwingUtilities.invokeLater(() -> {
+                                        main(new String[0]);
+                                    });
+                                }
+                                break;
+                            case 9:
+                                // Kiểm tra bàn chưa thanh toán trước khi thoát
+                                if (checkUnpaidTables()) {
+                                    // Có bàn chưa thanh toán, không làm gì cả (giữ cửa sổ mở)
+                                    return;
+                                }
+                                // Không có bàn chưa thanh toán, thoát bình thường
+                                if (XDialog.confirm(PolyBilliardsJFrame.this, "Bạn có muốn thoát?")) {
+                                    System.exit(0);
+                                }
+                                break;
+                            default:
+                                currentDrawer.hide();
+                        }
+                    }
+                })
+                .build();
+    }
+
+    private DrawerController createUserLightDrawer() {
+        return Drawer.newDrawer(this)
+                .background(new Color(90, 90, 90))
+                .closeOnPress(true)
+                .backgroundTransparent(0.3f)
+                .leftDrawer(true)
+                .enableScroll(true)
+                .enableScrollUI(false)
+                .headerHeight(160)
+                .header(new HeaderDrawer(currentUser))
+                .space(3)
+                .addChild(new DrawerItem("Đổi mật khẩu").icon(new ImageIcon(getClass().getResource("/poly/billiards/icons/menu/padlock.png"))).build())
+                .addChild(new DrawerItem("Lịch sử hoá đơn").icon(new ImageIcon(getClass().getResource("/poly/billiards/icons/menu/order-history.png"))).build())
+                .addFooter(new DrawerItem("Đăng xuất").icon(new ImageIcon(getClass().getResource("/poly/billiards/icons/menu/logout.png"))).build())
+                .addFooter(new DrawerItem("Thoát").icon(new ImageIcon(getClass().getResource("/poly/billiards/icons/menu/switch.png"))).build())
+                .event(new EventDrawer() {
+                    @Override
+                    public void selected(int index, DrawerItem item) {
+                        switch (index) {
+                            case 0:
+                                PolyBilliardsJFrame.this.showChangePasswordJDialog(PolyBilliardsJFrame.this);
+                                break;
+                            case 1:
+                                PolyBilliardsJFrame.this.showHistoryJDialog(PolyBilliardsJFrame.this);
+                                break;
+                            case 2:
+                                if (XDialog.confirm(PolyBilliardsJFrame.this, "Bạn có muốn đăng xuất?")) {
+                                    PolyBilliardsJFrame.this.dispose();
+                                    // Restart by calling main method directly
+                                    SwingUtilities.invokeLater(() -> {
+                                        main(new String[0]);
+                                    });
+                                }
+                                break;
+                            case 3:
+                                // Kiểm tra bàn chưa thanh toán trước khi thoát
+                                if (checkUnpaidTables()) {
+                                    // Có bàn chưa thanh toán, không làm gì cả (giữ cửa sổ mở)
+                                    return;
+                                }
+                                // Không có bàn chưa thanh toán, thoát bình thường
+                                if (XDialog.confirm(PolyBilliardsJFrame.this, "Bạn có muốn thoát?")) {
+                                    System.exit(0);
+                                }
+                                break;
+                            default:
+                                currentDrawer.hide();
+                        }
+                    }
+                })
+                .build();
+    }
+
+    private DrawerController createUserDarkDrawer() {
+        return Drawer.newDrawer(this)
+                .drawerBackground(new Color(43, 43, 43))
+                .closeOnPress(true)
+                .backgroundTransparent(0.3f)
+                .leftDrawer(true)
+                .enableScroll(true)
+                .enableScrollUI(false)
+                .headerHeight(160)
+                .header(new HeaderDrawer(currentUser))
+                .space(3)
+                .addChild(new DrawerItem("Đổi mật khẩu").icon(new ImageIcon(getClass().getResource("/poly/billiards/icons/menu/padlock.png"))).build())
+                .addChild(new DrawerItem("Lịch sử hoá đơn").icon(new ImageIcon(getClass().getResource("/poly/billiards/icons/menu/order-history.png"))).build())
+                .addFooter(new DrawerItem("Đăng xuất").icon(new ImageIcon(getClass().getResource("/poly/billiards/icons/menu/logout.png"))).build())
+                .addFooter(new DrawerItem("Thoát").icon(new ImageIcon(getClass().getResource("/poly/billiards/icons/menu/switch.png"))).build())
+                .event(new EventDrawer() {
+                    @Override
+                    public void selected(int index, DrawerItem item) {
+                        switch (index) {
+                            case 0:
+                                PolyBilliardsJFrame.this.showChangePasswordJDialog(PolyBilliardsJFrame.this);
+                                break;
+                            case 1:
+                                PolyBilliardsJFrame.this.showHistoryJDialog(PolyBilliardsJFrame.this);
+                                break;
+                            case 2:
+                                if (XDialog.confirm(PolyBilliardsJFrame.this, "Bạn có muốn đăng xuất?")) {
+                                    PolyBilliardsJFrame.this.dispose();
+                                    // Restart by calling main method directly
+                                    SwingUtilities.invokeLater(() -> {
+                                        main(new String[0]);
+                                    });
+                                }
+                                break;
+                            case 3:
+                                // Kiểm tra bàn chưa thanh toán trước khi thoát
+                                if (checkUnpaidTables()) {
+                                    // Có bàn chưa thanh toán, không làm gì cả (giữ cửa sổ mở)
+                                    return;
+                                }
+                                // Không có bàn chưa thanh toán, thoát bình thường
+                                if (XDialog.confirm(PolyBilliardsJFrame.this, "Bạn có muốn thoát?")) {
+                                    System.exit(0);
+                                }
+                                break;
+                            default:
+                                currentDrawer.hide();
+                        }
+                    }
+                })
+                .build();
+    }
+
 }
