@@ -16,10 +16,10 @@ import poly.billiards.util.XQuery;
  * @author Admin
  */
 public class TableDAOImpl implements TableDAO {
-    private static final String findAllSql = "SELECT * FROM BilliardTable";
-    private static final String findByIdSql = "SELECT * FROM BilliardTable WHERE Id = ?";
-    private static final String createSql = "INSERT INTO BilliardTable (Name, Status, Price) VALUES (?, ?, ?)";
-    private static final String updateSql = "UPDATE BilliardTable SET Status = ?, Price = ? WHERE Id = ?";
+    private static final String findAllSql = "SELECT bt.*, tt.Id as TableTypeId, tt.Name as TableTypeName FROM BilliardTable bt LEFT JOIN TableType tt ON bt.TableTypeId = tt.Id";
+    private static final String findByIdSql = "SELECT bt.*, tt.Id as TableTypeId, tt.Name as TableTypeName FROM BilliardTable bt LEFT JOIN TableType tt ON bt.TableTypeId = tt.Id WHERE bt.Id = ?";
+    private static final String createSql = "INSERT INTO BilliardTable (Name, Status, Price, TableTypeId) VALUES (?, ?, ?, ?)";
+    private static final String updateSql = "UPDATE BilliardTable SET Status = ?, Price = ?, TableTypeId = ? WHERE Id = ?";
     private static final String deleteByIdSql = "DELETE FROM BilliardTable WHERE Id = ?";
     
     @Override
@@ -37,7 +37,8 @@ public class TableDAOImpl implements TableDAO {
         XQuery.execute(createSql, 
             table.getName(),
             table.getStatus(),
-            table.getPrice()
+            table.getPrice(),
+            table.getTableTypeId()
         );
     }
     
@@ -46,6 +47,7 @@ public class TableDAOImpl implements TableDAO {
         XQuery.execute(updateSql,
             table.getStatus(),
             table.getPrice(),
+            table.getTableTypeId(),
             table.getId()
         );
     }

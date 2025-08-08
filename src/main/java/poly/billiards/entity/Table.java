@@ -12,6 +12,8 @@ public class Table {
     private int id;
     private String name, status;
     private double price;
+    private int tableTypeId;
+    private TableType tableType;
 
     public Table() {
     }
@@ -21,6 +23,23 @@ public class Table {
         this.name = name;
         this.status = status;
         this.price = price;
+    }
+
+    public Table(int id, String name, String status, double price, int tableTypeId) {
+        this.id = id;
+        this.name = name;
+        this.status = status;
+        this.price = price;
+        this.tableTypeId = tableTypeId;
+    }
+
+    public Table(int id, String name, String status, double price, int tableTypeId, TableType tableType) {
+        this.id = id;
+        this.name = name;
+        this.status = status;
+        this.price = price;
+        this.tableTypeId = tableTypeId;
+        this.tableType = tableType;
     }
 
     public int getId() {
@@ -53,6 +72,22 @@ public class Table {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public int getTableTypeId() {
+        return tableTypeId;
+    }
+
+    public void setTableTypeId(int tableTypeId) {
+        this.tableTypeId = tableTypeId;
+    }
+
+    public TableType getTableType() {
+        return tableType;
+    }
+
+    public void setTableType(TableType tableType) {
+        this.tableType = tableType;
     }
 
     @Override

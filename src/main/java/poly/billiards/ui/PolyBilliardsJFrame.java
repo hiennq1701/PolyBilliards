@@ -39,6 +39,7 @@ import poly.billiards.ui.manager.FoodCategoryManagerJDialog;
 import poly.billiards.ui.manager.FoodManagerJDialog;
 import poly.billiards.ui.manager.UserManagerJDialog;
 import poly.billiards.ui.manager.TableManagerJDialog;
+import poly.billiards.ui.manager.typeTableManagerJDialog;
 import poly.billiards.util.XDialog;
 import poly.billiards.util.XActivity;
 import java.util.Map;
@@ -144,6 +145,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         btnUserMgr = new javax.swing.JButton();
         btnDrinkMgr = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        btnTablebilliard1 = new javax.swing.JButton();
         btnChangePassword = new javax.swing.JButton();
         btnLogout = new javax.swing.JButton();
         btnChat = new javax.swing.JButton();
@@ -309,6 +311,16 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("QUẢN LÝ");
 
+        btnTablebilliard1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnTablebilliard1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poly/billiards/icons/menu/manager/pool-table.png"))); // NOI18N
+        btnTablebilliard1.setText("Loại bàn");
+        btnTablebilliard1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnTablebilliard1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTablebilliard1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlManagerLayout = new javax.swing.GroupLayout(pnlManager);
         pnlManager.setLayout(pnlManagerLayout);
         pnlManagerLayout.setHorizontalGroup(
@@ -317,6 +329,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
             .addGroup(pnlManagerLayout.createSequentialGroup()
                 .addGap(106, 106, 106)
                 .addGroup(pnlManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnTablebilliard1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnUserMgr, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCategoryMgr, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnTablebilliard, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -336,7 +349,9 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                 .addComponent(btnUserMgr, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnTablebilliard)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnTablebilliard1)
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         btnChangePassword.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -1405,7 +1420,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
                                 .addComponent(btnHistory)))
                         .addGap(48, 48, 48)
                         .addComponent(pnlManager, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnLogout)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnExit)
@@ -1902,6 +1917,7 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
     private javax.swing.JButton btnStart;
     private javax.swing.JButton btnStopContinue;
     private javax.swing.JButton btnTablebilliard;
+    private javax.swing.JButton btnTablebilliard1;
     private javax.swing.JButton btnTamTinh;
     private javax.swing.JButton btnThanhToan;
     private javax.swing.JButton btnToggleTheme;
@@ -3057,4 +3073,10 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
     private void btnLiber2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLiber2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnLiber2ActionPerformed
+
+    private void btnTablebilliard1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTablebilliard1ActionPerformed
+        typeTableManagerJDialog dialog = new typeTableManagerJDialog();
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_btnTablebilliard1ActionPerformed
 }

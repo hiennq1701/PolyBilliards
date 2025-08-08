@@ -123,6 +123,21 @@ CREATE TABLE [dbo].[BilliardTable](
 	[Name] [nvarchar](50) NOT NULL,
 	[Status] [nvarchar](20) NOT NULL,
 	[Price] [float] NOT NULL DEFAULT 0,
+	[TableTypeId] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[TableType]    Script Date: 7/18/2025 9:20:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TableType](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](50) NOT NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -228,33 +243,40 @@ INSERT [dbo].[ActivityLogs] ([Id], [Username], [Action], [Details], [Timestamp])
 INSERT [dbo].[ActivityLogs] ([Id], [Username], [Action], [Details], [Timestamp]) VALUES (2, N'b', N'Đăng nhập', N'Đăng nhập vào hệ thống', CAST(N'2025-07-04T11:23:45.217' AS DateTime))
 SET IDENTITY_INSERT [dbo].[ActivityLogs] OFF
 GO
+SET IDENTITY_INSERT [dbo].[TableType] ON
+
+INSERT [dbo].[TableType] ([Id], [Name]) VALUES (1, N'Liber')
+INSERT [dbo].[TableType] ([Id], [Name]) VALUES (2, N'VIP')
+INSERT [dbo].[TableType] ([Id], [Name]) VALUES (3, N'Lỗ')
+SET IDENTITY_INSERT [dbo].[TableType] OFF
+GO
 SET IDENTITY_INSERT [dbo].[BilliardTable] ON 
 
 -- Bàn liber 1-12
-INSERT [dbo].[BilliardTable] ([Id], [Name], [Status], [Price]) VALUES (1, N'Bàn liber 1', N'Chơi được', 60000)
-INSERT [dbo].[BilliardTable] ([Id], [Name], [Status], [Price]) VALUES (2, N'Bàn liber 2', N'Chơi được', 60000)
-INSERT [dbo].[BilliardTable] ([Id], [Name], [Status], [Price]) VALUES (3, N'Bàn liber 3', N'Chơi được', 60000)
-INSERT [dbo].[BilliardTable] ([Id], [Name], [Status], [Price]) VALUES (4, N'Bàn liber 4', N'Chơi được', 60000)
-INSERT [dbo].[BilliardTable] ([Id], [Name], [Status], [Price]) VALUES (5, N'Bàn liber 5', N'Chơi được', 60000)
-INSERT [dbo].[BilliardTable] ([Id], [Name], [Status], [Price]) VALUES (6, N'Bàn liber 6', N'Chơi được', 60000)
-INSERT [dbo].[BilliardTable] ([Id], [Name], [Status], [Price]) VALUES (7, N'Bàn liber 7', N'Chơi được', 60000)
-INSERT [dbo].[BilliardTable] ([Id], [Name], [Status], [Price]) VALUES (8, N'Bàn liber 8', N'Chơi được', 60000)
-INSERT [dbo].[BilliardTable] ([Id], [Name], [Status], [Price]) VALUES (9, N'Bàn liber 9', N'Chơi được', 60000)
-INSERT [dbo].[BilliardTable] ([Id], [Name], [Status], [Price]) VALUES (10, N'Bàn liber 10', N'Chơi được', 60000)
-INSERT [dbo].[BilliardTable] ([Id], [Name], [Status], [Price]) VALUES (11, N'Bàn liber 11', N'Chơi được', 60000)
-INSERT [dbo].[BilliardTable] ([Id], [Name], [Status], [Price]) VALUES (12, N'Bàn liber 12', N'Chơi được', 60000)
+INSERT [dbo].[BilliardTable] ([Id], [Name], [Status], [Price], [TableTypeId]) VALUES (1, N'Bàn liber 1', N'Chơi được', 60000, 1)
+INSERT [dbo].[BilliardTable] ([Id], [Name], [Status], [Price], [TableTypeId]) VALUES (2, N'Bàn liber 2', N'Chơi được', 60000, 1)
+INSERT [dbo].[BilliardTable] ([Id], [Name], [Status], [Price], [TableTypeId]) VALUES (3, N'Bàn liber 3', N'Chơi được', 60000, 1)
+INSERT [dbo].[BilliardTable] ([Id], [Name], [Status], [Price], [TableTypeId]) VALUES (4, N'Bàn liber 4', N'Chơi được', 60000, 1)
+INSERT [dbo].[BilliardTable] ([Id], [Name], [Status], [Price], [TableTypeId]) VALUES (5, N'Bàn liber 5', N'Chơi được', 60000, 1)
+INSERT [dbo].[BilliardTable] ([Id], [Name], [Status], [Price], [TableTypeId]) VALUES (6, N'Bàn liber 6', N'Chơi được', 60000, 1)
+INSERT [dbo].[BilliardTable] ([Id], [Name], [Status], [Price], [TableTypeId]) VALUES (7, N'Bàn liber 7', N'Chơi được', 60000, 1)
+INSERT [dbo].[BilliardTable] ([Id], [Name], [Status], [Price], [TableTypeId]) VALUES (8, N'Bàn liber 8', N'Chơi được', 60000, 1)
+INSERT [dbo].[BilliardTable] ([Id], [Name], [Status], [Price], [TableTypeId]) VALUES (9, N'Bàn liber 9', N'Chơi được', 60000, 1)
+INSERT [dbo].[BilliardTable] ([Id], [Name], [Status], [Price], [TableTypeId]) VALUES (10, N'Bàn liber 10', N'Chơi được', 60000, 1)
+INSERT [dbo].[BilliardTable] ([Id], [Name], [Status], [Price], [TableTypeId]) VALUES (11, N'Bàn liber 11', N'Chơi được', 60000, 1)
+INSERT [dbo].[BilliardTable] ([Id], [Name], [Status], [Price], [TableTypeId]) VALUES (12, N'Bàn liber 12', N'Chơi được', 60000, 1)
 
 -- Bàn VIP 1-3
-INSERT [dbo].[BilliardTable] ([Id], [Name], [Status], [Price]) VALUES (13, N'Bàn VIP 1', N'Chơi được', 60000)
-INSERT [dbo].[BilliardTable] ([Id], [Name], [Status], [Price]) VALUES (14, N'Bàn VIP 2', N'Chơi được', 60000)
-INSERT [dbo].[BilliardTable] ([Id], [Name], [Status], [Price]) VALUES (15, N'Bàn VIP 3', N'Chơi được', 60000)
+INSERT [dbo].[BilliardTable] ([Id], [Name], [Status], [Price], [TableTypeId]) VALUES (13, N'Bàn VIP 1', N'Chơi được', 60000, 2)
+INSERT [dbo].[BilliardTable] ([Id], [Name], [Status], [Price], [TableTypeId]) VALUES (14, N'Bàn VIP 2', N'Chơi được', 60000, 2)
+INSERT [dbo].[BilliardTable] ([Id], [Name], [Status], [Price], [TableTypeId]) VALUES (15, N'Bàn VIP 3', N'Chơi được', 60000, 2)
 
 -- Bàn lỗ 1-5
-INSERT [dbo].[BilliardTable] ([Id], [Name], [Status], [Price]) VALUES (16, N'Bàn lỗ 1', N'Chơi được', 60000)
-INSERT [dbo].[BilliardTable] ([Id], [Name], [Status], [Price]) VALUES (17, N'Bàn lỗ 2', N'Chơi được', 60000)
-INSERT [dbo].[BilliardTable] ([Id], [Name], [Status], [Price]) VALUES (18, N'Bàn lỗ 3', N'Chơi được', 60000)
-INSERT [dbo].[BilliardTable] ([Id], [Name], [Status], [Price]) VALUES (19, N'Bàn lỗ 4', N'Chơi được', 60000)
-INSERT [dbo].[BilliardTable] ([Id], [Name], [Status], [Price]) VALUES (20, N'Bàn lỗ 5', N'Chơi được', 60000)
+INSERT [dbo].[BilliardTable] ([Id], [Name], [Status], [Price], [TableTypeId]) VALUES (16, N'Bàn lỗ 1', N'Chơi được', 60000, 3)
+INSERT [dbo].[BilliardTable] ([Id], [Name], [Status], [Price], [TableTypeId]) VALUES (17, N'Bàn lỗ 2', N'Chơi được', 60000, 3)
+INSERT [dbo].[BilliardTable] ([Id], [Name], [Status], [Price], [TableTypeId]) VALUES (18, N'Bàn lỗ 3', N'Chơi được', 60000, 3)
+INSERT [dbo].[BilliardTable] ([Id], [Name], [Status], [Price], [TableTypeId]) VALUES (19, N'Bàn lỗ 4', N'Chơi được', 60000, 3)
+INSERT [dbo].[BilliardTable] ([Id], [Name], [Status], [Price], [TableTypeId]) VALUES (20, N'Bàn lỗ 5', N'Chơi được', 60000, 3)
 SET IDENTITY_INSERT [dbo].[BilliardTable] OFF
 GO
 INSERT [dbo].[Users] ([Username], [Password], [Enabled], [Fullname], [Photo], [Manager], [Email]) VALUES (N'a', N'1234$', 1, N'NgoQuangHien', N'53B963D6.jpg', 1, N'quanghien1701@gmail.com')
@@ -293,6 +315,10 @@ ALTER TABLE [dbo].[Food]  WITH CHECK ADD FOREIGN KEY([CategoryId])
 REFERENCES [dbo].[FoodCategory] ([Id])
 ON UPDATE CASCADE
 ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[BilliardTable]  WITH CHECK ADD FOREIGN KEY([TableTypeId])
+REFERENCES [dbo].[TableType] ([Id])
+ON UPDATE CASCADE
 GO
 
 -- =============================
