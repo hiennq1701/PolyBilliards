@@ -218,6 +218,8 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         btnXoasp = new javax.swing.JButton();
         jLabel21 = new javax.swing.JLabel();
         lblTime = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("PolyBilliards");
@@ -1212,6 +1214,11 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
 
         tabs.addTab("Thực đơn", jPanel13);
 
+        jPanel1.setLayout(new java.awt.GridLayout(0, 6, 15, 15));
+        jScrollPane1.setViewportView(jPanel1);
+
+        tabs.addTab("tab3", jScrollPane1);
+
         javax.swing.GroupLayout pnlLeftCenterLayout = new javax.swing.GroupLayout(pnlLeftCenter);
         pnlLeftCenter.setLayout(pnlLeftCenterLayout);
         pnlLeftCenterLayout.setHorizontalGroup(
@@ -1252,304 +1259,6 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         // Bỏ this.exit() để không hiển thị dialog confirm
         // this.exit();
     }//GEN-LAST:event_formWindowClosed
-
-    private void btnLiber10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLiber10ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnLiber10ActionPerformed
-
-    private void btnLiber11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLiber11ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnLiber11ActionPerformed
-
-    private void btnLiber1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLiber1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnLiber1ActionPerformed
-
-    private void btnLiber6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLiber6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnLiber6ActionPerformed
-
-    private void btnLiber12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLiber12ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnLiber12ActionPerformed
-
-    private void btnVip2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVip2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnVip2ActionPerformed
-
-    private void btnVip3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVip3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnVip3ActionPerformed
-
-    private void btnVip1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVip1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnVip1ActionPerformed
-
-    private void btnLo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLo1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnLo1ActionPerformed
-
-    private void btnLo2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLo2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnLo2ActionPerformed
-
-    private void btnLo3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLo3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnLo3ActionPerformed
-
-    private void btnLo4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLo4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnLo4ActionPerformed
-
-    private void btnLo5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLo5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnLo5ActionPerformed
-
-    private void txtPhiDichVuFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPhiDichVuFocusLost
-        // TODO add your handling code here:
-        calTotalPice();
-    }//GEN-LAST:event_txtPhiDichVuFocusLost
-
-    private void snpCountStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_snpCountStateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_snpCountStateChanged
-
-    private void snpCountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_snpCountMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_snpCountMouseClicked
-
-    private void btnStopContinueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStopContinueActionPerformed
-        // TODO add your handling code here:
-        if (idtable <= 0) {
-            XDialog.alert(this, "Chưa chọn bàn chơi !");
-            return;
-        }
-        if (txtTimeStart.getText().equals("")) {
-            XDialog.alert(this, "Chưa có thời gian bắt đầu");
-            return;
-        }
-
-        // Kiểm tra trạng thái hiện tại để quyết định hành động
-        if (!isPaused) {
-            // Đang chạy → Dừng
-            pauseGame();
-            calTotalPice();
-        } else {
-            // Đã dừng → Tiếp tục
-            resumeGame();
-        }
-    }//GEN-LAST:event_btnStopContinueActionPerformed
-
-    private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
-        // TODO add your handling code here:
-        if (txtTimeStart.getText().equals("")) {
-            XDialog.alert(this, "Chưa bắt đầu");
-            return;
-        }
-        if (txtTimeStop.getText().equals("")) {
-            XDialog.alert(this, "Chưa dừng giờ");
-        } else {
-            if (XDialog.confirm(this, "Bạn muốn thanh toán bàn này?")) {
-                // Chỉ gọi clickThanhToan(), không gọi updateBill() riêng
-                clickThanhToan();
-                XDialog.info(this, "ĐÃ THANH TOÁN");
-                btnStart.setEnabled(true);
-            }
-        }
-    }//GEN-LAST:event_btnThanhToanActionPerformed
-
-    private void btnXacNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacNhanActionPerformed
-        // TODO add your handling code here:
-        System.out.println("=== NÚT XÁC NHẬN ĐƯỢC NHẤN ===");
-        System.out.println("txtTimeStart.getText(): '" + txtTimeStart.getText() + "'");
-
-        if (txtTimeStart.getText().equals("")) {
-            System.out.println("Chưa bắt đầu giờ - không thực hiện insertBillinfo()");
-            XDialog.alert(this, "Chưa bắt đầu giờ");
-            return;
-        }
-
-        System.out.println("Điều kiện OK - gọi insertBillinfo()");
-        this.insertBillinfo();
-        this.calTotalPice();
-        System.out.println("=== KẾT THÚC NÚT XÁC NHẬN ===");
-    }//GEN-LAST:event_btnXacNhanActionPerformed
-
-    private void btnTamTinhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTamTinhActionPerformed
-        // TODO add your handling code here:
-        this.billTamTinh();
-    }//GEN-LAST:event_btnTamTinhActionPerformed
-
-    private void txtTimeStartFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTimeStartFocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTimeStartFocusGained
-
-    private void txtTimeStartFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTimeStartFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTimeStartFocusLost
-
-    private void txtTimeStartInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_txtTimeStartInputMethodTextChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTimeStartInputMethodTextChanged
-
-    private void txtTimeStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimeStartActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTimeStartActionPerformed
-
-    private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartActionPerformed
-        // TODO add your handling code here:
-        if (idtable <= 0) {
-            XDialog.alert(this, "Chưa chọn bàn chơi !");
-            return;
-        }
-        this.insertBill();
-        btnStart.setEnabled(false);
-        btnStopContinue.setEnabled(true);
-
-        // Bắt đầu theo dõi thời gian chơi
-        startPlayTime();
-    }//GEN-LAST:event_btnStartActionPerformed
-
-    private void cboCategoryItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboCategoryItemStateChanged
-        // TODO add your handling code here:
-        if (evt.getStateChange() == ItemEvent.SELECTED) {
-            this.dataCboFood();
-        }
-    }//GEN-LAST:event_cboCategoryItemStateChanged
-
-    private void cboCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboCategoryActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cboCategoryActionPerformed
-
-    private void txtPhiKhacFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPhiKhacFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPhiKhacFocusLost
-
-    private void txtGiamGiaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtGiamGiaFocusLost
-        // TODO add your handling code here:
-        calTotalPice();
-    }//GEN-LAST:event_txtGiamGiaFocusLost
-
-    private void cboFoodItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboFoodItemStateChanged
-        // TODO add your handling code here:
-        if (evt.getStateChange() == ItemEvent.SELECTED) {
-            this.showIdFood();
-        }
-    }//GEN-LAST:event_cboFoodItemStateChanged
-
-    private void cboFoodMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cboFoodMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cboFoodMouseClicked
-
-    private void cboFoodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboFoodActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cboFoodActionPerformed
-
-    private void txtGiamGiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtGiamGiaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtGiamGiaActionPerformed
-
-    private void btnXoaspActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaspActionPerformed
-        // TODO add your handling code here:
-        int selectedRow = tbInfo.getSelectedRow();
-        if (selectedRow >= 0) {
-            // Lấy thông tin sản phẩm được chọn
-            String productName = (String) tbInfo.getValueAt(selectedRow, 0);
-            int currentQuantity = (Integer) tbInfo.getValueAt(selectedRow, 1);
-            float unitPrice = (Float) tbInfo.getValueAt(selectedRow, 2);
-
-            if (currentQuantity > 1) {
-                // Nếu số lượng > 1, hiện dialog nhập số lượng cần xóa
-                String input = XDialog.prompt(this,
-                        "Nhập số lượng cần xóa.\nSố lượng hiện có: " + currentQuantity);
-
-                if (input != null && !input.trim().isEmpty()) {
-                    try {
-                        int quantityToRemove = Integer.parseInt(input.trim());
-
-                        // Kiểm tra số lượng nhập vào
-                        if (quantityToRemove <= 0) {
-                            XDialog.alert(this, "Số lượng phải lớn hơn 0!");
-                            return;
-                        }
-
-                        if (quantityToRemove > currentQuantity) {
-                            XDialog.alert(this, "Số lượng xóa không được lớn hơn số lượng hiện có!");
-                            return;
-                        }
-
-                        // Xử lý xóa số lượng
-                        if (quantityToRemove == currentQuantity) {
-                            // Xóa toàn bộ sản phẩm
-                            modelTable = (DefaultTableModel) tbInfo.getModel();
-                            modelTable.removeRow(selectedRow);
-
-                            // Xóa trong database
-                            try {
-                                String foodId = showIdFood(); // Lấy ID của sản phẩm được chọn
-                                if (foodId != null) {
-                                    billifdao.deleteByBillIdAndFoodId(showIdBill(), foodId);
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-
-                            XDialog.info(this, "Đã xóa toàn bộ " + productName + " khỏi hóa đơn!");
-                        } else {
-                            // Giảm số lượng
-                            int newQuantity = currentQuantity - quantityToRemove;
-                            float newTotalPrice = newQuantity * unitPrice;
-
-                            // Cập nhật trên bảng
-                            tbInfo.setValueAt(newQuantity, selectedRow, 1);
-                            tbInfo.setValueAt(newTotalPrice, selectedRow, 3);
-
-                            // Cập nhật trong database
-                            try {
-                                String foodId = showIdFood(); // Lấy ID của sản phẩm được chọn
-                                if (foodId != null) {
-                                    billifdao.updateCountByBillIdAndFoodId(showIdBill(), foodId, newQuantity);
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-
-                            XDialog.info(this, "Đã xóa " + quantityToRemove + " " + productName + " khỏi hóa đơn!");
-                        }
-
-                        // Tính lại tổng tiền
-                        calTotalPice();
-
-                    } catch (NumberFormatException e) {
-                        XDialog.alert(this, "Vui lòng nhập số hợp lệ!");
-                    }
-                }
-            } else {
-                // Nếu số lượng = 1, xóa toàn bộ sản phẩm
-                if (XDialog.confirm(this, "Bạn có muốn xóa sản phẩm này khỏi hóa đơn?")) {
-                    modelTable = (DefaultTableModel) tbInfo.getModel();
-                    modelTable.removeRow(selectedRow);
-
-                    // Xóa trong database
-                    try {
-                        String foodId = showIdFood(); // Lấy ID của sản phẩm được chọn
-                        if (foodId != null) {
-                            billifdao.deleteByBillIdAndFoodId(showIdBill(), foodId);
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                    // Tính lại tổng tiền
-                    calTotalPice();
-
-                    XDialog.info(this, "Đã xóa sản phẩm khỏi hóa đơn!");
-                }
-            }
-        } else {
-            XDialog.alert(this, "Vui lòng chọn sản phẩm cần xóa!");
-        }
-    }//GEN-LAST:event_btnXoaspActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1649,12 +1358,14 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JSeparator jSeparator3;
@@ -2767,13 +2478,6 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         return null;
     }
 
-    private void btnLiber3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLiber3ActionPerformed
-        // TODO: Thêm code xử lý sự kiện cho btnLiber3
-    }//GEN-LAST:event_btnLiber3ActionPerformed
-    private void btnLiber2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLiber2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnLiber2ActionPerformed
-
     private DrawerController currentDrawer = null;
 
     private void btnDrawerManagerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDrawerManagerActionPerformed
@@ -2816,6 +2520,312 @@ public final class PolyBilliardsJFrame extends javax.swing.JFrame implements Pol
         // Reinitialize drawer with new theme
         initializeDrawerForUser();
     }//GEN-LAST:event_btnToggleThemeActionPerformed
+
+    private void btnXoaspActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaspActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = tbInfo.getSelectedRow();
+        if (selectedRow >= 0) {
+            // Lấy thông tin sản phẩm được chọn
+            String productName = (String) tbInfo.getValueAt(selectedRow, 0);
+            int currentQuantity = (Integer) tbInfo.getValueAt(selectedRow, 1);
+            float unitPrice = (Float) tbInfo.getValueAt(selectedRow, 2);
+
+            if (currentQuantity > 1) {
+                // Nếu số lượng > 1, hiện dialog nhập số lượng cần xóa
+                String input = XDialog.prompt(this,
+                    "Nhập số lượng cần xóa.\nSố lượng hiện có: " + currentQuantity);
+
+                if (input != null && !input.trim().isEmpty()) {
+                    try {
+                        int quantityToRemove = Integer.parseInt(input.trim());
+
+                        // Kiểm tra số lượng nhập vào
+                        if (quantityToRemove <= 0) {
+                            XDialog.alert(this, "Số lượng phải lớn hơn 0!");
+                            return;
+                        }
+
+                        if (quantityToRemove > currentQuantity) {
+                            XDialog.alert(this, "Số lượng xóa không được lớn hơn số lượng hiện có!");
+                            return;
+                        }
+
+                        // Xử lý xóa số lượng
+                        if (quantityToRemove == currentQuantity) {
+                            // Xóa toàn bộ sản phẩm
+                            modelTable = (DefaultTableModel) tbInfo.getModel();
+                            modelTable.removeRow(selectedRow);
+
+                            // Xóa trong database
+                            try {
+                                String foodId = showIdFood(); // Lấy ID của sản phẩm được chọn
+                                if (foodId != null) {
+                                    billifdao.deleteByBillIdAndFoodId(showIdBill(), foodId);
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+                            XDialog.info(this, "Đã xóa toàn bộ " + productName + " khỏi hóa đơn!");
+                        } else {
+                            // Giảm số lượng
+                            int newQuantity = currentQuantity - quantityToRemove;
+                            float newTotalPrice = newQuantity * unitPrice;
+
+                            // Cập nhật trên bảng
+                            tbInfo.setValueAt(newQuantity, selectedRow, 1);
+                            tbInfo.setValueAt(newTotalPrice, selectedRow, 3);
+
+                            // Cập nhật trong database
+                            try {
+                                String foodId = showIdFood(); // Lấy ID của sản phẩm được chọn
+                                if (foodId != null) {
+                                    billifdao.updateCountByBillIdAndFoodId(showIdBill(), foodId, newQuantity);
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+                            XDialog.info(this, "Đã xóa " + quantityToRemove + " " + productName + " khỏi hóa đơn!");
+                        }
+
+                        // Tính lại tổng tiền
+                        calTotalPice();
+
+                    } catch (NumberFormatException e) {
+                        XDialog.alert(this, "Vui lòng nhập số hợp lệ!");
+                    }
+                }
+            } else {
+                // Nếu số lượng = 1, xóa toàn bộ sản phẩm
+                if (XDialog.confirm(this, "Bạn có muốn xóa sản phẩm này khỏi hóa đơn?")) {
+                    modelTable = (DefaultTableModel) tbInfo.getModel();
+                    modelTable.removeRow(selectedRow);
+
+                    // Xóa trong database
+                    try {
+                        String foodId = showIdFood(); // Lấy ID của sản phẩm được chọn
+                        if (foodId != null) {
+                            billifdao.deleteByBillIdAndFoodId(showIdBill(), foodId);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    // Tính lại tổng tiền
+                    calTotalPice();
+
+                    XDialog.info(this, "Đã xóa sản phẩm khỏi hóa đơn!");
+                }
+            }
+        } else {
+            XDialog.alert(this, "Vui lòng chọn sản phẩm cần xóa!");
+        }
+    }//GEN-LAST:event_btnXoaspActionPerformed
+
+    private void cboFoodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboFoodActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboFoodActionPerformed
+
+    private void cboFoodMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cboFoodMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboFoodMouseClicked
+
+    private void cboFoodItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboFoodItemStateChanged
+        // TODO add your handling code here:
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            this.showIdFood();
+        }
+    }//GEN-LAST:event_cboFoodItemStateChanged
+
+    private void txtGiamGiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtGiamGiaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtGiamGiaActionPerformed
+
+    private void txtGiamGiaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtGiamGiaFocusLost
+        // TODO add your handling code here:
+        calTotalPice();
+    }//GEN-LAST:event_txtGiamGiaFocusLost
+
+    private void txtPhiKhacFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPhiKhacFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPhiKhacFocusLost
+
+    private void cboCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboCategoryActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboCategoryActionPerformed
+
+    private void cboCategoryItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboCategoryItemStateChanged
+        // TODO add your handling code here:
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            this.dataCboFood();
+        }
+    }//GEN-LAST:event_cboCategoryItemStateChanged
+
+    private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartActionPerformed
+        // TODO add your handling code here:
+        if (idtable <= 0) {
+            XDialog.alert(this, "Chưa chọn bàn chơi !");
+            return;
+        }
+        this.insertBill();
+        btnStart.setEnabled(false);
+        btnStopContinue.setEnabled(true);
+
+        // Bắt đầu theo dõi thời gian chơi
+        startPlayTime();
+    }//GEN-LAST:event_btnStartActionPerformed
+
+    private void txtTimeStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimeStartActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTimeStartActionPerformed
+
+    private void txtTimeStartInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_txtTimeStartInputMethodTextChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTimeStartInputMethodTextChanged
+
+    private void txtTimeStartFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTimeStartFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTimeStartFocusLost
+
+    private void txtTimeStartFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTimeStartFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTimeStartFocusGained
+
+    private void btnTamTinhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTamTinhActionPerformed
+        // TODO add your handling code here:
+        this.billTamTinh();
+    }//GEN-LAST:event_btnTamTinhActionPerformed
+
+    private void btnXacNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacNhanActionPerformed
+        // TODO add your handling code here:
+        System.out.println("=== NÚT XÁC NHẬN ĐƯỢC NHẤN ===");
+        System.out.println("txtTimeStart.getText(): '" + txtTimeStart.getText() + "'");
+
+        if (txtTimeStart.getText().equals("")) {
+            System.out.println("Chưa bắt đầu giờ - không thực hiện insertBillinfo()");
+            XDialog.alert(this, "Chưa bắt đầu giờ");
+            return;
+        }
+
+        System.out.println("Điều kiện OK - gọi insertBillinfo()");
+        this.insertBillinfo();
+        this.calTotalPice();
+        System.out.println("=== KẾT THÚC NÚT XÁC NHẬN ===");
+    }//GEN-LAST:event_btnXacNhanActionPerformed
+
+    private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
+        // TODO add your handling code here:
+        if (txtTimeStart.getText().equals("")) {
+            XDialog.alert(this, "Chưa bắt đầu");
+            return;
+        }
+        if (txtTimeStop.getText().equals("")) {
+            XDialog.alert(this, "Chưa dừng giờ");
+        } else {
+            if (XDialog.confirm(this, "Bạn muốn thanh toán bàn này?")) {
+                // Chỉ gọi clickThanhToan(), không gọi updateBill() riêng
+                clickThanhToan();
+                XDialog.info(this, "ĐÃ THANH TOÁN");
+                btnStart.setEnabled(true);
+            }
+        }
+    }//GEN-LAST:event_btnThanhToanActionPerformed
+
+    private void btnStopContinueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStopContinueActionPerformed
+        // TODO add your handling code here:
+        if (idtable <= 0) {
+            XDialog.alert(this, "Chưa chọn bàn chơi !");
+            return;
+        }
+        if (txtTimeStart.getText().equals("")) {
+            XDialog.alert(this, "Chưa có thời gian bắt đầu");
+            return;
+        }
+
+        // Kiểm tra trạng thái hiện tại để quyết định hành động
+        if (!isPaused) {
+            // Đang chạy → Dừng
+            pauseGame();
+            calTotalPice();
+        } else {
+            // Đã dừng → Tiếp tục
+            resumeGame();
+        }
+    }//GEN-LAST:event_btnStopContinueActionPerformed
+
+    private void snpCountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_snpCountMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_snpCountMouseClicked
+
+    private void snpCountStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_snpCountStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_snpCountStateChanged
+
+    private void txtPhiDichVuFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPhiDichVuFocusLost
+        // TODO add your handling code here:
+        calTotalPice();
+    }//GEN-LAST:event_txtPhiDichVuFocusLost
+
+    private void btnLo5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLo5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLo5ActionPerformed
+
+    private void btnLo4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLo4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLo4ActionPerformed
+
+    private void btnLo3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLo3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLo3ActionPerformed
+
+    private void btnLo2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLo2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLo2ActionPerformed
+
+    private void btnLo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLo1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLo1ActionPerformed
+
+    private void btnVip1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVip1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnVip1ActionPerformed
+
+    private void btnVip3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVip3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnVip3ActionPerformed
+
+    private void btnVip2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVip2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnVip2ActionPerformed
+
+    private void btnLiber2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLiber2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLiber2ActionPerformed
+
+    private void btnLiber3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLiber3ActionPerformed
+        // TODO: Thêm code xử lý sự kiện cho btnLiber3
+    }//GEN-LAST:event_btnLiber3ActionPerformed
+
+    private void btnLiber12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLiber12ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLiber12ActionPerformed
+
+    private void btnLiber6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLiber6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLiber6ActionPerformed
+
+    private void btnLiber1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLiber1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLiber1ActionPerformed
+
+    private void btnLiber11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLiber11ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLiber11ActionPerformed
+
+    private void btnLiber10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLiber10ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLiber10ActionPerformed
 
     private void initializeDrawerForUser() {
         System.out.println("initializeDrawerForUser() called - currentUser: " + (currentUser != null ? currentUser.getFullname() : "null"));
