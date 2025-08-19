@@ -161,6 +161,11 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
 
         txtTkiem.setName(""); // NOI18N
         txtTkiem.setPreferredSize(new java.awt.Dimension(200, 22));
+        txtTkiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTkiemActionPerformed(evt);
+            }
+        });
 
         btnLamMoi.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnLamMoi.setText("Làm mới");
@@ -553,6 +558,10 @@ public class UserManagerJDialog extends javax.swing.JDialog implements UserContr
         // TODO add your handling code here:
         this.fillToTable();
     }//GEN-LAST:event_btnLamMoiActionPerformed
+
+    private void txtTkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTkiemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTkiemActionPerformed
 
     private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {
         try {

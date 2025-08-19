@@ -109,6 +109,12 @@ public class ChangePasswordJDialog extends javax.swing.JDialog implements Change
         jLabel3.setText("Mật khẩu hiện tại");
         jLabel3.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         jPanel2.add(jLabel3);
+
+        txtUsername.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUsernameActionPerformed(evt);
+            }
+        });
         jPanel2.add(txtUsername);
         jPanel2.add(txtPassword);
 
@@ -188,6 +194,10 @@ public class ChangePasswordJDialog extends javax.swing.JDialog implements Change
         // TODO add your handling code here:
         this.open();
     }//GEN-LAST:event_formWindowOpened
+
+    private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUsernameActionPerformed
 
     /**
      * @param args the command line arguments
